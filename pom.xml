@@ -6,10 +6,10 @@
 	<groupId>ca.seanforfun</groupId>
 	<artifactId>blog</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
-	<name>SeanforfunBlog</name>
-	<description>A java web based technology blog</description>
+	<name>SeanForFunBlog</name>
+	<description>A java-web based technical blog.</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -46,14 +46,13 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>  
+    		<groupId>org.springframework.boot</groupId>  
+    		<artifactId>spring-boot-starter-thymeleaf</artifactId>  
+		</dependency> 
 	</dependencies>
 
 	<build>
