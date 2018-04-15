@@ -14,6 +14,7 @@ Overview
 
 Technical selections
 ======================================
+* JDK: 1.8
 * Front: BootStrap, JQuery, HTML, jetbrick
 * Backend: SpringBoot, Spring, SpringMVC and MyBatis.
 * DataBase: MySQL
