@@ -3,7 +3,7 @@ package ca.seanforfun.blog.config.adapter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @author SeanForFun E-mail:xiaob6@mcmaster.ca
@@ -11,20 +11,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
  * @version 1.0
  */
 @Configuration
-public class CustomMvcAdapter extends WebMvcConfigurationSupport   {
+public class CustomMvcAdapter implements WebMvcConfigurer    {
 
 	@Override
-	protected void addViewControllers(ViewControllerRegistry registry) {
+	public void addViewControllers(ViewControllerRegistry registry) {
 		// TODO *************Add ViewController for Spring boot.*************
-//		registry.addViewController("/tologin").setViewName("index.html");
-//		registry.addRedirectViewController("/tologin", "/index.html");
-		super.addViewControllers(registry);
+		registry.addRedirectViewController("/tologin", "/admin/login.html");
 	}
 
 	@Override
-	protected void addInterceptors(InterceptorRegistry registry) {
+	public void addInterceptors(InterceptorRegistry registry) {
 		// TODO *************Add Interceptors for Spring boot.*************
-		super.addInterceptors(registry);
 	}
-	
 }
