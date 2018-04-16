@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/Seanforfun/SeanForFunBlog">
-    <img src="https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/logo/logo.png"></img>
+    <img src="https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/logo/logo.png"></img>
   </a>
 </p>
 

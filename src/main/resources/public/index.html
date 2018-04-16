@@ -5,13 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
     <meta name="description" content="Entrance of bog">
     <meta name="author" content="Seanforfun">
-    <link rel="icon" href="icon/seanforfun.ico">
+    <link rel="icon" href="/images/icon/seanforfun.ico">
+    <script type="text/javascript" src="/jquery/jquery-1.8.3.js"></script>
 
     <title>SeanForFun Blog</title>
+    <style type="text/css">
+    	.nav-font{
+    		font-size: 1.2rem;
+    		text-align: center;
+    		font: italic;
+	    }
+	    .nav-sub-font{
+    		font-size: 1.2rem;
+    		text-align: center;
+    		color: #fff;
+	    }
+    </style>
 
     <!-- Bootstrap core CSS -->
     <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script type="text/javascript" src="/jquery/jquery-1.8.3.js"></script>
 
     <!-- Custom styles for this template -->    
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
@@ -19,19 +31,19 @@
 	
 	<script type="text/javascript">
 		$(function(){
-			$('.carousel').carousel({
-				  interval: 100
-				})
+			$(".dropdown-item").hover(
+				function(){
+					$(this).attr("style", "color: #000");
+				},
+				function(){
+					$(this).attr("style", "color: #fff");
+				}
+			);
 		})
-		function globalSearch(){
-			var searchInput = $("#globalSearchInput").val();
-			//发送AJAX请求
-		}
 	</script>
   </head>
 
   <body>
-
     <div class="container">
       <header class="blog-header py-3">
         <div class="row flex-nowrap justify-content-between align-items-center">
@@ -40,31 +52,40 @@
           </div>
           <div class="col-2 d-flex justify-content-end align-items-center">
           </div>
-          <div class="col-3 input-group align-items-center">
-			  <input id="globalSearchInput" type="text" class="form-control" aria-describedby="basic-addon1">
-			  <div class="input-group-append">
-			    <button class="btn btn-outline-secondary" type="button" onclick="globalSearch()">Search</button>
-			  </div>
-			</div>
         </div>
       </header>
 
-      <div class="nav-scroller py-1 mb-2">
-        <nav class="nav d-flex justify-content-between">
-          <a class="p-2 text-muted" href="#">World</a>
-          <a class="p-2 text-muted" href="#">U.S.</a>
-          <a class="p-2 text-muted" href="#">Technology</a>
-          <a class="p-2 text-muted" href="#">Design</a>
-          <a class="p-2 text-muted" href="#">Culture</a>
-          <a class="p-2 text-muted" href="#">Business</a>
-          <a class="p-2 text-muted" href="#">Politics</a>
-          <a class="p-2 text-muted" href="#">Opinion</a>
-          <a class="p-2 text-muted" href="#">Science</a>
-          <a class="p-2 text-muted" href="#">Health</a>
-          <a class="p-2 text-muted" href="#">Style</a>
-          <a class="p-2 text-muted" href="#">Travel</a>
-        </nav>
-      </div>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark nav-justified">
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+		    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+		      <li class="nav-item active p-1">
+		        <a class="nav-link nav-font font-italic" href="/"><strong>Home</strong><span class="sr-only">(current)</span></a>
+		      </li>
+		      <li class="nav-item p-1">
+		        <a class="nav-link nav-font font-italic" href="#" style="color: #fff" onclick="test()"><strong>col1</strong></a>
+		      </li>
+		      <li class="nav-item p-1">
+		        <a class="nav-link nav-font font-italic" href="#" style="color: #fff"><strong>col2</strong></a>
+		      </li>
+		      <li class="nav-item dropdown p-1">
+		      	<a class="nav-link nav-font font-italic" data-toggle="dropdown" href="#" style="color: #fff">
+         			<strong>col3</strong>
+      			</a>
+      			<ul class="dropdown-menu bg-dark">
+			         <a class="dropdown-item font-italic" href="#" style="color: #fff"><strong>Regular link</strong></a>
+					  <a class="dropdown-item font-italic" href="#" style="color: #fff"><strong>Another link</strong></a>
+			    </ul>
+		      </li>
+		    </ul>
+		    <form class="form-inline my-2 my-lg-0">
+		      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+		      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+		    </form>
+		  </div>
+		</nav>     
 	    <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
 		  <ol class="carousel-indicators">
 		    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -73,21 +94,21 @@
 		  </ol>
 		  <div class="carousel-inner">
 		    <div class="carousel-item active">
-		      <img class="d-block w-100" src="slides/1.png" height="250px" alt="First slide">
+		      <img class="d-block w-100" src="images/slides/1.png" height="250px" alt="First slide">
 		      <div class="carousel-caption d-none d-md-block">
 			    <h5>...</h5>
 			    <p>...</p>
 			  </div>
 		    </div>
 		    <div class="carousel-item">
-		      <img class="d-block w-100" src="slides/2.png" height="250px" alt="Second slide">
+		      <img class="d-block w-100" src="images/slides/2.png" height="250px" alt="Second slide">
 		      <div class="carousel-caption d-none d-md-block">
 			    <h5>...</h5>
 			    <p>...</p>
 			  </div>
 			</div>
 		    <div class="carousel-item">
-		      <img class="d-block w-100" src="slides/3.png" height="250px" alt="Third slide">
+		      <img class="d-block w-100" src="images/slides/3.png" height="250px" alt="Third slide">
 		      <div class="carousel-caption d-none d-md-block">
 			    <h5>...</h5>
 			    <p>...</p>
@@ -181,7 +202,8 @@
 
         <aside class="col-md-4 blog-sidebar">
           <div class="p-3 mb-3 bg-light rounded">
-            <h4 class="font-italic">About</h4>
+            <h4 class="font-italic">About Me</h4>
+            <img src="images/avatar/avatar.jpg" height="50px" width="50px" class="rounded-circle">
             <p class="mb-0">Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
           </div>
 
