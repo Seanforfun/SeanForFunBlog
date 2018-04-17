@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/Seanforfun/SeanForFunBlog">
-    <img src="https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/logo/logo.png"></img>
+    <img src="https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/readme/logo.png"></img>
   </a>
 </p>
 
@@ -18,3 +18,14 @@ Technical selections
 * Front: BootStrap, JQuery, HTML, jetbrick
 * Backend: SpringBoot, Spring, SpringMVC and MyBatis.
 * DataBase: MySQL
+* Server: Tomcat 7.0
+* Editor: Markdown
+
+Interfaces demos
+======================================
+index.html:
+<p align="center">
+  <a href="tbd">
+    <img src="https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/readme/index.png"></img>
+  </a>
+</p>
