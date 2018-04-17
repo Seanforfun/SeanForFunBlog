@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <meta name="viewport"
@@ -29,10 +29,9 @@
 
 <!-- Custom styles for this template -->
 <link
-	href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900"
+	th:href="@{https://fonts.googleapis.com/css?family=Playfair+Display:700,900}"
 	rel="stylesheet">
 <link href="/bootstrap/css/blog.css" rel="stylesheet" type="text/css" />
-<link href="./carousel.html" rel="stylesheet" type="text/html" />
 
 <script type="text/javascript">
 	$(function() {
@@ -50,14 +49,14 @@
 									.attr("style",
 											"color: #16181b;text-decoration: none;background-color: #f8f9fa");
 						});
-		
+
 		$('#carouselExampleIndicators').carousel({
 			interval : 4000
 		});
-		
-		$(".dropdown-menu").hover(function(){
-		}, function(){
-			if($(this).hasClass("show")){
+
+		$(".dropdown-menu").hover(function() {
+		}, function() {
+			if ($(this).hasClass("show")) {
 				$(this).removeClass("show");
 			}
 		})
@@ -68,15 +67,17 @@
 <body>
 	<div class="container">
 		<header class="blog-header py-3">
-			<div class="row flex-nowrap justify-content-between align-items-center">
+			<div
+				class="row flex-nowrap justify-content-between align-items-center">
 				<div class="col-7 text-right">
-					<a class="blog-header-logo text-dark" href="/">SeanforFun</a>
+					<a class="blog-header-logo text-dark" th:href="@{/}">SeanforFun</a>
 				</div>
 				<div class="col-2 d-flex justify-content-end align-items-center">
 				</div>
 			</div>
 		</header>
 
+		<!-- navigate bar -->
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark nav-justified">
 			<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -120,7 +121,7 @@
 		</nav>
 
 		<!-- Carousel -->
-		<div id="carouselExampleIndicators" class="carousel slide" 
+		<div id="carouselExampleIndicators" class="carousel slide"
 			data-ride="carousel">
 			<ol class="carousel-indicators">
 				<li data-target="#carouselExampleIndicators" data-slide-to="0"
@@ -164,7 +165,7 @@
 				class="sr-only">Next</span>
 			</a>
 		</div>
-		<br/>
+		<br />
 
 		<main role="main" class="container">
 		<div class="row">
@@ -172,8 +173,8 @@
 				<div class="blog-post">
 					<h3 class="blog-post-title">Sample post</h3>
 					<p class="blog-post-meta">
-						January 1, 2014 by <a href="#">Seanforfun</a>
-						<span class="badge badge-success">新</span>
+						January 1, 2014 by <a href="#">Seanforfun</a> <span
+							class="badge badge-success">新</span>
 					</p>
 					<p>This blog post shows a few different types of content that's
 						supported and styled with Bootstrap. Basic typography, images, and
@@ -220,10 +221,11 @@
 			<aside class="col-md-4 blog-sidebar">
 				<div class="p-3 mb-3 bg-light rounded">
 					<center>
-					<h4 class="font-italic">About Me</h4>
-					<img src="images/avatar/avatar.jpg" height="60px" width="60px" class="rounded-circle">
-					<h5 class="font-italic">Botao Xiao</h5>
-					<p class="mb-0">清醒的人最荒唐</p>
+						<h4 class="font-italic">About Me</h4>
+						<img src="images/avatar/avatar.jpg" height="60px" width="60px"
+							class="rounded-circle">
+						<h5 class="font-italic">Botao Xiao</h5>
+						<p class="mb-0">清醒的人最荒唐</p>
 					</center>
 					<p class="mb-0">
 						Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras

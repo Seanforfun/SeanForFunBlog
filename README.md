@@ -15,10 +15,10 @@ Overview
 Technical selections
 ======================================
 * JDK: 1.8
-* Front: BootStrap, JQuery, HTML, jetbrick
+* Front: BootStrap, JQuery, HTML, thymeleaf
 * Backend: SpringBoot, Spring, SpringMVC and MyBatis.
 * DataBase: MySQL
-* Server: Tomcat 7.0
+* Server: Tomcat 8.5.29
 * Editor: Markdown
 
 Interfaces demos
