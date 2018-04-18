@@ -9,4 +9,8 @@ import ca.seanforfun.blog.model.entity.entity.User;
  */
 public class UserVo extends User {
 
+	public void setDefaultAvatar() {
+		super.setPic("images/avatar/avatar.jpg");
+	}
+	
 }

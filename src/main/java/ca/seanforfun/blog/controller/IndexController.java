@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import ca.seanforfun.blog.exception.SeanForFunException;
-import ca.seanforfun.blog.model.entity.entity.User;
 import ca.seanforfun.blog.model.entity.vo.UserVo;
 import ca.seanforfun.blog.service.ebo.UserService;
 
@@ -34,15 +33,28 @@ public class IndexController {
 		if(null == userInfo){
 			throw new SeanForFunException("Current url is not registered...");
 		}
-		mv.addObject("userInfo", userInfo);
-		mv.setViewName("front/index.html");
+		
 		/**
-		 * Get 10 new blogs from database.
+		 * TODO Get user avatar and carousel pictures from third party database.
+		 */
+		if(null == userInfo.getPic()){
+			userInfo.setDefaultAvatar();
+		}
+		
+		mv.addObject("userInfo", userInfo);
+		
+		/**
+		 * TODO Get 10 new blogs from database.
 		 */
 		
 		/**
-		 * Get categories and sub-categories from database
+		 * TODO Get categories and sub-categories from database
 		 */
+		
+		/**
+		 * TODO Blog access statistic update
+		 */
+		mv.setViewName("front/index.html");
 		return mv;
 	}
 }

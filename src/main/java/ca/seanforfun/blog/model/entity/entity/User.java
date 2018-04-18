@@ -21,6 +21,7 @@ public class User {
 	private String email;
 	private String bio;
 	private String intro;
+	private String pic;
 	
 	/**
 	 * User location
@@ -137,5 +138,11 @@ public class User {
 	}
 	public void setIntro(String intro) {
 		this.intro = intro;
+	}
+	public String getPic() {
+		return pic;
+	}
+	public void setPic(String pic) {
+		this.pic = pic;
 	}
 }
