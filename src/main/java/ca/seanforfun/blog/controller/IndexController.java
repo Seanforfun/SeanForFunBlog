@@ -44,11 +44,11 @@ public class IndexController {
 		mv.addObject("userInfo", userInfo);
 		
 		/**
-		 * TODO Get 10 new blogs from database.
+		 * TODO Get categories and sub-categories from database.
 		 */
 		
 		/**
-		 * TODO Get categories and sub-categories from database
+		 * TODO Get 10 new blogs from database.
 		 */
 		
 		/**
