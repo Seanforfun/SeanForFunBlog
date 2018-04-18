@@ -7,14 +7,10 @@
 			<h4 class="font-italic">About Me</h4>
 			<img src="images/avatar/avatar.jpg" height="60px" width="60px"
 				class="rounded-circle">
-			<h5 class="font-italic">Botao Xiao</h5>
-			<p class="mb-0">清醒的人最荒唐</p>
+			<h5 class="font-italic" th:text="${userInfo.name}"></h5>
+			<p class="mb-0 font-italic font-weight-bold" th:text="${userInfo.bio}"></p>
 		</center>
-		<p class="mb-0">
-			Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis
-			consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla
-			sed consectetur.
-		</p>
+		<p class="mb-0" th:text="${userInfo.intro}"></p>
 	</div>
 </body>
 </html>

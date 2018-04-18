@@ -3,8 +3,15 @@ package ca.seanforfun.blog.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import ca.seanforfun.blog.exception.SeanForFunException;
+import ca.seanforfun.blog.model.entity.entity.User;
+import ca.seanforfun.blog.model.entity.vo.UserVo;
+import ca.seanforfun.blog.service.ebo.UserService;
 
 /**
  * @author SeanForFun E-mail:xiaob6@mcmaster.ca
@@ -13,8 +20,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class IndexController {
+	@Autowired
+	private UserService userService;
+	
 	@RequestMapping("/")
-	public String test(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		return "front/index.html";
+	public ModelAndView index(HttpServletRequest request, HttpServletResponse response, ModelAndView mv) throws Exception{
+		/**
+		 * Get user information according to url
+		 */
+		String requestUrl = request.getRequestURL().toString();
+		UserVo userInfo = userService.getUserByUrl(requestUrl);
+		
+		if(null == userInfo){
+			throw new SeanForFunException("Current url is not registered...");
+		}
+		mv.addObject("userInfo", userInfo);
+		mv.setViewName("front/index.html");
+		/**
+		 * Get 10 new blogs from database.
+		 */
+		
+		/**
+		 * Get categories and sub-categories from database
+		 */
+		return mv;
 	}
 }

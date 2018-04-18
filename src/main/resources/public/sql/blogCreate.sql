@@ -14,5 +14,7 @@ CREATE TABLE USER(
 	country VARCHAR(60),
 	province VARCHAR(60),
 	city VARCHAR(60),
-	activestatus INT(3) NOT NULL	
+	activestatus INT(3) NOT NULL,
+	url varchar(255) NOT NULL,
+	intro text
 );

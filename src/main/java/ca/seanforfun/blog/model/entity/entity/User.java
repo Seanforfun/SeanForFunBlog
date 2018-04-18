@@ -8,6 +8,9 @@ import ca.seanforfun.blog.utils.FormatUtils;
  * @version 1.0
  */
 public class User {
+	public static final Integer USER_ACTIVED = 0;
+	public static final Integer USER_NOT_ACTIVED = 1;
+	
 	private Long id;
 	/**
 	 * User information
@@ -17,6 +20,8 @@ public class User {
 	private String password;
 	private String email;
 	private String bio;
+	private String intro;
+	
 	/**
 	 * User location
 	 */
@@ -29,6 +34,8 @@ public class User {
 	 */
 	private Long activeTime;
 	private Long lastLoginTime;
+	private String url;
+	
 	/**
 	 * 0: Not activate by e-mail
 	 * 1: Activated by e-mail 
@@ -118,5 +125,17 @@ public class User {
 	}
 	public void setActivestatus(Integer activestatus) {
 		this.activestatus = activestatus;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public String getIntro() {
+		return intro;
+	}
+	public void setIntro(String intro) {
+		this.intro = intro;
 	}
 }
