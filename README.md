@@ -15,11 +15,13 @@ Overview
 Technical selections
 ======================================
 * JDK: 1.8
-* Front: BootStrap, JQuery, HTML, thymeleaf
+* Front: BootStrap, JQuery, HTML5, thymeleaf
 * Backend: SpringBoot, Spring, SpringMVC and MyBatis.
+* Spring Cache, may use Redis
 * DataBase: MySQL
 * Server: Tomcat 8.5.29
 * Editor: Markdown
+* Log: Commons Logging
 
 Interfaces demos
 ======================================
@@ -29,3 +31,8 @@ index.html:
     <img src="https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/readme/index.png"></img>
   </a>
 </p>
+
+DataBase design
+======================================
+* <a href="https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/User.java">User table</a>
+
