@@ -8,8 +8,8 @@ import ca.seanforfun.blog.utils.FormatUtils;
  * @version 1.0
  */
 public class User {
-	public static final Integer USER_ACTIVED = 0;
-	public static final Integer USER_NOT_ACTIVED = 1;
+	public static final Integer USER_ACTIVED = 1;
+	public static final Integer USER_NOT_ACTIVED = 0;
 	
 	private Long id;
 	/**

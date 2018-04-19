@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import ca.seanforfun.blog.exception.SeanForFunException;
+import ca.seanforfun.blog.model.entity.entity.User;
 import ca.seanforfun.blog.model.entity.vo.UserVo;
 import ca.seanforfun.blog.service.ebo.UserService;
 
@@ -21,36 +22,41 @@ import ca.seanforfun.blog.service.ebo.UserService;
 public class IndexController {
 	@Autowired
 	private UserService userService;
-	
+
 	@RequestMapping("/")
-	public ModelAndView index(HttpServletRequest request, HttpServletResponse response, ModelAndView mv) throws Exception{
+	public ModelAndView index(HttpServletRequest request,
+			HttpServletResponse response, ModelAndView mv) throws Exception {
 		/**
 		 * Get user information according to url
 		 */
 		String requestUrl = request.getRequestURL().toString();
 		UserVo userInfo = userService.getUserByUrl(requestUrl);
-		
-		if(null == userInfo){
+
+		if (null == userInfo) {
 			throw new SeanForFunException("Current url is not registered...");
 		}
-		
+		if (null == userInfo.getActivestatus()
+				|| userInfo.getActivestatus() == UserVo.USER_NOT_ACTIVED) {
+			throw new SeanForFunException("Blogger's e-mail is not verified...");
+		}
+
 		/**
 		 * TODO Get user avatar and carousel pictures from third party database.
 		 */
-		if(null == userInfo.getPic()){
+		if (null == userInfo.getPic()) {
 			userInfo.setDefaultAvatar();
 		}
-		
+
 		mv.addObject("userInfo", userInfo);
-		
+
 		/**
 		 * TODO Get categories and sub-categories from database.
 		 */
-		
+
 		/**
 		 * TODO Get 10 new blogs from database.
 		 */
-		
+
 		/**
 		 * TODO Blog access statistic update
 		 */

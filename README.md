@@ -22,6 +22,8 @@ Technical selections
 * Server: Tomcat 8.5.29
 * Editor: Markdown
 * Log: Commons Logging
+* Url style: Restful
+* Connection pool: Druid -from Alibaba, China
 
 Interfaces demos
 ======================================
@@ -35,7 +37,7 @@ index.html:
 DataBase design
 ======================================
 * <a href="https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/User.java">User table</a>
-
+* <a href="https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/Category.java">Category table</a>
 Controller design
 ======================================
 * <a href="https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/java/ca/seanforfun/blog/controller/IndexController.java">IndexController</a>
@@ -44,4 +46,5 @@ Controller design
 3. Get categories and sub-categories from database.
 4. Get 10 new blogs from database.
 5. Blog access statistic update.
+
 

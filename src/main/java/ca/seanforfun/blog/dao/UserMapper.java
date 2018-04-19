@@ -17,7 +17,7 @@ import ca.seanforfun.blog.model.entity.vo.UserVo;
 @Repository
 public interface UserMapper {
 
-	@Select("SELECT name, nickname, bio, intro, pic FROM USER WHERE url=#{url}")
+	@Select("SELECT id, name, nickname, bio, intro, pic, activestatus FROM USER WHERE url=#{url}")
 	@Cacheable("user")
 	public UserVo getUserByUrl(@Param("url") String url);
 
