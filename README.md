@@ -38,6 +38,7 @@ DataBase design
 ======================================
 * <a href="https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/User.java">User table</a>
 * <a href="https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/Category.java">Category table</a>
+
 Controller design
 ======================================
 * <a href="https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/java/ca/seanforfun/blog/controller/IndexController.java">IndexController</a>

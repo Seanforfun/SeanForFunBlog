@@ -34,7 +34,12 @@ public class Category {
 	 */
 	private Integer categoryType;
 	/**
-	 * pid: If it is a secondary category, pid value records it's primary category id.
+	 * name: pid
+	 * type: Long 
+	 * @Description If it is a secondary category, pid value records it's primary category id.
+	 * if it is a primary category, this value is null.
+	 * if it is a secondary category, this value refers corresponding id of primary category.
+	 * Can be null
 	 */
 	private Long pid;
 	/**

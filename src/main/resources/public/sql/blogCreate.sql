@@ -19,3 +19,16 @@ CREATE TABLE USER(
 	url varchar(255) NOT NULL,
 	intro text
 );
+
+#Category
+CREATE TABLE category(
+	id BIGINT PRIMARY KEY NOT NULL,
+	category_type INT(2) NOT NULL,
+	pid BIGINT,
+	NAME VARCHAR(50) NOT NULL,
+	uid BIGINT(20) NOT NULL,
+	FOREIGN KEY(uid) REFERENCES USER(id),
+	icon VARCHAR(255),
+	link VARCHAR(255) NOT NULL,
+	role INT(3) NOT NULL
+)
