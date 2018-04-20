@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Scope(value="singleton")
 @Configuration
 @ConfigurationProperties(prefix="com.seanforfun")
-@PropertySource(value="classpath:/properties/seanforfun.properties ")
+@PropertySource(value="classpath:/properties/seanforfun.properties")
 public class ConfigBean {
 	private String author;
 	private String version;

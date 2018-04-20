@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ca.seanforfun.blog.dao.CategoryMapper;
+import ca.seanforfun.blog.exception.SeanForFunException;
 import ca.seanforfun.blog.model.entity.entity.Category;
 import ca.seanforfun.blog.service.ebi.CategoryEbi;
 
@@ -23,6 +24,25 @@ public class CategoryService implements CategoryEbi {
 	public List<Category> getPrimaryFrontCategories() {
 		return categoryMapper.getCategoriesByCategoryTypeAndRole(
 				Category.PRIMARY_CATEGORY, Category.FRONT_PAGE);
+	}
+
+	@Override
+	public List<Category> getFrontCategories() {
+		return categoryMapper.getCategoriesByRole(Category.FRONT_PAGE);
+	}
+
+	@Override
+	public Integer getFrontPrimaryCategoryNum() {
+		Long frontPriNum = categoryMapper.getCategoryNumByTypeAndRol(Category.PRIMARY_CATEGORY, Category.FRONT_PAGE);
+		if(null == frontPriNum){
+			throw new SeanForFunException("Get category number error...");
+		}
+		return frontPriNum.intValue();
+	}
+
+	@Override
+	public List<Category> getSecondaryCategoriesByPid(Long pid) {
+		return categoryMapper.getCategorieByPid(pid);
 	}
 
 }

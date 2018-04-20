@@ -11,4 +11,10 @@ import ca.seanforfun.blog.model.entity.entity.Category;
  */
 public interface CategoryEbi {
 	public List<Category> getPrimaryFrontCategories();
+	
+	public List<Category> getFrontCategories();
+	
+	public Integer getFrontPrimaryCategoryNum();
+	
+	public List<Category> getSecondaryCategoriesByPid(Long pid);
 }
