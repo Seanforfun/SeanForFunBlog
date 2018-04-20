@@ -62,16 +62,16 @@ public class Category {
 	 * name: link
 	 * type: String 
 	 * @Description Link of current category.
-	 * Null: PRIMARY_CATEGORY
-	 * Not null: SECONDARY_CATEGORY
+	 * Null: PRIMARY_CATEGORY 0
+	 * Not null: SECONDARY_CATEGORY 1
 	 */
 	private String link;
 	/**
 	 * name: role
 	 * type: Integer 
 	 * @Description	Determine current column belongs to front or admin. Not null.
-	 * FRONT_PAGE: Belongs to front pages.
-	 * ADMIN_PAGE: Belongs to admin pages.
+	 * FRONT_PAGE: Belongs to front pages.0
+	 * ADMIN_PAGE: Belongs to admin pages.1
 	 */
 	private Integer role;
 	

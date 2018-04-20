@@ -25,6 +25,12 @@ public class CategoryService implements CategoryEbi {
 		return categoryMapper.getCategoriesByCategoryTypeAndRole(
 				Category.PRIMARY_CATEGORY, Category.FRONT_PAGE);
 	}
+	
+	@Override
+	public List<Category> getPrimaryAdminCategories() {
+		return categoryMapper.getCategoriesByCategoryTypeAndRole(
+				Category.PRIMARY_CATEGORY, Category.ADMIN_PAGE);
+	}
 
 	@Override
 	public List<Category> getFrontCategories() {
@@ -44,5 +50,4 @@ public class CategoryService implements CategoryEbi {
 	public List<Category> getSecondaryCategoriesByPid(Long pid) {
 		return categoryMapper.getCategorieByPid(pid);
 	}
-
 }

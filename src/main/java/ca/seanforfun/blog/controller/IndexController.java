@@ -1,6 +1,7 @@
 package ca.seanforfun.blog.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,11 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import ca.seanforfun.blog.config.runner.CategoryRunner;
 import ca.seanforfun.blog.exception.SeanForFunException;
 import ca.seanforfun.blog.model.entity.entity.Category;
-import ca.seanforfun.blog.model.entity.entity.User;
 import ca.seanforfun.blog.model.entity.vo.UserVo;
-import ca.seanforfun.blog.service.ebo.CategoryService;
 import ca.seanforfun.blog.service.ebo.UserService;
 
 /**
@@ -26,8 +26,6 @@ import ca.seanforfun.blog.service.ebo.UserService;
 public class IndexController {
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private CategoryService categoryService;
 
 	@RequestMapping("/")
 	public ModelAndView index(HttpServletRequest request,
@@ -56,13 +54,13 @@ public class IndexController {
 		mv.addObject("userInfo", userInfo);
 
 		/**
-		 * TODO Get primary front categories from database.
+		 * TODO Get primary front category map.
 		 */
-		List<Category> primaryFrontCategories = categoryService.getPrimaryFrontCategories();
-		if(null == primaryFrontCategories || primaryFrontCategories.size() <= 0){
+		Map<Category, List<Category>> frontCategoryMap = CategoryRunner.getFrontCategoryMap();
+		if(null == frontCategoryMap || frontCategoryMap.size() <= 0){
 			throw new SeanForFunException("Blog Category setting error....");
-		}else{
-			mv.addObject("pfcategory", primaryFrontCategories);
+		}else {
+			mv.addObject("pfcategory", frontCategoryMap);
 		}
 		/**
 		 * TODO Get 10 new blogs from database.

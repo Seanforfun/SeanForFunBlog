@@ -7,22 +7,21 @@
 			<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 				<ul class="navbar-nav mr-auto">				
 					<!-- Single front primary bar -->
-					<li class="nav-item" th:each="pcategory:${pfcategory}" style="display:inline;width: 160px;padding-left: 0">
-						<a class="nav-link" th:href="${pcategory.link}" style="color: #fff">
-							<img th:if="${pcategory.icon} != null" src="/images/icon/seanforfun.ico" height="10px" width="10px"></img>
-							<strong class="nav-font font-italic" th:text="${pcategory.name}"></strong>
+					<li class="nav-item dropdown" th:each="pcategory:${pfcategory}" style="display:inline;width: 160px;padding-left: 0">
+						<a class="nav-link" href="javascript:void(0);" style="color: #fff" data-toggle="dropdown">
+							<!-- Need to be fixed to correct value -->
+							<img th:if="${pcategory.key.icon} != null" th:src="${pcategory.key.icon}" height="13px" width="13px"></img>
+							<img th:unless="${pcategory.key.icon} != null" src="/images/icon/firefox.ico" height="13px" width="13px"></img>
+							<strong class="nav-font font-italic" th:text="${pcategory.key.name}"></strong>
 						</a>
+						<ul th:if="${not #lists.isEmpty(pcategory.value) && pcategory.value != null}" class="dropdown-menu bg-dark">
+							<a th:each="subcategory:${pcategory.value}" class="dropdown-item font-italic" href="${subcategory.link}" style="color: #fff">
+								<img th:if="${subcategory.icon} != null" th:src="${subcategory.icon}" height="13px" width="13px"></img>
+								<img th:unless="${subcategory.icon} != null" src="/images/icon/column.ico" height="13px" width="13px"></img>
+								<strong th:text="${subcategory.name}"></strong>
+							</a>
+						</ul>
 					</li>
-					<!-- <li class="nav-item dropdown p-1"><a
-						class="nav-link nav-font font-italic" data-toggle="dropdown"
-						href="#" style="color: #fff"> <strong>col4</strong>
-					</a>
-						<ul class="dropdown-menu bg-dark">
-							<a class="dropdown-item font-italic" href="#" style="color: #fff"><strong>Regular
-									link</strong></a>
-							<a class="dropdown-item font-italic" href="#" style="color: #fff"><strong>Another
-									link</strong></a>
-						</ul></li> -->
 				</ul>
 				<form class="form-inline my-2 my-lg-0">
 					<input class="form-control mr-sm-2" type="search"

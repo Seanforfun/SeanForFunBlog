@@ -17,4 +17,10 @@ public interface CategoryEbi {
 	public Integer getFrontPrimaryCategoryNum();
 	
 	public List<Category> getSecondaryCategoriesByPid(Long pid);
+	
+	/**
+	 * @Description: Get admin primary categories.
+	 * @Return: List<Category>
+	 */
+	public List<Category> getPrimaryAdminCategories();
 }
