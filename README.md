@@ -23,7 +23,7 @@ Technical selections
 * Editor: Markdown
 * Log: Commons Logging
 * Url style: Restful
-* Connection pool: Druid -from Alibaba, China
+* Connection pool: <a href="https://github.com/alibaba/druid">Druid -from Alibaba, China</a>
 
 Interfaces demos
 ======================================
