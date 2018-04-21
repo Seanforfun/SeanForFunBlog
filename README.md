@@ -8,9 +8,11 @@
 
 Overview
 ======================================
-<p>This is the source code of project SeanforfunBlog. This is a java web based technology blog.</p>
-<p>I always write some conclusion files and append them into my different repositories. However, it is difficult when I was going to read them. By the way, I want to design this blog completely by myself and test the knowledge I've learnt from Sept, 2017.</p>
-<p>I named this blog as Seanforfun which is my nickname of Github and I hope this blog will publish soon :)</p>
+This is the source code of project **SeanforfunBlog**. This is a java web based technology blog.   
+
+I always write some conclusion files and append them into my different repositories. However, it is difficult when I was going to read them. By the way, I want to design this blog completely by myself and test the knowledge I've learnt from Sept, 2017.   
+
+I named this blog as Seanforfun which is my nickname of Github and I hope this blog will publish soon :)    
 
 Technical selections
 ======================================
@@ -27,23 +29,19 @@ Technical selections
 
 Interfaces demos
 ======================================
-index.html:
-<p align="center">
-  <a href="tbd">
-    <img src="https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/readme/index.png"></img>
-  </a>
-</p>
+* index.html:
+![index](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/readme/index.png)
 
 DataBase design
 ======================================
-* <a href="https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/User.java">User table</a>
-* <a href="https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/Category.java">Category table</a>
-* <a href="https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/Article.java">Article table</a>
-* <a href="https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/Badge.java">Badge table</a>
+* [User table](https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/User.java)
+* [Category table](https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/Category.java)
+* [Article table](https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/Article.java)
+* [Badge table](https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/Badge.java)
 
 Controller design
 ======================================
-* <a href="https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/java/ca/seanforfun/blog/controller/IndexController.java">IndexController</a>
+* [IndexController](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/java/ca/seanforfun/blog/controller/IndexController.java)
 >1. Get blog owner's information according to access url.
 >2. Get user avatar and carousel pictures from third party database.
 >3. Get categories and sub-categories from database.
