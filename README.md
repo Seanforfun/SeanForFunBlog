@@ -38,6 +38,8 @@ DataBase design
 ======================================
 * <a href="https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/User.java">User table</a>
 * <a href="https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/Category.java">Category table</a>
+* <a href="https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/Article.java">Article table</a>
+* <a href="https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/Badge.java">Badge table</a>
 
 Controller design
 ======================================

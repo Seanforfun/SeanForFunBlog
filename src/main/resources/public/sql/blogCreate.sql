@@ -32,3 +32,34 @@ CREATE TABLE category(
 	link VARCHAR(255) NOT NULL,
 	role INT(3) NOT NULL
 )
+
+#Badge
+CREATE TABLE badge(
+	id BIGINT PRIMARY KEY AUTO_INCREMENT,
+	NAME VARCHAR(10) NOT NULL
+);
+
+#Article
+CREATE TABLE article(
+	id BIGINT(30) PRIMARY KEY AUTO_INCREMENT,
+	title VARCHAR(100) NOT NULL,
+	cid BIGINT NOT NULL,
+	FOREIGN KEY(cid) REFERENCES category(id),
+	TYPE INT NOT NULL,
+	#badge many to many relatioship
+	hit BIGINT NOT NULL,
+	lastmodifytime BIGINT NOT NULL,
+	publishTime BIGINT NOT NULL,
+	uid BIGINT NOT NULL,
+	FOREIGN KEY(uid) REFERENCES USER(id),
+	abst TEXT,
+	content TEXT NOT NULL
+);
+
+#Intermediate article_badge
+#Need to use trigger modify this table when doing update, delete, create if we change data in article or badge
+CREATE TABLE article_badge(
+	id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	aid BIGINT NOT NULL,
+	bid BIGINT
+);
