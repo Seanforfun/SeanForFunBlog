@@ -81,7 +81,7 @@ public class Article {
 	 * type: Integer 
 	 * @Description:Which user this artical belongs to.
 	 */
-	private Integer uid;
+	private User author;
 	/**
 	 * name: abst
 	 * type: String 
@@ -151,12 +151,6 @@ public class Article {
 		this.publishTime = publishTime;
 		this.publishTimeView = FormatUtils.formatDate(publishTime);
 	}
-	public Integer getUid() {
-		return uid;
-	}
-	public void setUid(Integer uid) {
-		this.uid = uid;
-	}
 	public String getAbst() {
 		return abst;
 	}
@@ -177,5 +171,11 @@ public class Article {
 	}
 	public String getPublishTimeView() {
 		return publishTimeView;
+	}
+	public User getAuthor() {
+		return author;
+	}
+	public void setAuthor(User author) {
+		this.author = author;
 	}
 }

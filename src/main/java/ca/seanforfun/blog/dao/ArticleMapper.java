@@ -2,13 +2,19 @@ package ca.seanforfun.blog.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.One;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import ca.seanforfun.blog.model.entity.entity.Article;
+import ca.seanforfun.blog.model.entity.entity.Badge;
+import ca.seanforfun.blog.model.entity.entity.User;
 
 /**
  * @author SeanForFun E-mail:xiaob6@mcmaster.ca
@@ -23,9 +29,19 @@ public interface ArticleMapper {
 	public Integer getArticalCount();
 
 	@Cacheable("articlePagination")
-	@Select("SELECT a.id, title, abst, uid, u.nickname, lastmodifytime FROM article a LEFT OUTER JOIN USER u ON a.uid = u.id WHERE TYPE = #{type} ORDER BY lastmodifytime LIMIT #{current}, #{perpage}")
+	@Select("SELECT id, title, abst, uid, lastmodifytime FROM article WHERE TYPE = #{type} ORDER BY lastmodifytime LIMIT #{current}, #{perpage}")
+	@Results(value = {
+			@Result(property = "id", column = "id"),
+			@Result(property = "title", column = "title"),
+			@Result(property = "abst", column = "abst"),
+			@Result(property = "author", column = "uid", javaType = User.class, one = @One(select = "ca.seanforfun.blog.dao.UserMapper.getUserById")),
+			@Result(property = "lastModifyTime", column = "lastmodifytime"),
+			@Result(property = "badges", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getBadgesByAritcleId")) })
 	public List<Article> getArticlePaginationByType(
 			@Param("current") Integer nextIndex,
 			@Param("perpage") Integer articlePerPage,
 			@Param("type") Integer type);
+
+	@Select("SELECT id, NAME FROM badge b WHERE b.id IN(SELECT bid FROM article_badge WHERE aid = #{aid})")
+	public List<Badge> getBadgesByAritcleId(@Param("aid") Integer aid);
 }

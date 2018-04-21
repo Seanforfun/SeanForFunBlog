@@ -16,6 +16,7 @@ import ca.seanforfun.blog.config.runner.CategoryRunner;
 import ca.seanforfun.blog.exception.SeanForFunException;
 import ca.seanforfun.blog.model.entity.config.ConfigBean;
 import ca.seanforfun.blog.model.entity.entity.Article;
+import ca.seanforfun.blog.model.entity.entity.Badge;
 import ca.seanforfun.blog.model.entity.entity.Category;
 import ca.seanforfun.blog.model.entity.vo.UserVo;
 import ca.seanforfun.blog.service.ebo.ArticleService;
@@ -32,10 +33,12 @@ public class IndexController {
 	private UserService userService;
 	@Autowired
 	private ArticleService articleService;
+	@Autowired
+	private ConfigBean configBean;
 
-	@RequestMapping(value={"/", "/{pageIndex}"})
+	@RequestMapping(value={"", "/{pageIndex}"})
 	public ModelAndView index(HttpServletRequest request,
-			HttpServletResponse response, ModelAndView mv, @PathVariable Integer pageIndex) throws Exception {
+			HttpServletResponse response, ModelAndView mv, @PathVariable(required=false) Integer pageIndex) throws Exception {
 		/**
 		 * Get user information according to url
 		 */
@@ -74,13 +77,12 @@ public class IndexController {
 		if(null == pageIndex){
 			pageIndex = 1;
 		}
-		Integer articlePerPage = ConfigBean.maxArticlePerPage;
+		Integer articlePerPage = configBean.getMaxArticlePerPage();
 		mv.addObject("pageIndex", pageIndex);
 		/**
 		 * TODO Get 5 new blogs from database.
 		 */
 		List<Article> articles = articleService.getIndexPublicArticlesPagination(pageIndex, articlePerPage);
-		System.out.println(articles);
 		mv.addObject("articles", articles);
 		/**
 		 * TODO Blog access statistic update

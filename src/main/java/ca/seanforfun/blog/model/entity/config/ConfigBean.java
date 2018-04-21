@@ -17,7 +17,25 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix="com.seanforfun")
 @PropertySource(value="classpath:/properties/seanforfun.properties")
 public class ConfigBean {
-	public static String author;
-	public static String version;
-	public static Integer maxArticlePerPage; 
+	public String author;
+	public String version;
+	public Integer maxArticlePerPage; 
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	public Integer getMaxArticlePerPage() {
+		return maxArticlePerPage;
+	}
+	public void setMaxArticlePerPage(Integer maxArticlePerPage) {
+		this.maxArticlePerPage = maxArticlePerPage;
+	}
 }

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
+import ca.seanforfun.blog.model.entity.entity.User;
 import ca.seanforfun.blog.model.entity.vo.UserVo;
 
 /**
@@ -17,8 +18,10 @@ import ca.seanforfun.blog.model.entity.vo.UserVo;
 @Repository
 public interface UserMapper {
 
-	@Select("SELECT id, name, nickname, bio, intro, pic, activestatus FROM USER WHERE url=#{url}")
+	@Select("SELECT id, name, nickname, bio, intro, pic, activestatus FROM USER WHERE url like '${url}%'")
 	@Cacheable("user")
 	public UserVo getUserByUrl(@Param("url") String url);
-
+	
+	@Select("SELECT id, name FROM USER WHERE id = #{id}")
+	public User getUserById(@Param("id") Long id);
 }
