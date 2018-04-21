@@ -47,7 +47,7 @@ Controller design
 >1. Get blog owner's information according to access url.
 >2. Get user avatar and carousel pictures from third party database.
 >3. Get categories and sub-categories from database.
->4. Get 10 new blogs from database.
+>4. Get 5 new blogs from database.
 >5. Blog access statistic update.
 
 

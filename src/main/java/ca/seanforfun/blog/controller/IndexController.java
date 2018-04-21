@@ -8,13 +8,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import ca.seanforfun.blog.config.runner.CategoryRunner;
 import ca.seanforfun.blog.exception.SeanForFunException;
+import ca.seanforfun.blog.model.entity.config.ConfigBean;
+import ca.seanforfun.blog.model.entity.entity.Article;
 import ca.seanforfun.blog.model.entity.entity.Category;
 import ca.seanforfun.blog.model.entity.vo.UserVo;
+import ca.seanforfun.blog.service.ebo.ArticleService;
 import ca.seanforfun.blog.service.ebo.UserService;
 
 /**
@@ -26,10 +30,12 @@ import ca.seanforfun.blog.service.ebo.UserService;
 public class IndexController {
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private ArticleService articleService;
 
-	@RequestMapping("/")
+	@RequestMapping(value={"/", "/{pageIndex}"})
 	public ModelAndView index(HttpServletRequest request,
-			HttpServletResponse response, ModelAndView mv) throws Exception {
+			HttpServletResponse response, ModelAndView mv, @PathVariable Integer pageIndex) throws Exception {
 		/**
 		 * Get user information according to url
 		 */
@@ -63,9 +69,19 @@ public class IndexController {
 			mv.addObject("pfcategory", frontCategoryMap);
 		}
 		/**
-		 * TODO Get 10 new blogs from database.
+		 * TODO Get pagination info
 		 */
-
+		if(null == pageIndex){
+			pageIndex = 1;
+		}
+		Integer articlePerPage = ConfigBean.maxArticlePerPage;
+		mv.addObject("pageIndex", pageIndex);
+		/**
+		 * TODO Get 5 new blogs from database.
+		 */
+		List<Article> articles = articleService.getIndexPublicArticlesPagination(pageIndex, articlePerPage);
+		System.out.println(articles);
+		mv.addObject("articles", articles);
 		/**
 		 * TODO Blog access statistic update
 		 */

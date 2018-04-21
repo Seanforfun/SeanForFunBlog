@@ -52,7 +52,7 @@ CREATE TABLE article(
 	publishTime BIGINT NOT NULL,
 	uid BIGINT NOT NULL,
 	FOREIGN KEY(uid) REFERENCES USER(id),
-	abst TEXT,
+	abst TEXT NOT NULL,
 	content TEXT NOT NULL
 );
 
@@ -61,5 +61,10 @@ CREATE TABLE article(
 CREATE TABLE article_badge(
 	id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
 	aid BIGINT NOT NULL,
-	bid BIGINT
+	FOREIGN KEY(aid) REFERENCES article(id),
+	bid BIGINT,
+	FOREIGN KEY(bid) REFERENCES badge(id),
 );
+
+#Add foreign key for existing field
+ALTER TABLE article_badge ADD FOREIGN KEY (aid) REFERENCES article(id)

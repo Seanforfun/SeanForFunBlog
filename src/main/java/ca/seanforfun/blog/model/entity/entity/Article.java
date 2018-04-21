@@ -11,7 +11,7 @@ import ca.seanforfun.blog.utils.FormatUtils;
  * @date Apr 20, 2018 7:41:04 PM
  * @version 1.0
  */
-public class Artical {
+public class Article {
 	public static final Integer ARTICAL_PUBLIC = 0;
 	public static final Integer ARTICAL_PRIVATE = 1;
 	private static final String ARTICAL_PUBLIC_VIEW = "public";
