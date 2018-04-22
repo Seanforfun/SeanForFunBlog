@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * @author SeanForFun E-mail:xiaob6@mcmaster.ca
@@ -14,7 +15,7 @@ public class FormatUtils {
 	public static final String formatDate(Long time) {
 		if (null == time)
 			return "";
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat df = new SimpleDateFormat("MMM d, yyyy", Locale.CANADA);
 		return df.format(new Date(time));
 	}
 

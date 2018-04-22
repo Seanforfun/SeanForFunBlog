@@ -36,4 +36,13 @@ public class ArticleService implements ArticleEbi{
 		return articles;
 	}
 
+	@Override
+	public Article getArticleById(Long id) {
+		Article article =  articleMapper.getArticleById(id);
+		if(null == article){
+			throw new SeanForFunException("Article not read error....");
+		}
+		return article;
+	}
+
 }

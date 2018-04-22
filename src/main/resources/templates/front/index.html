@@ -7,7 +7,7 @@
 <meta name="description" content="Entrance of bog">
 <meta name="author" content="Seanforfun">
 <link rel="icon" href="/images/icon/seanforfun.ico">
-<script type="text/javascript" src="/jquery/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="/jquery/jquery-2.1.0.js"></script>
 <script type="text/javascript" src="/js/canvas-particle.js"></script>
 
 <title>SeanForFun Blog</title>
@@ -60,6 +60,15 @@
 				$(this).removeClass("show");
 			}
 		})
+		
+		$(".blog-post-title").on("click", null, function(){
+			var article_id = $(this).attr("id");
+			$.ajax({
+				url:"/article/" + article_id,				
+				success: function(){
+				}
+			});
+		})
 	})
 </script>
 </head>
@@ -75,44 +84,25 @@
 		<main role="main" class="container">
 		<div class="row">
 			<div class="col-md-8 blog-main">
-				<div class="blog-post">
-					<h3 class="blog-post-title">Sample post</h3>
+				<!-- Single Post -->
+				<div class="blog-post" th:each="article:${articles}">
+					<h3 class="blog-post-title" th:text="${article.title}" th:id="${article.id}" style="cursor:pointer;"></h3>
 					<p class="blog-post-meta">
-						January 1, 2014 by <a href="#">Seanforfun</a> <span
-							class="badge badge-success">New</span>
+						<th:block th:text="${article.lastModifyTimeView}"></th:block>
+						&nbspby
+						<a href="#" th:text="${article.author.name}"></a>
+						<th:block th:each="badge:${article.badges}" th:switch="${badge.colorView}">
+							<span th:case="BLUE" class="badge badge-primary" th:text="${badge.name}"></span>
+							<span th:case="GREY" class="badge badge-secondary" th:text="${badge.name}"></span>
+							<span th:case="GREEN" class="badge badge-success" th:text="${badge.name}"></span>
+							<span th:case="RED" class="badge badge-danger" th:text="${badge.name}"></span>
+							<span th:case="YELLOW" class="badge badge-warning" th:text="${badge.name}"></span>
+							<span th:case="WHITE" class="badge badge-light" th:text="${badge.name}"></span>
+							<span th:case="BLACK" class="badge badge-dark" th:text="${badge.name}"></span>
+							<span th:case="INFO" class="badge badge-info" th:text="${badge.name}"></span>
+						</th:block>
 					</p>
-					<p>This blog post shows a few different types of content that's
-						supported and styled with Bootstrap. Basic typography, images, and
-						code are all supported.</p>
-				</div>
-				<!-- /.blog-post -->
-
-				<div class="blog-post">
-					<h2 class="blog-post-title">Another blog post</h2>
-					<p class="blog-post-meta">
-						December 23, 2013 by <a href="#">Jacob</a>
-					</p>
-
-					<p>
-						Cum sociis natoque penatibus et magnis <a href="#">dis
-							parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam.
-						Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed
-						posuere consectetur est at lobortis. Cras mattis consectetur purus
-						sit amet fermentum.
-					</p>
-				</div>
-				<!-- /.blog-post -->
-
-				<div class="blog-post">
-					<h2 class="blog-post-title">New feature</h2>
-					<p class="blog-post-meta">
-						December 14, 2013 by <a href="#">Chris</a>
-					</p>
-					<p>Cum sociis natoque penatibus et magnis dis parturient
-						montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed
-						consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce
-						dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-						ut fermentum massa justo sit amet risus.</p>
+					<p th:text="${article.abst}"></p>
 				</div>
 				<!-- /.blog-post -->
 
@@ -141,17 +131,14 @@
 		<!-- Bootstrap core JavaScript
     ================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-			integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-			crossorigin="anonymous"></script>
-		<script>
-			window.jQuery
-					|| document
-							.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')
-		</script>
 		<script src="/bootstrap/assets/js/vendor/popper.min.js"></script>
 		<script src="/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script src="/bootstrap/assets/js/vendor/holder.min.js"></script>
+		<script>
+			window.jQuery
+					|| document
+							.write('<script type="text/javascript" src="/jquery/jquery-2.1.0.js"><\/script>')
+		</script>
 		<script>
 			Holder.addTheme('thumb', {
 				bg : '#55595c',

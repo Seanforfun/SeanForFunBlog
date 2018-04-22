@@ -16,7 +16,6 @@ import ca.seanforfun.blog.config.runner.CategoryRunner;
 import ca.seanforfun.blog.exception.SeanForFunException;
 import ca.seanforfun.blog.model.entity.config.ConfigBean;
 import ca.seanforfun.blog.model.entity.entity.Article;
-import ca.seanforfun.blog.model.entity.entity.Badge;
 import ca.seanforfun.blog.model.entity.entity.Category;
 import ca.seanforfun.blog.model.entity.vo.UserVo;
 import ca.seanforfun.blog.service.ebo.ArticleService;
@@ -54,7 +53,7 @@ public class IndexController {
 		}
 
 		/**
-		 * TODO Get user avatar and carousel pictures from third party database.
+		 * Get user avatar and carousel pictures from third party database.
 		 */
 		if (null == userInfo.getPic()) {
 			userInfo.setDefaultAvatar();
@@ -63,7 +62,7 @@ public class IndexController {
 		mv.addObject("userInfo", userInfo);
 
 		/**
-		 * TODO Get primary front category map.
+		 * Get primary front category map.
 		 */
 		Map<Category, List<Category>> frontCategoryMap = CategoryRunner.getFrontCategoryMap();
 		if(null == frontCategoryMap || frontCategoryMap.size() <= 0){
@@ -72,7 +71,7 @@ public class IndexController {
 			mv.addObject("pfcategory", frontCategoryMap);
 		}
 		/**
-		 * TODO Get pagination info
+		 * Get pagination info
 		 */
 		if(null == pageIndex){
 			pageIndex = 1;
@@ -80,12 +79,12 @@ public class IndexController {
 		Integer articlePerPage = configBean.getMaxArticlePerPage();
 		mv.addObject("pageIndex", pageIndex);
 		/**
-		 * TODO Get 5 new blogs from database.
+		 * Get 5 new blogs from database.
 		 */
 		List<Article> articles = articleService.getIndexPublicArticlesPagination(pageIndex, articlePerPage);
 		mv.addObject("articles", articles);
 		/**
-		 * TODO Blog access statistic update
+		 * Blog access statistic update
 		 */
 		mv.setViewName("front/index.html");
 		return mv;

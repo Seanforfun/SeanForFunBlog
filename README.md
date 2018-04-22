@@ -8,11 +8,11 @@
 
 Overview
 ======================================
-This is the source code of project **SeanforfunBlog**. This is a java web based technology blog.   
+This is the source code of project **SeanforfunBlog**. This is a java web based technology blog.
 
-I always write some conclusion files and append them into my different repositories. However, it is difficult when I was going to read them. By the way, I want to design this blog completely by myself and test the knowledge I've learnt from Sept, 2017.   
+I always write some conclusion files and append them into my different repositories. However, it is difficult when I was going to read them. By the way, I want to design this blog completely by myself and test the knowledge I've learnt from Sept, 2017.
 
-I named this blog as Seanforfun which is my nickname of Github and I hope this blog will publish soon :)    
+I named this blog as Seanforfun which is my nickname of Github and I hope this blog will publish soon :)
 
 Technical selections
 ======================================
@@ -22,10 +22,10 @@ Technical selections
 * Spring Cache, may use Redis
 * DataBase: MySQL
 * Server: Tomcat 8.5.29
-* Editor: Markdown
+* Editor: Markdown, [editor.md](https://github.com/pandao/editor.md)
 * Log: Commons Logging
 * Url style: Restful
-* Connection pool: <a href="https://github.com/alibaba/druid">Druid -from Alibaba, China</a>
+* Connection pool: [Druid](https://github.com/alibaba/druid)
 
 Interfaces demos
 ======================================

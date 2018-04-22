@@ -41,7 +41,18 @@ public interface ArticleMapper {
 			@Param("current") Integer nextIndex,
 			@Param("perpage") Integer articlePerPage,
 			@Param("type") Integer type);
-
-	@Select("SELECT id, NAME FROM badge b WHERE b.id IN(SELECT bid FROM article_badge WHERE aid = #{aid})")
+	
+	@Select("SELECT id, NAME, color FROM badge b WHERE b.id IN(SELECT bid FROM article_badge WHERE aid = #{aid})")
 	public List<Badge> getBadgesByAritcleId(@Param("aid") Integer aid);
+
+	@Results(value = {
+			@Result(property = "title", column = "title"),
+			@Result(property = "hit", column = "hit"),
+			@Result(property = "abst", column = "abst"),
+			@Result(property = "content", column = "content"),
+			@Result(property = "author", column = "uid", javaType = User.class, one = @One(select = "ca.seanforfun.blog.dao.UserMapper.getUserById")),
+			@Result(property = "lastModifyTime", column = "lastmodifytime"),
+			@Result(property = "badges", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getBadgesByAritcleId")) })
+	@Select("SELECT id, title, hit, lastmodifytime, uid, abst, content FROM article WHERE id=1;")
+	public Article getArticleById(Long id);
 }

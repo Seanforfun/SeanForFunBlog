@@ -21,4 +21,9 @@ public interface ArticleEbi {
 	 * @Return: List<Article>
 	 */
 	public List<Article> getIndexPublicArticlesPagination(Integer pageIndex, Integer articlePerPage);
+	/**
+	 * @Description: Get article Information according article id.
+	 * @Return: Article
+	 */
+	public Article getArticleById(Long id);
 }
