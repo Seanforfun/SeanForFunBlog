@@ -14,7 +14,7 @@
 							<img th:unless="${pcategory.key.icon} != null" src="/images/icon/firefox.ico" height="13px" width="13px"></img>
 							<strong class="nav-font font-italic" th:text="${pcategory.key.name}"></strong>
 						</a>
-						<ul th:if="${not #lists.isEmpty(pcategory.value) && pcategory.value != null}" class="dropdown-menu bg-dark">
+						<ul th:if="${pcategory.value != null && not #lists.isEmpty(pcategory.value)}" class="dropdown-menu bg-dark">
 							<a th:each="subcategory:${pcategory.value}" class="dropdown-item font-italic" href="${subcategory.link}" style="color: #fff">
 								<img th:if="${subcategory.icon} != null" th:src="${subcategory.icon}" height="13px" width="13px"></img>
 								<img th:unless="${subcategory.icon} != null" src="/images/icon/column.ico" height="13px" width="13px"></img>

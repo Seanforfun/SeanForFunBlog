@@ -2,10 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <body>
-	<div class="p-3" th:fragment="links">
-		<h4 class="font-italic">My Links</h4>
+	<div class="p-3" th:fragment="links" th:if="${links != null && not #lists.isEmpty(links)}">
+		<h4 class="font-italic">Recommand Links</h4>
 		<ol class="list-unstyled">
-			<li><a href="https://github.com/Seanforfun">GitHub</a></li>
+			<li th:each="link:${links}">
+				<a th:href="${link.link}">
+					<th:block th:text="${link.name}"></th:block>
+				</a>
+			</li>
 		</ol>
 	</div>
 </body>

@@ -47,5 +47,6 @@ Controller design
 >3. Get categories and sub-categories from database.
 >4. Get 5 new blogs from database.
 >5. Blog access statistic update.
+>6. Get friend's link from database.
 
 

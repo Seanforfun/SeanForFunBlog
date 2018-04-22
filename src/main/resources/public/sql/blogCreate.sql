@@ -69,3 +69,10 @@ CREATE TABLE article_badge(
 
 #Add foreign key for existing field
 ALTER TABLE article_badge ADD FOREIGN KEY (aid) REFERENCES article(id)
+
+#Link
+CREATE TABLE link(
+	id BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	NAME VARCHAR(100) NOT NULL,
+	link VARCHAR(255) NOT NULL
+);

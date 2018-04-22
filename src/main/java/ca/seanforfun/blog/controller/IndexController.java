@@ -17,8 +17,10 @@ import ca.seanforfun.blog.exception.SeanForFunException;
 import ca.seanforfun.blog.model.entity.config.ConfigBean;
 import ca.seanforfun.blog.model.entity.entity.Article;
 import ca.seanforfun.blog.model.entity.entity.Category;
+import ca.seanforfun.blog.model.entity.entity.Link;
 import ca.seanforfun.blog.model.entity.vo.UserVo;
 import ca.seanforfun.blog.service.ebo.ArticleService;
+import ca.seanforfun.blog.service.ebo.LinkService;
 import ca.seanforfun.blog.service.ebo.UserService;
 
 /**
@@ -34,6 +36,8 @@ public class IndexController {
 	private ArticleService articleService;
 	@Autowired
 	private ConfigBean configBean;
+	@Autowired
+	private LinkService linkService;
 
 	@RequestMapping(value={"", "/{pageIndex}"})
 	public ModelAndView index(HttpServletRequest request,
@@ -83,6 +87,11 @@ public class IndexController {
 		 */
 		List<Article> articles = articleService.getIndexPublicArticlesPagination(pageIndex, articlePerPage);
 		mv.addObject("articles", articles);
+		/**
+		 * Get links from database
+		 */
+		List<Link> friendsLinks = linkService.getAllFriendsLinks();
+		mv.addObject("links", friendsLinks);
 		/**
 		 * Blog access statistic update
 		 */
