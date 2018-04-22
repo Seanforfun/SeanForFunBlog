@@ -69,10 +69,6 @@
 				}
 			});
 		})
-		
-		$(".btn").click(function(){
-			
-		})
 	})
 	
 	function goAnotherPage(obj){
@@ -86,8 +82,62 @@
 		alert(wantPageNum);
 		$.ajax({
 			url:"/article/page/" + wantPageNum,
-			success:function(){
-				alert("test");
+			success:function(data){
+				//Refresh the article part.
+				var $main = $(".blog-main"); 
+				$main.empty();
+				var articles = data.articles;
+				var article_num = articles.length();
+				for(var i = 0; i < article_num; i++){
+					var article = articles[i];					
+					$blogPostDiv = $("<div class='blog-post'></div>");
+					$h3 = $("<h3 class='blog-post-title' id='"+ article.id +"' style='cursor:pointer;'>"+ article.title +"</h3>");
+					$blogPostDiv.append($h3);
+					$p = $("<p class='blog-post-meta'></p>");
+					$p.html(article.lastModifyTimeView + "&nbspby;");
+					//Should be modified.
+					$aAuthor = $("<a href='#'>"+article.author.name+"</a>");
+					$p.append($aAuthor);
+					var badge_length = article.badges.length();
+					for(int j = 0; j < badge_length; j++){
+						var badge = article.badges[j];
+						switch(badge.colorView){
+						case "BLUE":
+							$badge = $("<span class='badge badge-primary'>"+badge.name+"</span>");
+							break;
+						case "GREY":
+							$badge = $("<span class='badge badge-secondary'>"+badge.name+"</span>");
+							break;
+						case "GREEN":
+							$badge = $("<span class='badge badge-success'>"+badge.name+"</span>");
+							break;
+						case "RED":
+							$badge = $("<span class='badge badge-secondary'>"+badge.name+"</span>");
+							break;
+						case "YELLOW":
+							$badge = $("<span class='badge badge-warning'>"+badge.name+"</span>");
+							break;
+						case "WHITE":
+							$badge = $("<span class='badge badge-light'>"+badge.name+"</span>");
+							break;
+						case "BLACK":
+							$badge = $("<span class='badge badge-dark'>"+badge.name+"</span>");
+							break;
+						case "INFO":
+							$badge = $("<span class='badge badge-info'>"+badge.name+"</span>");
+							break;
+						default:
+							$badge = $("<span class='badge badge-info'>"+badge.name+"</span>");
+							break;
+						}
+						$p.append($badge);
+					}
+					$blogPostDiv.append($p);
+					$pAbs = $("<p>"+article.abst+"</p>");
+					$blogPostDiv.append($pAbs);
+					$main.append($blogPostDiv);
+				}
+				//Update the pagination information.
 			}
 		})
 	}
@@ -103,48 +153,49 @@
 		<br />
 
 		<main role="main" class="container">
-		<div class="row">
-			<div class="col-md-8 blog-main">
-				<!-- Single Post -->
-				<div class="blog-post" th:each="article:${articles}">
-					<h3 class="blog-post-title" th:text="${article.title}" th:id="${article.id}" style="cursor:pointer;"></h3>
-					<p class="blog-post-meta">
-						<th:block th:text="${article.lastModifyTimeView}"></th:block>
-						&nbspby
-						<a href="#" th:text="${article.author.name}"></a>
-						<th:block th:each="badge:${article.badges}" th:switch="${badge.colorView}">
-							<span th:case="BLUE" class="badge badge-primary" th:text="${badge.name}"></span>
-							<span th:case="GREY" class="badge badge-secondary" th:text="${badge.name}"></span>
-							<span th:case="GREEN" class="badge badge-success" th:text="${badge.name}"></span>
-							<span th:case="RED" class="badge badge-danger" th:text="${badge.name}"></span>
-							<span th:case="YELLOW" class="badge badge-warning" th:text="${badge.name}"></span>
-							<span th:case="WHITE" class="badge badge-light" th:text="${badge.name}"></span>
-							<span th:case="BLACK" class="badge badge-dark" th:text="${badge.name}"></span>
-							<span th:case="INFO" class="badge badge-info" th:text="${badge.name}"></span>
-						</th:block>
-					</p>
-					<p th:text="${article.abst}"></p>
+			<div class="row">
+				<div class="col-md-8 blog-main">
+					<!-- Single Post -->
+					<div class="blog-post" th:each="article:${articles}">
+						<h3 class="blog-post-title" th:text="${article.title}" th:id="${article.id}" style="cursor:pointer;"></h3>
+						<p class="blog-post-meta">
+							<th:block th:text="${article.lastModifyTimeView}"></th:block>
+							&nbspby;
+							<a href="#" th:text="${article.author.name}"></a>
+							<th:block th:each="badge:${article.badges}" th:switch="${badge.colorView}">
+								<span th:case="BLUE" class="badge badge-primary" th:text="${badge.name}"></span>
+								<span th:case="GREY" class="badge badge-secondary" th:text="${badge.name}"></span>
+								<span th:case="GREEN" class="badge badge-success" th:text="${badge.name}"></span>
+								<span th:case="RED" class="badge badge-danger" th:text="${badge.name}"></span>
+								<span th:case="YELLOW" class="badge badge-warning" th:text="${badge.name}"></span>
+								<span th:case="WHITE" class="badge badge-light" th:text="${badge.name}"></span>
+								<span th:case="BLACK" class="badge badge-dark" th:text="${badge.name}"></span>
+								<span th:case="INFO" class="badge badge-info" th:text="${badge.name}"></span>
+							</th:block>
+						</p>
+						<p th:text="${article.abst}"></p>
+					</div>
+					<!-- /.blog-post -->
+	
+					<nav id="pagination" class="blog-pagination text-center" th:numPerPage="${pagination.numPerPage}">
+						<a class="btn btn-outline-primary" th:classappend="${pagination==null || pagination.currentPageNum == pagination.maxPageNum}?'disabled':''" href="javascript:void(0);" th:currentPage="${pagination.currentPageNum}" onclick="goAnotherPage(this)">Older</a>
+						<a class="btn btn-outline-primary" th:classappend="${pagination==null || pagination.currentPageNum==1}? 'disabled':''" th:currentPage="${pagination.currentPageNum}" href="javascript:void(0);" onclick="goAnotherPage(this)">Newer</a>
+					</nav>
 				</div>
-				<!-- /.blog-post -->
-
-				<nav id="pagination" class="blog-pagination text-center" th:numPerPage="${pagination.numPerPage}">
-					<a class="btn btn-outline-primary" th:classappend="${pagination==null || pagination.currentPageNum == pagination.maxPageNum}?'disabled':''" href="javascript:void(0);" th:currentPage="${pagination.currentPageNum}" onclick="goAnotherPage(this)">Older</a>
-					<a class="btn btn-outline-primary" th:classappend="${pagination==null || pagination.currentPageNum==1}? 'disabled':''" th:currentPage="${pagination.currentPageNum}" href="javascript:void(0);" onclick="goAnotherPage(this)">Newer</a>
-				</nav>
+				<!-- /.blog-main -->
+	
+				<!-- Right bar -->
+				<aside class="col-md-4 blog-sidebar">
+					<div th:replace="include/introduce :: introduce"></div>
+					<!-- Archives -->
+					<div th:replace="include/archives :: archives"></div>
+					<!-- MyLinks -->
+					<div th:replace="include/links :: links"></div>
+				</aside>
+	
 			</div>
-			<!-- /.blog-main -->
-
-			<!-- Right bar -->
-			<aside class="col-md-4 blog-sidebar">
-				<div th:replace="include/introduce :: introduce"></div>
-				<!-- Archives -->
-				<div th:replace="include/archives :: archives"></div>
-				<!-- MyLinks -->
-				<div th:replace="include/links :: links"></div>
-			</aside>
-
-		</div>
-		<!-- /.row --> </main>
+		<!-- /.row -->
+		</main>
 		<!-- /.container -->
 
 		<div th:replace="include/footer :: footer"></div>
