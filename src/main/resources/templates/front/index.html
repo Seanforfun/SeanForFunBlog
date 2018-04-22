@@ -69,7 +69,28 @@
 				}
 			});
 		})
+		
+		$(".btn").click(function(){
+			
+		})
 	})
+	
+	function goAnotherPage(obj){
+		var type = $(obj).html();
+		var wantPageNum;
+		if(type == "Older"){
+			wantPageNum = parseInt($(obj).attr("currentPage")) + 1;
+		}else{
+			wantPageNum = parseInt($(obj).attr("currentPage")) - 1;
+		}
+		alert(wantPageNum);
+		$.ajax({
+			url:"/article/page/" + wantPageNum,
+			success:function(){
+				alert("test");
+			}
+		})
+	}
 </script>
 </head>
 
@@ -106,9 +127,9 @@
 				</div>
 				<!-- /.blog-post -->
 
-				<nav class="blog-pagination text-center">
-					<a class="btn btn-outline-primary" href="#">Older</a> <a
-						class="btn btn-outline-secondary disabled" href="#">Newer</a>
+				<nav id="pagination" class="blog-pagination text-center" th:numPerPage="${pagination.numPerPage}">
+					<a class="btn btn-outline-primary" th:classappend="${pagination==null || pagination.currentPageNum == pagination.maxPageNum}?'disabled':''" href="javascript:void(0);" th:currentPage="${pagination.currentPageNum}" onclick="goAnotherPage(this)">Older</a>
+					<a class="btn btn-outline-primary" th:classappend="${pagination==null || pagination.currentPageNum==1}? 'disabled':''" th:currentPage="${pagination.currentPageNum}" href="javascript:void(0);" onclick="goAnotherPage(this)">Newer</a>
 				</nav>
 			</div>
 			<!-- /.blog-main -->

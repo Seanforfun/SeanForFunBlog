@@ -45,8 +45,12 @@ Controller design
 >1. Get blog owner's information according to access url.
 >2. Get user avatar and carousel pictures from third party database.
 >3. Get categories and sub-categories from database.
->4. Get 5 new blogs from database.
+>4. Get pagination Inforamtion and get 5 new blogs from database.
 >5. Blog access statistic update.
 >6. Get friend's link from database.
 
+* [ArticleController](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/java/ca/seanforfun/blog/controller/ArticleController.java)
+>Ajax response:
+>>1. ajaxGetArticle
+>>2. ajaxGetArticleByPageindex
 

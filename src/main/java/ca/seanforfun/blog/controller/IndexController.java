@@ -8,13 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import ca.seanforfun.blog.config.runner.CategoryRunner;
 import ca.seanforfun.blog.exception.SeanForFunException;
 import ca.seanforfun.blog.model.entity.config.ConfigBean;
+import ca.seanforfun.blog.model.entity.config.PaginationBean;
 import ca.seanforfun.blog.model.entity.entity.Article;
 import ca.seanforfun.blog.model.entity.entity.Category;
 import ca.seanforfun.blog.model.entity.entity.Link;
@@ -38,10 +38,12 @@ public class IndexController {
 	private ConfigBean configBean;
 	@Autowired
 	private LinkService linkService;
+	@Autowired
+	private PaginationBean paginationBean;
 
-	@RequestMapping(value={"", "/{pageIndex}"})
+	@RequestMapping("/")
 	public ModelAndView index(HttpServletRequest request,
-			HttpServletResponse response, ModelAndView mv, @PathVariable(required=false) Integer pageIndex) throws Exception {
+			HttpServletResponse response, ModelAndView mv) throws Exception {
 		/**
 		 * Get user information according to url
 		 */
@@ -77,11 +79,13 @@ public class IndexController {
 		/**
 		 * Get pagination info
 		 */
-		if(null == pageIndex){
-			pageIndex = 1;
-		}
+		Integer articleTotalNum = articleService.getArticleTotalNum();
+		Integer pageIndex = 1;
 		Integer articlePerPage = configBean.getMaxArticlePerPage();
-		mv.addObject("pageIndex", pageIndex);
+		paginationBean.setCurrentPageNum(pageIndex);
+		paginationBean.setNumPerPage(articlePerPage);
+		paginationBean.calculationMaxPage(articleTotalNum, articlePerPage);
+		mv.addObject("pagination", paginationBean);
 		/**
 		 * Get 5 new blogs from database.
 		 */
