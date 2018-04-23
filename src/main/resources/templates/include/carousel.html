@@ -11,7 +11,7 @@
 				<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
 			</ol>
 			<div class="carousel-inner">
-				<div class="carousel-item" th:each="imageArticle:${imageArticles}">
+				<div class="carousel-item"  th:classappend="${iter.index == 0}?'active':''" th:each="imageArticle, iter:${imageArticles}" th:index="${iter.index}">
 					<img class="d-block w-100" th:src="${imageArticle.images[0].path}" height="250px" th:alt="${imageArticle.images[0].id}">
 					<div class="carousel-caption d-none d-md-block">
 						<a herf="javascript:void(0)" onclick>

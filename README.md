@@ -26,6 +26,7 @@ Technical selections
 * Log: Commons Logging
 * Url style: Restful
 * Connection pool: [Druid](https://github.com/alibaba/druid)
+* Markdown to HTML converter: [showdown](https://github.com/showdownjs/showdown)
 
 Interfaces demos
 ======================================
@@ -58,4 +59,5 @@ Controller design
 >>2. ajaxGetArticleByPageindex
 >Non-Ajax response:
 >>1. Load articles with given category id.
+>>2. Load articles for carousel in index.html.
 
