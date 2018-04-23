@@ -42,7 +42,7 @@ DataBase design
 Controller design
 ======================================
 * [IndexController](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/java/ca/seanforfun/blog/controller/IndexController.java)
->1. Get blog owner's information according to access url.
+>1. Get admin user information.
 >2. Get user avatar and carousel pictures from third party database.
 >3. Get categories and sub-categories from database.
 >4. Get pagination Inforamtion and get 5 new blogs from database.

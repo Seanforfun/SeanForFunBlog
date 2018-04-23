@@ -45,10 +45,9 @@ public class IndexController {
 	public ModelAndView index(HttpServletRequest request,
 			HttpServletResponse response, ModelAndView mv) throws Exception {
 		/**
-		 * Get user information according to url
+		 * Get admin user information.
 		 */
-		String requestUrl = request.getRequestURL().toString();
-		UserVo userInfo = userService.getUserByUrl(requestUrl);
+		UserVo userInfo = userService.getAdmin();
 
 		if (null == userInfo) {
 			throw new SeanForFunException("Current url is not registered...");

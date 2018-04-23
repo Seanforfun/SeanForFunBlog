@@ -16,7 +16,7 @@
 						</a>
 						<!-- TODO Need to add id and find a way to submit the request. -->
 						<ul th:if="${pcategory.value != null && not #lists.isEmpty(pcategory.value)}" class="dropdown-menu bg-dark">
-							<a th:each="subcategory:${pcategory.value}" class="dropdown-item font-italic" href="${subcategory.link}" style="color: #fff">
+							<a th:each="subcategory:${pcategory.value}" class="dropdown-item font-italic" th:href="${subcategory.link}" style="color: #fff">
 								<img th:if="${subcategory.icon} != null" th:src="${subcategory.icon}" height="13px" width="13px"></img>
 								<img th:unless="${subcategory.icon} != null" src="/images/icon/column.ico" height="13px" width="13px"></img>
 								<strong th:text="${subcategory.name}"></strong>

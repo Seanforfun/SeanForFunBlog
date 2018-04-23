@@ -48,8 +48,7 @@ public class ArticleService implements ArticleEbi{
 	@Override
 	public List<Article> getArticleByCategory(Integer categoryId, Integer currentPageNum, Integer numPerPage) {
 		Integer currentIndex = (currentPageNum - 1) * numPerPage;
-		articleMapper.getArticalCountByCategoryId(categoryId, currentIndex, numPerPage);
-		return null;
+		return articleMapper.getArticalByCategoryId(categoryId, currentIndex, numPerPage, Article.ARTICAL_PUBLIC);
 	}
 
 	@Override

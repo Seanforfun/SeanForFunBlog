@@ -9,14 +9,14 @@ import java.util.Map;
  * @version 1.0
  */
 public class Badge {
-	public static final Integer COLOR_BLUE = 0;
-	public static final Integer COLOR_GREY = 1;
-	public static final Integer COLOR_GREEN = 2;
-	public static final Integer COLOR_RED = 3;
-	public static final Integer COLOR_YELLOW = 4;
-	public static final Integer COLOR_WHITE = 5;
-	public static final Integer COLOR_BLACK = 6;
-	public static final Integer COLOR_INFO = 7;
+	public static final Integer COLOR_BLUE = 1;
+	public static final Integer COLOR_GREY = 2;
+	public static final Integer COLOR_GREEN = 3;
+	public static final Integer COLOR_RED = 4;
+	public static final Integer COLOR_YELLOW = 5;
+	public static final Integer COLOR_WHITE = 6;
+	public static final Integer COLOR_BLACK = 7;
+	public static final Integer COLOR_INFO = 8;
 	
 	public static final String COLOR_BLUE_VIEW = "BLUE";
 	public static final String COLOR_GREY_VIEW = "GREY";
@@ -54,14 +54,14 @@ public class Badge {
 	 * name: color
 	 * type: Integer 
 	 * @Description: Color of badge.
-	 * 0: blue
-	 * 1: grey
-	 * 2: green
-	 * 3: red
-	 * 4: yellow
-	 * 5: white
-	 * 6: black
-	 * 7: Info
+	 * 1: blue
+	 * 2: grey
+	 * 3: green
+	 * 4: red
+	 * 5: yellow
+	 * 6: white
+	 * 7: black
+	 * 8: Info
 	 */
 	private Integer color;
 	private String colorView;

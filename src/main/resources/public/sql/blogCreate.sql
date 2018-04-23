@@ -17,7 +17,8 @@ CREATE TABLE USER(
 	city VARCHAR(60),
 	activestatus INT(3) NOT NULL,
 	url varchar(255) NOT NULL,
-	intro text
+	intro text,
+	admin int(3) not null
 );
 
 #Category

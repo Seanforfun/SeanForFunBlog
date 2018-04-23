@@ -14,4 +14,10 @@ public interface UserEbi {
 	 * @return
 	 */
 	public UserVo getUserByUrl(String url);
+	
+	/**
+	 * @Description: Get admin user.
+	 * @Return: UserVo
+	 */
+	public UserVo getAdmin();
 }

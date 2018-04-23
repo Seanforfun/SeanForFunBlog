@@ -1,5 +1,8 @@
 package ca.seanforfun.blog.model.entity.entity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import ca.seanforfun.blog.utils.FormatUtils;
 
 /**
@@ -10,6 +13,16 @@ import ca.seanforfun.blog.utils.FormatUtils;
 public class User {
 	public static final Integer USER_ACTIVED = 1;
 	public static final Integer USER_NOT_ACTIVED = 0;
+	public static final Integer USER_ADMIN = 1;
+	public static final Integer USER_NOT_ADMIN = 0;
+	public static final String USER_ADMIN__VIEW = "admin";
+	public static final String USER_NOT_ADMIN_VIEW = "not admin";
+	public static final Map<Integer, String> ADMIN_MAP = new HashMap<Integer, String>();
+	
+	static{
+		ADMIN_MAP.put(USER_ADMIN, USER_ADMIN__VIEW);
+		ADMIN_MAP.put(USER_NOT_ADMIN, USER_NOT_ADMIN_VIEW);
+	}
 	
 	private Long id;
 	/**
@@ -42,10 +55,22 @@ public class User {
 	 * 1: Activated by e-mail 
 	 */
 	private Integer activestatus;
+	/**
+	 * name: admin
+	 * type: Integer 
+	 * @Description:
+	 * 1: admin
+	 * 0: not admin
+	 */
+	private Integer admin;
 	
 	private String activateTimeView;
 	private String lastLoginTimeView;
+	private String adminView;
 	
+	public String getAdminView() {
+		return adminView;
+	}
 	public String getActivateTimeView() {
 		return activateTimeView;
 	}
@@ -144,5 +169,12 @@ public class User {
 	}
 	public void setPic(String pic) {
 		this.pic = pic;
+	}
+	public Integer getAdmin() {
+		return admin;
+	}
+	public void setAdmin(Integer admin) {
+		this.admin = admin;
+		this.adminView = ADMIN_MAP.get(admin);
 	}
 }

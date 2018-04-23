@@ -60,6 +60,15 @@ public interface ArticleMapper {
 	@Select("select count(id) from article where cid = #{category}")
 	public Integer getArticalCountByCategoryId(Integer category);
 
-	@Select("")
-	public void getArticalCountByCategoryId(Integer categoryId, Integer currentIndex, Integer numPerPage);
+	
+	@Results(value = {
+			@Result(property = "title", column = "title"),
+			@Result(property = "hit", column = "hit"),
+			@Result(property = "abst", column = "abst"),
+			@Result(property = "content", column = "content"),
+			@Result(property = "author", column = "uid", javaType = User.class, one = @One(select = "ca.seanforfun.blog.dao.UserMapper.getUserById")),
+			@Result(property = "lastModifyTime", column = "lastmodifytime"),
+			@Result(property = "badges", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getBadgesByAritcleId")) })
+	@Select("SELECT id, title, abst, uid, lastmodifytime FROM article WHERE TYPE = #{type} ORDER BY lastmodifytime LIMIT #{current}, #{perpage}")
+	public List<Article> getArticalByCategoryId(Integer categoryId, @Param("current") Integer currentIndex, @Param("perpage") Integer numPerPage, @Param("type") Integer type);
 }

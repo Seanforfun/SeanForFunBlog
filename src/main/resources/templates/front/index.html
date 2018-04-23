@@ -194,7 +194,7 @@
 					<!-- /.blog-post -->
 	
 					<nav id="pagination" class="blog-pagination text-center" th:numPerPage="${pagination.numPerPage}">
-						<a class="btn btn-outline-primary" th:classappend="${pagination==null || pagination.currentPageNum == pagination.maxPageNum}?'disabled':''" href="javascript:void(0);" th:currentPage="${pagination.currentPageNum}" onclick="goAnotherPage(this)">Older</a>
+						<a class="btn btn-outline-primary" th:classappend="${pagination==null || pagination.currentPageNum == pagination.totalPageNum}?'disabled':''" href="javascript:void(0);" th:currentPage="${pagination.currentPageNum}" onclick="goAnotherPage(this)">Older</a>
 						<a class="btn btn-outline-primary" th:classappend="${pagination==null || pagination.currentPageNum==1}? 'disabled':''" th:currentPage="${pagination.currentPageNum}" href="javascript:void(0);" onclick="goAnotherPage(this)">Newer</a>
 					</nav>
 				</div>
@@ -219,7 +219,6 @@
 		<!-- Bootstrap core JavaScript
     ================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="/bootstrap/assets/js/vendor/popper.min.js"></script>
 		<script src="/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script src="/bootstrap/assets/js/vendor/holder.min.js"></script>
 		<script>

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class PaginationBean {
-	private Integer maxPageNum;
 	private Integer currentPageNum;
 	private Integer numPerPage;
 	private Integer totalPageNum;
@@ -20,12 +19,6 @@ public class PaginationBean {
 	}
 	public void setTotalPageNum(Integer totalPageNum) {
 		this.totalPageNum = totalPageNum;
-	}
-	public Integer getMaxPageNum() {
-		return maxPageNum;
-	}
-	public void setMaxPageNum(Integer maxPageNum) {
-		this.maxPageNum = maxPageNum;
 	}
 	public Integer getCurrentPageNum() {
 		return currentPageNum;

@@ -1,5 +1,7 @@
 package ca.seanforfun.blog.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -24,4 +26,7 @@ public interface UserMapper {
 	
 	@Select("SELECT id, name FROM USER WHERE id = #{id}")
 	public User getUserById(@Param("id") Long id);
+
+	@Select("SELECT id, NAME, nickname, bio, intro, pic, activestatus FROM USER WHERE admin=#{adminType}")
+	public List<UserVo> getUserByAdmin(Integer adminType);
 }
