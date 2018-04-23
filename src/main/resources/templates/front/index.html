@@ -138,6 +138,23 @@
 					$main.append($blogPostDiv);
 				}
 				//Update the pagination information.
+				var currentPageNum = data.currentPageNum;
+				var totalPageNum = data.totalPageNum;
+				var numPerPage = data.numPerPage;
+				$nav = $("<nav id='pagination' class='blog-pagination text-center' numPerPage='"+ numPerPage +"'></nav>");	
+				if(currentPageNum == 1){
+					$older = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
+					$newer = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
+				}else if(currentPageNum == totalPageNum){
+					$older = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
+					$newer = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
+				}else{
+					$older = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
+					$newer = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
+				}
+				$nav.append($older);
+				$nav.append($newer);
+				$main.append($nav);
 			}
 		})
 	}
