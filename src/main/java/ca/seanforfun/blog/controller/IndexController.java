@@ -91,10 +91,16 @@ public class IndexController {
 		List<Article> articles = articleService.getIndexPublicArticlesPagination(pageIndex, articlePerPage);
 		mv.addObject("articles", articles);
 		/**
+		 * Load 3 new blogs with images.
+		 */
+		List<Article> imageArticles = articleService.getArticlesWithImages();
+		mv.addObject("imageArticles", imageArticles);
+		/**
 		 * Get links from database
 		 */
 		List<Link> friendsLinks = linkService.getAllFriendsLinks();
 		mv.addObject("links", friendsLinks);
+		
 		/**
 		 * Blog access statistic update
 		 */

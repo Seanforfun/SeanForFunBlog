@@ -95,6 +95,7 @@ public class Article {
 	 * @Description:Content of current article.
 	 */
 	private String content;
+	private List<Image> images;
 	
 	private String typeView;
 	private String lastModifyTimeView;
@@ -177,5 +178,11 @@ public class Article {
 	}
 	public void setAuthor(User author) {
 		this.author = author;
+	}
+	public List<Image> getImages() {
+		return images;
+	}
+	public void setImages(List<Image> images) {
+		this.images = images;
 	}
 }

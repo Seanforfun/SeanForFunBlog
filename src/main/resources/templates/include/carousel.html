@@ -11,28 +11,13 @@
 				<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
 			</ol>
 			<div class="carousel-inner">
-				<div class="carousel-item active">
-					<img class="d-block w-100" src="images/slides/1.png" height="250px"
-						alt="First slide">
+				<div class="carousel-item" th:each="imageArticle:${imageArticles}">
+					<img class="d-block w-100" th:src="${imageArticle.images[0].path}" height="250px" th:alt="${imageArticle.images[0].id}">
 					<div class="carousel-caption d-none d-md-block">
-						<h5>...</h5>
-						<p>...</p>
-					</div>
-				</div>
-				<div class="carousel-item">
-					<img class="d-block w-100" src="images/slides/2.png" height="250px"
-						alt="Second slide">
-					<div class="carousel-caption d-none d-md-block">
-						<h5>...</h5>
-						<p>...</p>
-					</div>
-				</div>
-				<div class="carousel-item">
-					<img class="d-block w-100" src="images/slides/3.png" height="250px"
-						alt="Third slide">
-					<div class="carousel-caption d-none d-md-block">
-						<h5>...</h5>
-						<p>...</p>
+						<a herf="javascript:void(0)" onclick>
+							<h3 class="carouselTitle" th:id="${imageArticle.id}" th:text="${imageArticle.title}" style="color:black;cursor:pointer;"></h3>
+						</a>
+						<p th:text="${imageArticle.abst}" style="color:black;"></p>
 					</div>
 				</div>
 			</div>

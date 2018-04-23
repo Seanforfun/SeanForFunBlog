@@ -51,7 +51,7 @@
 						});
 
 		$('#carouselExampleIndicators').carousel({
-			interval : 4000
+			interval : 5000
 		});
 
 		$(".dropdown-menu").hover(function() {
@@ -69,6 +69,18 @@
 				}
 			});
 		})
+		
+		$(".carouselTitle").on("click", null, function(){
+			var article_id = $(this).attr("id");
+			alert(article_id);
+			$.ajax({
+				url:"/article/" + article_id,				
+				success: function(){
+				}
+			});
+		})
+		
+		$(".carousel-inner").children("div:eq(0)").attr("class", "carousel-item active")
 	})
 	
 	function goAnotherPage(obj){

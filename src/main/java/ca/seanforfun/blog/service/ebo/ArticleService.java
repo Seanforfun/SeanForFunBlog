@@ -56,4 +56,10 @@ public class ArticleService implements ArticleEbi{
 		return articleMapper.getArticalCountByCategoryId(category);
 	}
 
+	@Override
+	public List<Article> getArticlesWithImages() {
+		List<Article> articles = articleMapper.getArticalsWithImage();
+		return articles;
+	}
+
 }

@@ -36,4 +36,10 @@ public interface ArticleEbi {
 	 * @Return: List<Article>
 	 */
 	List<Article> getArticleByCategory(Integer categoryId, Integer currentPageNum, Integer numPerPage);
+
+	/**
+	 * @Description: Get images for the index.html on carousel.
+	 * @Return: List<Article>
+	 */
+	List<Article> getArticlesWithImages();
 }

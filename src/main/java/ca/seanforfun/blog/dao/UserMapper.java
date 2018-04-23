@@ -27,6 +27,7 @@ public interface UserMapper {
 	@Select("SELECT id, name FROM USER WHERE id = #{id}")
 	public User getUserById(@Param("id") Long id);
 
+	@Cacheable("admin")
 	@Select("SELECT id, NAME, nickname, bio, intro, pic, activestatus FROM USER WHERE admin=#{adminType}")
 	public List<UserVo> getUserByAdmin(Integer adminType);
 }

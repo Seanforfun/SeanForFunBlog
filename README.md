@@ -38,6 +38,8 @@ DataBase design
 * [Category table](https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/Category.java)
 * [Article table](https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/Article.java)
 * [Badge table](https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/Badge.java)
+* [Image table](https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/Image.java)
+* [Album table](https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/Album.java)
 
 Controller design
 ======================================
@@ -48,9 +50,12 @@ Controller design
 >4. Get pagination Inforamtion and get 5 new blogs from database.
 >5. Blog access statistic update.
 >6. Get friend's link from database.
+>7. Load 3 new blogs with images.
 
 * [ArticleController](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/java/ca/seanforfun/blog/controller/ArticleController.java)
 >Ajax response:
 >>1. ajaxGetArticle
 >>2. ajaxGetArticleByPageindex
+>Non-Ajax response:
+>>1. Load articles with given category id.
 
