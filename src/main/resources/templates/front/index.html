@@ -62,7 +62,7 @@
 			}
 		})
 		
-		var converter = new showdown.Converter();
+		var converter = new showdown.Converter({'headerLevelStart': '3'});
 		$(".blog-post-title").on("click", null, function(){
 			var article_id = $(this).attr("id");
 			$.ajax({
@@ -176,15 +176,51 @@
 	}
 	
 	function getArticleByIdCb(content){
+		//Remove original elements in index.html and append the article.
 		$("#carouselExampleIndicators").remove();
 		var $main = $("main");
 		$main.empty();
-		var $html = $(content);
-		$main.append($html);
+		$row = $("<div class='row'></div>")
+		$colum1 = $("<div class='col-md-2' style='position:fixed;margin-left: 0%;'></div>");
+		$colum2 = $("<div class='col-md-9 blog-main' style='margin-left: 27%;' ></div>");
+		
+		$articleDiv = $("<div data-spy='scroll' data-target='#article-scrollspy' data-offset='0'></div>")
+		$html = $(content);
+		$articleDiv.append($html);
+		$colum2.append($articleDiv);
+		//Create the scrollspy.
+		var h3 = $html.parent().children("h3");
+		var h3Num = $html.parent().children("h3").length;
+		$nav = $("<nav id='article-scrollspy' class='navbar navbar-light bg-light' ></nav>");
+		$title = $("<a class='navbar-brand' href='#'><b>"+ h3.eq(0).html() + "</b></a>");
+		$nav.append($title);
+		//Iterate all h3
+		if(h3Num > 1){
+			for(var i = 1; i < h3Num; i++ ){
+				$nav1 = $("<nav class='nav nav-pills flex-column'></nav>");
+				$a = $("<a class='nav-link' href='#"+ h3.eq(i).attr("id") +"'>"+ h3.eq(i).html() +"</a>");
+				$nav1.append($a);
+				var h4 = h3.eq(i).children("h4");
+				var h4Num = h3.eq(i).children("h4").length;
+				if(h4Num > 0){
+					$nav2 = $("<nav class='nav nav-pills flex-column'></nav>");
+					for(var j = 0; j < h4Num; j++){
+						$a1 = $("<a class='nav-link ml-3 my-1' href='#"+ h4.eq(j).attr("id") +"'>"+ h4.eq(j).html() +"</a>");
+						$nav2.append($a1);
+					}
+					$nav1.append($nav2);
+				}
+				$nav.append($nav1);
+			}
+		}
+		$colum1.append($nav);
+		$row.append($colum1);
+		$row.append($colum2);
+		$main.append($row);
 	}
 </script>
 </head>
-<body>
+<body data-spy="scroll" data-offset="200" data-target="#article-scrollspy" style="position: relative;">
 	<div id="mydiv">
 	<div class="container">
 		<div th:replace="include/header :: header"></div>

@@ -30,9 +30,10 @@ Technical selections
 
 Interfaces demos
 ======================================
-* index.html:
+* index page:
 ![index](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/readme/index.png)
-
+* article page:
+![article]((https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/readme/article.png))
 DataBase design
 ======================================
 * [User table](https://github.com/Seanforfun/SeanForFunBlog/tree/master/src/main/java/ca/seanforfun/blog/model/entity/entity/User.java)
