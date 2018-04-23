@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ca.seanforfun.blog.model.entity.config.ConfigBean;
-import ca.seanforfun.blog.model.entity.config.PaginationBean;
 import ca.seanforfun.blog.model.entity.entity.Article;
+import ca.seanforfun.blog.model.entity.vo.PaginationVo;
 import ca.seanforfun.blog.service.ebo.ArticleService;
 
 /**
@@ -27,28 +27,41 @@ public class ArticleController {
 	@Autowired
 	private ConfigBean configBean;
 	@Autowired
-	private PaginationBean paginationBean;
-
+	private PaginationVo paginationVo;
+	
+	@RequestMapping("/category/{category}/{pagenum}")
+	public @ResponseBody PaginationVo getArticlesByCategory(@PathVariable("pagenum") Integer index, @PathVariable("category") Integer category){
+		paginationVo.setCurrentPageNum(index);
+		Integer numPerPage = configBean.getMaxArticlePerPage();
+		paginationVo.setNumPerPage(numPerPage);
+		Integer totalArticleNumByCategory = articleService.getArticleNumByCategory(category);
+		paginationVo.calculationMaxPage(totalArticleNumByCategory, numPerPage);
+		List<Article> articleByCategory = articleService.getArticleByCategory(category, index, numPerPage);
+		return null;
+	}
+	
+	//---------------------------------------AJAX---------------------------------------------------------
 	@RequestMapping(value = "/{id}")
 	public @ResponseBody Article ajaxGetArticle(@PathVariable("id") Long id) {
 		return articleService.getArticleById(id);
 	}
 
 	@RequestMapping(value = "/page/{pagenum}")
-	public @ResponseBody List<Article> ajaxGetArticleByPageindex(
+	public @ResponseBody PaginationVo ajaxGetArticleByPageindex(
 			@PathVariable("pagenum") Integer index, ModelAndView mv) {
 		/**
 		 * Set information about pagination.
 		 */
 		Integer articleTotalNum = articleService.getArticleTotalNum();
 		Integer articlePerPage = configBean.getMaxArticlePerPage();
-		paginationBean.setCurrentPageNum(index);
-		paginationBean.setNumPerPage(articlePerPage);
-		paginationBean.calculationMaxPage(articleTotalNum, articlePerPage);
-		mv.addObject("pagination", paginationBean);
+		paginationVo.setCurrentPageNum(index);
+		paginationVo.setNumPerPage(articlePerPage);
+		paginationVo.calculationMaxPage(articleTotalNum, articlePerPage);
 		/**
 		 * Get new Articles.
 		 */
-		return articleService.getIndexPublicArticlesPagination(index, articlePerPage);
+		List<Article> articles = articleService.getIndexPublicArticlesPagination(index, articlePerPage);
+		paginationVo.setArticles(articles);
+		return paginationVo;
 	}
 }

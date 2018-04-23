@@ -22,8 +22,18 @@ public interface ArticleEbi {
 	 */
 	public List<Article> getIndexPublicArticlesPagination(Integer pageIndex, Integer articlePerPage);
 	/**
-	 * @Description: Get article Information according article id.
+	 * @Description: Get article Information according to article id.
 	 * @Return: Article
 	 */
 	public Article getArticleById(Long id);
+	/**
+	 * @Description: Get article number according to category id.
+	 * @Return: Integer
+	 */
+	Integer getArticleNumByCategory(Integer category);
+	/**
+	 * @Description: Get articles according to category id and pagination Information.
+	 * @Return: List<Article>
+	 */
+	List<Article> getArticleByCategory(Integer categoryId, Integer currentPageNum, Integer numPerPage);
 }

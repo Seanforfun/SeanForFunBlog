@@ -53,6 +53,13 @@ public interface ArticleMapper {
 			@Result(property = "author", column = "uid", javaType = User.class, one = @One(select = "ca.seanforfun.blog.dao.UserMapper.getUserById")),
 			@Result(property = "lastModifyTime", column = "lastmodifytime"),
 			@Result(property = "badges", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getBadgesByAritcleId")) })
-	@Select("SELECT id, title, hit, lastmodifytime, uid, abst, content FROM article WHERE id=1;")
+	@Select("SELECT id, title, hit, lastmodifytime, uid, abst, content FROM article WHERE id=#{id};")
 	public Article getArticleById(Long id);
+
+	@Cacheable("articleNumByCategory")
+	@Select("select count(id) from article where cid = #{category}")
+	public Integer getArticalCountByCategoryId(Integer category);
+
+	@Select("")
+	public void getArticalCountByCategoryId(Integer categoryId, Integer currentIndex, Integer numPerPage);
 }
