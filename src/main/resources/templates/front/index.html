@@ -73,13 +73,12 @@
 	
 	function goAnotherPage(obj){
 		var type = $(obj).html();
-		var wantPageNum;
+		var wantPageNum
 		if(type == "Older"){
 			wantPageNum = parseInt($(obj).attr("currentPage")) + 1;
 		}else{
 			wantPageNum = parseInt($(obj).attr("currentPage")) - 1;
 		}
-		alert(wantPageNum);
 		$.ajax({
 			url:"/article/page/" + wantPageNum,
 			success:function(data){
@@ -87,7 +86,7 @@
 				var $main = $(".blog-main"); 
 				$main.empty();
 				var articles = data.articles;
-				var article_num = articles.length();
+				var article_num = articles.length;
 				for(var i = 0; i < article_num; i++){
 					var article = articles[i];					
 					$blogPostDiv = $("<div class='blog-post'></div>");
@@ -98,8 +97,8 @@
 					//Should be modified.
 					$aAuthor = $("<a href='#'>"+article.author.name+"</a>");
 					$p.append($aAuthor);
-					var badge_length = article.badges.length();
-					for(int j = 0; j < badge_length; j++){
+					var badge_length = article.badges.length;
+					for(var j = 0; j < badge_length; j++){
 						var badge = article.badges[j];
 						switch(badge.colorView){
 						case "BLUE":
@@ -143,20 +142,20 @@
 				var numPerPage = data.numPerPage;
 				$nav = $("<nav id='pagination' class='blog-pagination text-center' numPerPage='"+ numPerPage +"'></nav>");	
 				if(currentPageNum == 1){
-					$older = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
-					$newer = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
-				}else if(currentPageNum == totalPageNum){
 					$older = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
-					$newer = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
+					$newer = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
+				}else if(currentPageNum >= totalPageNum){
+					$older = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
+					$newer = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
 				}else{
 					$older = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
-					$newer = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
+					$newer = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
 				}
 				$nav.append($older);
 				$nav.append($newer);
 				$main.append($nav);
 			}
-		})
+		});
 	}
 </script>
 </head>
@@ -177,7 +176,7 @@
 						<h3 class="blog-post-title" th:text="${article.title}" th:id="${article.id}" style="cursor:pointer;"></h3>
 						<p class="blog-post-meta">
 							<th:block th:text="${article.lastModifyTimeView}"></th:block>
-							&nbspby;
+							&nbsp;by
 							<a href="#" th:text="${article.author.name}"></a>
 							<th:block th:each="badge:${article.badges}" th:switch="${badge.colorView}">
 								<span th:case="BLUE" class="badge badge-primary" th:text="${badge.name}"></span>
