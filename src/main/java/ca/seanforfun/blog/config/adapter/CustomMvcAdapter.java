@@ -17,7 +17,7 @@ public class CustomMvcAdapter implements WebMvcConfigurer    {
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		// TODO *************Add ViewController for Spring boot.*************
-		registry.addRedirectViewController("/tologin", "/admin/login.html");
+//		registry.addRedirectViewController("/tologin", "/admin/login.html");
 	}
 
 	@Override

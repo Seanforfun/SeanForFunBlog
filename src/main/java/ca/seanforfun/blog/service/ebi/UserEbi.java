@@ -1,5 +1,6 @@
 package ca.seanforfun.blog.service.ebi;
 
+import ca.seanforfun.blog.model.entity.entity.User;
 import ca.seanforfun.blog.model.entity.vo.UserVo;
 
 /**
@@ -20,4 +21,10 @@ public interface UserEbi {
 	 * @Return: UserVo
 	 */
 	public UserVo getAdmin();
+
+	/**
+	 * @Description: Check if user is existing. 
+	 * @Return: User
+	 */
+	public User checkUserInfo(User user);
 }

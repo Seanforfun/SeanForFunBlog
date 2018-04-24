@@ -10,6 +10,7 @@ import ca.seanforfun.blog.exception.SeanForFunException;
 import ca.seanforfun.blog.model.entity.entity.User;
 import ca.seanforfun.blog.model.entity.vo.UserVo;
 import ca.seanforfun.blog.service.ebi.UserEbi;
+import ca.seanforfun.blog.utils.MD5Utils;
 
 /**
  * @author SeanForFun E-mail:xiaob6@mcmaster.ca
@@ -34,6 +35,17 @@ public class UserService implements UserEbi {
 			throw new SeanForFunException("Admin user number error....");
 		}
 		return adminUsers.get(0);
+	}
+
+	@Override
+	public User checkUserInfo(User user) {
+		String name = user.getName();
+		String password = user.getPassword();
+		if(null == name || password == null){
+			return null;
+		}
+		String password_hash = MD5Utils.md5(password);
+		return userMapper.getUserByNameAndPassword(name, password_hash);
 	}
 	
 }
