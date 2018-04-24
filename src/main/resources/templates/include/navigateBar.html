@@ -8,7 +8,13 @@
 				<ul class="navbar-nav mr-auto">				
 					<!-- Single front primary bar -->
 					<li class="nav-item dropdown" th:each="pcategory:${pfcategory}" style="display:inline;width: 160px;padding-left: 0">
-						<a class="nav-link" href="javascript:void(0);" style="color: #fff" data-toggle="dropdown">
+						<a th:if="${pcategory.key.link != null && pcategory.key.link != ''}" class="nav-link" th:href="${pcategory.key.link}" style="color: #fff" >
+							<!-- Need to be fixed to correct value -->
+							<img th:if="${pcategory.key.icon} != null" th:src="${pcategory.key.icon}" height="13px" width="13px"></img>
+							<img th:unless="${pcategory.key.icon} != null" src="/images/icon/firefox.ico" height="13px" width="13px"></img>
+							<strong class="nav-font font-italic" th:text="${pcategory.key.name}"></strong>
+						</a>
+						<a th:unless="${pcategory.key.link != null && pcategory.key.link != ''}" class="nav-link" href="javascript:void(0);"  style="color: #fff" data-toggle="dropdown">
 							<!-- Need to be fixed to correct value -->
 							<img th:if="${pcategory.key.icon} != null" th:src="${pcategory.key.icon}" height="13px" width="13px"></img>
 							<img th:unless="${pcategory.key.icon} != null" src="/images/icon/firefox.ico" height="13px" width="13px"></img>
