@@ -33,7 +33,7 @@ Interfaces demos
 * index page:
 ![index](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/readme/index.png)
 * article page:
-![article]((https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/readme/article.png)
+![article](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/readme/article.png)
 
 DataBase design
 ======================================

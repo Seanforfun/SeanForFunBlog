@@ -62,19 +62,6 @@
 			}
 		})
 		
-		var converter = new showdown.Converter({'headerLevelStart': '3'});
-		$(".blog-post-title").on("click", null, function(){
-			var article_id = $(this).attr("id");
-			$.ajax({
-				url:"/article/" + article_id,				
-				success: function(data){
-					var content = data.content;
-					var contentHTML = converter.makeHtml(content);
-					getArticleByIdCb(contentHTML);
-				}
-			});
-		})
-		
 		$(".carouselTitle").on("click", null, function(){
 			var article_id = $(this).attr("id");
 			$.ajax({
@@ -107,7 +94,7 @@
 				for(var i = 0; i < article_num; i++){
 					var article = articles[i];					
 					$blogPostDiv = $("<div class='blog-post'></div>");
-					$h3 = $("<h3 class='blog-post-title' id='"+ article.id +"' style='cursor:pointer;'>"+ article.title +"</h3>");
+					$h3 = $("<h3 class='blog-post-title' id='"+ article.id +"' style='cursor:pointer;' onclick='titleClick(this)'>"+ article.title +"</h3>");
 					$blogPostDiv.append($h3);
 					$p = $("<p class='blog-post-meta'></p>");
 					$p.html(article.lastModifyTimeView + "&nbspby;");
@@ -175,6 +162,19 @@
 		});
 	}
 	
+	var converter = new showdown.Converter({'headerLevelStart': '3'});
+	function titleClick(obj){
+		var article_id = $(obj).attr("id");
+		$.ajax({
+			url:"/article/" + article_id,				
+			success: function(data){
+				var content = data.content;
+				var contentHTML = converter.makeHtml(content);
+				getArticleByIdCb(contentHTML);
+			}
+		});
+	}
+	
 	function getArticleByIdCb(content){
 		//Remove original elements in index.html and append the article.
 		$("#carouselExampleIndicators").remove();
@@ -233,7 +233,7 @@
 				<div class="col-md-8 blog-main">
 					<!-- Single Post -->
 					<div class="blog-post" th:each="article:${articles}">
-						<h3 class="blog-post-title" th:text="${article.title}" th:id="${article.id}" style="cursor:pointer;"></h3>
+						<h3 class="blog-post-title" th:text="${article.title}" th:id="${article.id}" style="cursor:pointer;" onclick="titleClick(this)"></h3>
 						<p class="blog-post-meta">
 							<th:block th:text="${article.lastModifyTimeView}"></th:block>
 							&nbsp;by
