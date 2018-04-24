@@ -39,9 +39,6 @@ public class ArticleController {
 		paginationVo.calculationMaxPage(totalArticleNumByCategory, numPerPage);
 		List<Article> articleByCategory = articleService.getArticleByCategory(category, index, numPerPage);
 		paginationVo.setArticles(articleByCategory);
-		for(Article a:articleByCategory){
-			System.out.println(a.getTitle());
-		}
 		return paginationVo;
 	}
 	
