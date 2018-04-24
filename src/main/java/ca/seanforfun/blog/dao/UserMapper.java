@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
@@ -32,7 +33,10 @@ public interface UserMapper {
 	public List<UserVo> getUserByAdmin(Integer adminType);
 
 	@Cacheable("loginUser")
-	@Select("SELECT nickname, NAME, PASSWORD, email, lastLoginTime, bio, country, province, city, url, intro, pic FROM USER WHERE NAME = #{name} AND PASSWORD = #{password}")
+	@Select("SELECT id, nickname, activestatus, NAME, PASSWORD, email, bio, country, province, city, url, intro, pic FROM USER WHERE NAME = #{name} AND PASSWORD = #{password}")
 	public User getUserByNameAndPassword(@Param("name") String name,
 			@Param("password") String password_hash);
+
+	@Update("UPDATE USER SET lastLoginTime = #{currentTimeMillis}, ipAddr = #{loginIp} WHERE id = #{id}")
+	public void updateUserLastLoginTime(@Param("currentTimeMillis") long currentTimeMillis, @Param("id") Long id, @Param("loginIp") String loginIp);
 }

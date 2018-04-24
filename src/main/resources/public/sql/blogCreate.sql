@@ -18,7 +18,8 @@ CREATE TABLE USER(
 	activestatus INT(3) NOT NULL,
 	url varchar(255) NOT NULL,
 	intro text,
-	admin int(3) not null
+	admin int(3) not null,
+	ipAddr varchar(100)
 );
 
 #Category

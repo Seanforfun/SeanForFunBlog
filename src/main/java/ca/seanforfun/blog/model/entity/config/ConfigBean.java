@@ -19,7 +19,14 @@ import org.springframework.stereotype.Component;
 public class ConfigBean {
 	public String author;
 	public String version;
-	public Integer maxArticlePerPage; 
+	public Integer maxArticlePerPage;
+	public String rememberSalt;
+	public String getRememberSalt() {
+		return rememberSalt;
+	}
+	public void setRememberSalt(String rememberSalt) {
+		this.rememberSalt = rememberSalt;
+	}
 	public String getAuthor() {
 		return author;
 	}

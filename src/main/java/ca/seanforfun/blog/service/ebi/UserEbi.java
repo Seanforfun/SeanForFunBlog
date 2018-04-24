@@ -27,4 +27,10 @@ public interface UserEbi {
 	 * @Return: User
 	 */
 	public User checkUserInfo(User user);
+
+	/**
+	 * @Description: Update user information when user login.
+	 * @Return: void
+	 */
+	void loginUpdate(Long id, String loginIp);
 }

@@ -49,6 +49,7 @@ public class User {
 	private Long activeTime;
 	private Long lastLoginTime;
 	private String url;
+	private String ipAddr;
 	
 	/**
 	 * 0: Not activate by e-mail
@@ -176,5 +177,11 @@ public class User {
 	public void setAdmin(Integer admin) {
 		this.admin = admin;
 		this.adminView = ADMIN_MAP.get(admin);
+	}
+	public String getIpAddr() {
+		return ipAddr;
+	}
+	public void setIpAddr(String ipAddr) {
+		this.ipAddr = ipAddr;
 	}
 }

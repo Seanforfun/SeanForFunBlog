@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ca.seanforfun.blog.dao.UserMapper;
 import ca.seanforfun.blog.exception.SeanForFunException;
@@ -46,6 +47,12 @@ public class UserService implements UserEbi {
 		}
 		String password_hash = MD5Utils.md5(password);
 		return userMapper.getUserByNameAndPassword(name, password_hash);
+	}
+
+	@Override
+	@Transactional
+	public void loginUpdate(Long id, String loginIp) {
+		userMapper.updateUserLastLoginTime(System.currentTimeMillis(), id, loginIp);
 	}
 	
 }

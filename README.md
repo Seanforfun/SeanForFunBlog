@@ -34,6 +34,8 @@ Interfaces demos
 ![index](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/readme/index.png)
 * article page:
 ![article](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/readme/article.png)
+* login page:
+![login](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/readme/login.png)
 
 DataBase design
 ======================================
@@ -62,4 +64,16 @@ Controller design
 >Non-Ajax response:
 >>1. Load articles with given category id.
 >>2. Load articles for carousel in index.html.
+
+* [LoginController](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/java/ca/seanforfun/blog/controller/LoginController.java)
+>Load User information from session
+>>1. If user information is saved, we skip the login page and go to admin controller directly.
+>>2. If no user remember information provided, go to login page to login.
+>Login process.
+>>1. Check if current user is existing.
+>>2. Check if current user has activated his/her e-mail.
+>>3. Update user information and current Ip address and save that into database for future use.
+>>4. Save user information into session scope.
+>>5. Get blog statistic for admin representation.
+>>6. Go to Admin controller.
 
