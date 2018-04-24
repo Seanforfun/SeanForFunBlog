@@ -50,11 +50,12 @@ public class LoginController {
 	public ModelAndView toLoginPage(ModelAndView mv, HttpSession session,
 			HttpServletResponse response, HttpServletRequest request) throws IOException {
 		// If session scope saved user information direct to admin page directly.
-		Integer rememberToken = (Integer) session.getAttribute("remember");
-		//Set a token and check the token
+		String rememberToken = (String) session.getAttribute("remember");
 		String loginIp = getIpAddr(request);
+		//Set a token and check the token
 		if(null != rememberToken && rememberToken.equals(MD5Utils.md5(loginIp + configBean.getRememberSalt()))){
 			mv.setViewName("redirect:/toAdmin");
+			return mv;
 		}
 		// Dispatcher to login page.
 		mv.setViewName("/admin/login.html");
