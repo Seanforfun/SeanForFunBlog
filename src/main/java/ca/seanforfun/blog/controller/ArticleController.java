@@ -30,7 +30,7 @@ public class ArticleController {
 	private PaginationVo paginationVo;
 	
 	@RequestMapping("/category/{category}/{pagenum}")
-	public ModelAndView getArticlesByCategory(@PathVariable("pagenum") Integer index, @PathVariable("category") Integer category, ModelAndView mv){
+	public @ResponseBody PaginationVo getArticlesByCategory(@PathVariable("pagenum") Integer index, @PathVariable("category") Integer category, ModelAndView mv){
 		// TODO Finish getArticlesByCategory
 		paginationVo.setCurrentPageNum(index);
 		Integer numPerPage = configBean.getMaxArticlePerPage();
@@ -39,7 +39,10 @@ public class ArticleController {
 		paginationVo.calculationMaxPage(totalArticleNumByCategory, numPerPage);
 		List<Article> articleByCategory = articleService.getArticleByCategory(category, index, numPerPage);
 		paginationVo.setArticles(articleByCategory);
-		return null;
+		for(Article a:articleByCategory){
+			System.out.println(a.getTitle());
+		}
+		return paginationVo;
 	}
 	
 	//---------------------------------------AJAX---------------------------------------------------------

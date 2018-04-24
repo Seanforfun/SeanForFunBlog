@@ -31,6 +31,6 @@ public interface CategoryMapper {
 	@Select("select count(name) from category where categoryType = #{categoryType} and role = #{role} ")
 	public Long getCategoryNumByTypeAndRol(@Param("categoryType") Integer categoryType, @Param("role") Integer role);
 	
-	@Select("select name, icon, link from category where pid = #{pid}")
+	@Select("select id, name, icon, link from category where pid = #{pid}")
 	public List<Category> getCategorieByPid(@Param("pid") Long pid);
 }

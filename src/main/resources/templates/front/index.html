@@ -73,93 +73,135 @@
 				}
 			});
 		})
+		
+		$(".dropdown-item").on("click", null, function(){
+			var link = $(this).attr("link");
+			var category_id = $(this).attr("id");
+			if(link.includes("/article/category")){
+				$.ajax({
+					url:link,
+					success:function(data){
+						changeArticleIndexCb(data, category_id);
+					}				
+				})
+			}
+		});
 	})
 	
 	function goAnotherPage(obj){
 		var type = $(obj).html();
-		var wantPageNum
+		var wantPageNum;
+		var category_id = $(obj).parent().attr("category");
 		if(type == "Older"){
 			wantPageNum = parseInt($(obj).attr("currentPage")) + 1;
 		}else{
 			wantPageNum = parseInt($(obj).attr("currentPage")) - 1;
 		}
-		$.ajax({
-			url:"/article/page/" + wantPageNum,
-			success:function(data){
-				//Refresh the article part.
-				var $main = $(".blog-main"); 
-				$main.empty();
-				var articles = data.articles;
-				var article_num = articles.length;
-				for(var i = 0; i < article_num; i++){
-					var article = articles[i];					
-					$blogPostDiv = $("<div class='blog-post'></div>");
-					$h3 = $("<h3 class='blog-post-title' id='"+ article.id +"' style='cursor:pointer;' onclick='titleClick(this)'>"+ article.title +"</h3>");
-					$blogPostDiv.append($h3);
-					$p = $("<p class='blog-post-meta'></p>");
-					$p.html(article.lastModifyTimeView + "&nbspby;");
-					//Should be modified.
-					$aAuthor = $("<a href='#'>"+article.author.name+"</a>");
-					$p.append($aAuthor);
-					var badge_length = article.badges.length;
-					for(var j = 0; j < badge_length; j++){
-						var badge = article.badges[j];
-						switch(badge.colorView){
-						case "BLUE":
-							$badge = $("<span class='badge badge-primary'>"+badge.name+"</span>");
-							break;
-						case "GREY":
-							$badge = $("<span class='badge badge-secondary'>"+badge.name+"</span>");
-							break;
-						case "GREEN":
-							$badge = $("<span class='badge badge-success'>"+badge.name+"</span>");
-							break;
-						case "RED":
-							$badge = $("<span class='badge badge-secondary'>"+badge.name+"</span>");
-							break;
-						case "YELLOW":
-							$badge = $("<span class='badge badge-warning'>"+badge.name+"</span>");
-							break;
-						case "WHITE":
-							$badge = $("<span class='badge badge-light'>"+badge.name+"</span>");
-							break;
-						case "BLACK":
-							$badge = $("<span class='badge badge-dark'>"+badge.name+"</span>");
-							break;
-						case "INFO":
-							$badge = $("<span class='badge badge-info'>"+badge.name+"</span>");
-							break;
-						default:
-							$badge = $("<span class='badge badge-info'>"+badge.name+"</span>");
-							break;
-						}
-						$p.append($badge);
-					}
-					$blogPostDiv.append($p);
-					$pAbs = $("<p>"+article.abst+"</p>");
-					$blogPostDiv.append($pAbs);
-					$main.append($blogPostDiv);
+		if(typeof category_id == typeof undefined && category_id != false){
+			$.ajax({
+				url:"/article/page/" + wantPageNum,
+				success:function(data){
+					changeArticleIndexCb(data, null);
 				}
-				//Update the pagination information.
-				var currentPageNum = data.currentPageNum;
-				var totalPageNum = data.totalPageNum;
-				var numPerPage = data.numPerPage;
-				$nav = $("<nav id='pagination' class='blog-pagination text-center' numPerPage='"+ numPerPage +"'></nav>");	
-				if(currentPageNum == 1){
-					$older = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
-					$newer = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
-				}else if(currentPageNum >= totalPageNum){
-					$older = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
-					$newer = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
-				}else{
-					$older = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
-					$newer = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
+			});
+		}else{
+			$.ajax({
+				url:"/article/category/" +category_id+ "/" + wantPageNum,
+				success:function(data){
+					changeArticleIndexCb(data, category_id);
 				}
-				$nav.append($older);
-				$nav.append($newer);
-				$main.append($nav);
+			});
+		}
+	}
+	
+	function changeArticleIndexCb(data, id){
+		var category_id = id;
+		//Refresh the article part.
+		var $main = $(".blog-main"); 
+		$main.empty();
+		var articles = data.articles;
+		var article_num = articles.length;
+		for(var i = 0; i < article_num; i++){
+			var article = articles[i];					
+			$blogPostDiv = $("<div class='blog-post'></div>");
+			$h3 = $("<h3 class='blog-post-title' id='"+ article.id +"' style='cursor:pointer;' onclick='titleClick(this)'>"+ article.title +"</h3>");
+			$blogPostDiv.append($h3);
+			$p = $("<p class='blog-post-meta'></p>");
+			$p.html(article.lastModifyTimeView + "&nbspby;");
+			//Should be modified.
+			$aAuthor = $("<a href='#'>"+article.author.name+"</a>");
+			$p.append($aAuthor);
+			var badge_length = article.badges.length;
+			for(var j = 0; j < badge_length; j++){
+				var badge = article.badges[j];
+				switch(badge.colorView){
+				case "BLUE":
+					$badge = $("<span class='badge badge-primary'>"+badge.name+"</span>");
+					break;
+				case "GREY":
+					$badge = $("<span class='badge badge-secondary'>"+badge.name+"</span>");
+					break;
+				case "GREEN":
+					$badge = $("<span class='badge badge-success'>"+badge.name+"</span>");
+					break;
+				case "RED":
+					$badge = $("<span class='badge badge-secondary'>"+badge.name+"</span>");
+					break;
+				case "YELLOW":
+					$badge = $("<span class='badge badge-warning'>"+badge.name+"</span>");
+					break;
+				case "WHITE":
+					$badge = $("<span class='badge badge-light'>"+badge.name+"</span>");
+					break;
+				case "BLACK":
+					$badge = $("<span class='badge badge-dark'>"+badge.name+"</span>");
+					break;
+				case "INFO":
+					$badge = $("<span class='badge badge-info'>"+badge.name+"</span>");
+					break;
+				default:
+					$badge = $("<span class='badge badge-info'>"+badge.name+"</span>");
+					break;
+				}
+				$p.append($badge);
 			}
-		});
+			$blogPostDiv.append($p);
+			$pAbs = $("<p>"+article.abst+"</p>");
+			$blogPostDiv.append($pAbs);
+			$main.append($blogPostDiv);
+		}
+		//Update the pagination information.
+		var currentPageNum = data.currentPageNum;
+		var totalPageNum = data.totalPageNum;
+		var numPerPage = data.numPerPage;
+		if(null == id){
+			$nav = $("<nav id='pagination' class='blog-pagination text-center' numPerPage='"+ numPerPage +"'></nav>");	
+			if(currentPageNum == 1){
+				$older = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
+				$newer = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
+			}else if(currentPageNum >= totalPageNum){
+				$older = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
+				$newer = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
+			}else{
+				$older = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
+				$newer = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
+			}
+		}else{
+			$nav = $("<nav id='pagination' class='blog-pagination text-center' category='"+ category_id +"' numPerPage='"+ numPerPage +"'></nav>");	
+			if(currentPageNum == 1){
+				$older = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
+				$newer = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
+			}else if(currentPageNum >= totalPageNum){
+				$older = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
+				$newer = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
+			}else{
+				$older = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
+				$newer = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
+			}
+		}
+		$nav.append($older);
+		$nav.append($newer);
+		$main.append($nav);
 	}
 	
 	var converter = new showdown.Converter({'headerLevelStart': '3'});
