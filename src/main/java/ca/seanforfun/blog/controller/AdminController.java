@@ -29,7 +29,7 @@ public class AdminController {
 		
 		//Get Friend's link information.
 		
-		//Get Blog information.
+		//Get Blog & Server information.
 		
 		mv.setViewName("admin/admin.html");
 		return mv;

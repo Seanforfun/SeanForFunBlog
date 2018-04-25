@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ca.seanforfun.blog.config.runner.CategoryRunner;
 import ca.seanforfun.blog.exception.SeanForFunException;
+import ca.seanforfun.blog.model.entity.config.BlogInfo;
 import ca.seanforfun.blog.model.entity.config.ConfigBean;
 import ca.seanforfun.blog.model.entity.config.PaginationBean;
 import ca.seanforfun.blog.model.entity.entity.Article;
@@ -104,6 +105,7 @@ public class IndexController {
 		/**
 		 * Blog access statistic update
 		 */
+		BlogInfo.oneDayAccessTime.getAndIncrement();
 		mv.setViewName("front/index.html");
 		return mv;
 	}
