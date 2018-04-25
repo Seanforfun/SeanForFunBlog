@@ -20,6 +20,6 @@ public class BlogAccessWriteListener implements ServletContextListener {
 
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
-		//Write Blog access data into database.
+		// TODO Write Blog access data into database.
 	}
 }
