@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ca.seanforfun.blog.dao.LinkMapper;
+import ca.seanforfun.blog.exception.SeanForFunException;
 import ca.seanforfun.blog.model.entity.entity.Link;
 import ca.seanforfun.blog.service.ebi.LinkEbi;
 
@@ -22,5 +23,14 @@ public class LinkService implements LinkEbi {
 	@Override
 	public List<Link> getAllFriendsLinks() {
 		return linkMapper.getAllLinks();
+	}
+
+	@Override
+	public Integer getLinkCount() {
+		Long count = linkMapper.getLinkCount();
+		if(null == count){
+			throw new SeanForFunException("Friends information error...");
+		}
+		return count.intValue();
 	}
 }

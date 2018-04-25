@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.seanforfun.blog.dao.AccessMapper;
+import ca.seanforfun.blog.exception.SeanForFunException;
 import ca.seanforfun.blog.model.entity.entity.Access;
 import ca.seanforfun.blog.service.ebi.AccessEbi;
 
@@ -28,5 +29,15 @@ public class AccessService implements AccessEbi {
 			accessMapper.deleteOldAccessinfo(id);
 		}
 		accessMapper.createDailyAccessInfo(accessNum, System.currentTimeMillis() - HOUR);
+	}
+
+	@Override
+	public Access getYesterdayAccessInfo() {
+		Access access = accessMapper.getNewestAccessInfo();
+		if(null == access){
+			throw new SeanForFunException("Get access information error...");
+		}
+		return access;
+			
 	}
 }

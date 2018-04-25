@@ -15,4 +15,10 @@ public interface LinkEbi {
 	 * @Return: List<Link> Get all friends links from database.
 	 */
 	public List<Link> getAllFriendsLinks();
+	
+	/**
+	 * @Description: Get total friend link number.
+	 * @Return: Integer
+	 */
+	public Integer getLinkCount();
 }

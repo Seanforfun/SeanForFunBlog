@@ -72,4 +72,13 @@ public class ArticleService implements ArticleEbi{
 		return articles;
 	}
 
+	@Override
+	public Integer getCountByUid(Long id) {
+		Long count = articleMapper.getArticleByUid(id);
+		if(null == count){
+			throw new SeanForFunException("Get article information error...");
+		}
+		return count.intValue();
+	}
+
 }

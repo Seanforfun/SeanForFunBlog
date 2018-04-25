@@ -42,4 +42,10 @@ public interface ArticleEbi {
 	 * @Return: List<Article>
 	 */
 	List<Article> getArticlesWithImages();
+
+	/**
+	 * @Description:Get article number of specific user.
+	 * @Return: Integer
+	 */
+	Integer getCountByUid(Long id);
 }
