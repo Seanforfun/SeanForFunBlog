@@ -1,5 +1,12 @@
 package ca.seanforfun.blog.controller;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +14,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import ca.seanforfun.blog.exception.SeanForFunException;
 import ca.seanforfun.blog.model.entity.config.ConfigBean;
+import ca.seanforfun.blog.model.entity.config.SqlInfo;
+import ca.seanforfun.blog.model.entity.config.SysInfo;
+import ca.seanforfun.blog.model.entity.entity.Access;
+import ca.seanforfun.blog.model.entity.entity.User;
+import ca.seanforfun.blog.service.ebo.AccessService;
+import ca.seanforfun.blog.service.ebo.ArticleService;
+import ca.seanforfun.blog.service.ebo.LinkService;
 
 /**
  * @author SeanForFun E-mail:xiaob6@mcmaster.ca
@@ -18,25 +33,56 @@ import ca.seanforfun.blog.model.entity.config.ConfigBean;
 public class AdminController {
 	@Autowired
 	private ConfigBean configBean;
-	
+	@Autowired
+	private AccessService accessService;
+	@Autowired
+	private ArticleService articleService;
+	@Autowired
+	private LinkService linkService;
+	@Autowired
+	private SysInfo sysInfo;
+	@Autowired
+	private SqlInfo sqlInfo;
+
 	@RequestMapping("/toAdmin")
-	public ModelAndView toAdminPage(ModelAndView mv){
-		//Get yesterday's blog access data.
-		
-		//Get blog articles infromation.
-		
-		//Get comments information.
-		
-		//Get Friend's link information.
-		
-		//Get Blog & Server information.
-		
+	public ModelAndView toAdminPage(ModelAndView mv, HttpSession session,
+			HttpServletRequest request) throws SQLException {
+		// Get yesterday's blog access data.
+		Access access = accessService.getYesterdayAccessInfo();
+		mv.addObject("access", access);
+
+		// Get blog articles infromation.
+		User loginUser = (User) session.getAttribute("loginUser");
+		if (null == loginUser || null == loginUser.getId()) {
+			throw new SeanForFunException("Login information error...");
+		}
+		Integer articleNum = articleService.getCountByUid(loginUser.getId());
+		mv.addObject("articleNum", articleNum);
+
+		// Get comments information.
+
+		// Get Friend's link information.
+		Integer linkCount = linkService.getLinkCount();
+		mv.addObject("linkCount", linkCount);
+		// Get Blog & Server information.
+		Properties props = System.getProperties();
+		sysInfo.setCountry(request.getLocale().getDisplayCountry());
+		sysInfo.setAccountName(props.getProperty("user.name"));
+		sysInfo.setJavaVersion(props.getProperty("java.version"));
+		sysInfo.setOs(props.getProperty("os.name"));
+		sysInfo.setOsVersion(props.getProperty("os.version"));
+		sysInfo.setServerName(request.getServerName());
+		Connection connection = DriverManager.getConnection(sqlInfo.getUrl(),sqlInfo.getUsername(),sqlInfo.getPassword());
+		DatabaseMetaData metaData = connection.getMetaData();
+		sysInfo.setDatabaseName(metaData.getDatabaseProductName());
+		sysInfo.setDatabaseVersion(metaData.getDatabaseProductVersion());
+		sysInfo.setDatabaseDriverName(metaData.getDriverName());
 		mv.setViewName("admin/admin.html");
 		return mv;
 	}
-	
+
 	@RequestMapping("/adminSignout")
-	public ModelAndView signOut(ModelAndView mv, HttpSession session){
+	public ModelAndView signOut(ModelAndView mv, HttpSession session) {
 		session.removeAttribute("remember");
 		mv.setViewName("redirect:/");
 		return mv;

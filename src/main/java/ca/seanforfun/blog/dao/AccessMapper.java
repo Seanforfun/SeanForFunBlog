@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
+import ca.seanforfun.blog.model.entity.entity.Access;
+
 /**
  * @author SeanForFun E-mail:xiaob6@mcmaster.ca
  * @date Apr 25, 2018 1:50:36 PM
@@ -27,4 +29,7 @@ public interface AccessMapper {
 
 	@Select("SELECT MIN(id) FROM access")
 	public Long getOldestId();
+
+	@Select("SELECT dayAccessNum FROM access WHERE id = (SELECT MAX(id) FROM access)")
+	Access getNewestAccessInfo();
 }

@@ -91,4 +91,7 @@ public interface ArticleMapper {
 
 	@Update("UPDATE article SET accessTime = accessTime + 1 WHERE id = #{id}")
 	public void updateAccesstimeById(Long articleId);
+
+	@Select("SELECT COUNT(id) FROM article WHERE uid = #{id}")
+	public Long getArticleByUid(Long id);
 }

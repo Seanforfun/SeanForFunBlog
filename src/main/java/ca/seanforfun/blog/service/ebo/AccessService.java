@@ -38,6 +38,5 @@ public class AccessService implements AccessEbi {
 			throw new SeanForFunException("Get access information error...");
 		}
 		return access;
-			
 	}
 }

@@ -21,4 +21,7 @@ public interface LinkMapper {
 	@Cacheable("links")
 	@Select("select * from link")
 	public List<Link> getAllLinks();
+	
+	@Select("SELECT COUNT(id) FROM link")
+	public Long getLinkCount();
 }
