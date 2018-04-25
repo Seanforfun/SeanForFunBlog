@@ -21,6 +21,15 @@ public class AdminController {
 	
 	@RequestMapping("/toAdmin")
 	public ModelAndView toAdminPage(ModelAndView mv){
+		//Get yesterday's blog access data.
+		
+		//Get blog articles infromation.
+		
+		//Get comments information.
+		
+		//Get Friend's link information.
+		
+		//Get Blog information.
 		
 		mv.setViewName("admin/admin.html");
 		return mv;

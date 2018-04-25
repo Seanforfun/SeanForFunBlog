@@ -127,7 +127,7 @@
 			$h3 = $("<h3 class='blog-post-title' id='"+ article.id +"' style='cursor:pointer;' onclick='titleClick(this)'>"+ article.title +"</h3>");
 			$blogPostDiv.append($h3);
 			$p = $("<p class='blog-post-meta'></p>");
-			$p.html(article.lastModifyTimeView + "&nbspby;");
+			$p.html(article.lastModifyTimeView + "&nbsp;by ");
 			//Should be modified.
 			$aAuthor = $("<a href='#'>"+article.author.name+"</a>");
 			$p.append($aAuthor);
@@ -233,32 +233,36 @@
 		//Create the scrollspy.
 		var h3 = $html.parent().children("h3");
 		var h3Num = $html.parent().children("h3").length;
-		$nav = $("<nav id='article-scrollspy' class='navbar navbar-light bg-light' ></nav>");
-		$title = $("<a class='navbar-brand' href='#'><b>"+ h3.eq(0).html() + "</b></a>");
-		$nav.append($title);
-		//Iterate all h3
-		if(h3Num > 1){
-			for(var i = 1; i < h3Num; i++ ){
-				$nav1 = $("<nav class='nav nav-pills flex-column'></nav>");
-				$a = $("<a class='nav-link' href='#"+ h3.eq(i).attr("id") +"'>"+ h3.eq(i).html() +"</a>");
-				$nav1.append($a);
-				var h4 = h3.eq(i).children("h4");
-				var h4Num = h3.eq(i).children("h4").length;
-				if(h4Num > 0){
-					$nav2 = $("<nav class='nav nav-pills flex-column'></nav>");
-					for(var j = 0; j < h4Num; j++){
-						$a1 = $("<a class='nav-link ml-3 my-1' href='#"+ h4.eq(j).attr("id") +"'>"+ h4.eq(j).html() +"</a>");
-						$nav2.append($a1);
+		if(h3Num > 0){
+			$nav = $("<nav id='article-scrollspy' class='navbar navbar-light bg-light' ></nav>");
+			$title = $("<a class='navbar-brand' href='#'><b>"+ h3.eq(0).html() + "</b></a>");
+			$nav.append($title);
+			//Iterate all h3
+			if(h3Num > 1){
+				for(var i = 1; i < h3Num; i++ ){
+					$nav1 = $("<nav class='nav nav-pills flex-column'></nav>");
+					$a = $("<a class='nav-link' href='#"+ h3.eq(i).attr("id") +"'>"+ h3.eq(i).html() +"</a>");
+					$nav1.append($a);
+					var h4 = h3.eq(i).children("h4");
+					var h4Num = h3.eq(i).children("h4").length;
+					if(h4Num > 0){
+						$nav2 = $("<nav class='nav nav-pills flex-column'></nav>");
+						for(var j = 0; j < h4Num; j++){
+							$a1 = $("<a class='nav-link ml-3 my-1' href='#"+ h4.eq(j).attr("id") +"'>"+ h4.eq(j).html() +"</a>");
+							$nav2.append($a1);
+						}
+						$nav1.append($nav2);
 					}
-					$nav1.append($nav2);
+					$nav.append($nav1);
 				}
-				$nav.append($nav1);
 			}
+			$colum1.append($nav);
+			$row.append($colum1);
+			$row.append($colum2);
+			$main.append($row);
+		}else{
+			$main.append($html);
 		}
-		$colum1.append($nav);
-		$row.append($colum1);
-		$row.append($colum2);
-		$main.append($row);
 	}
 </script>
 </head>
@@ -278,7 +282,7 @@
 						<h3 class="blog-post-title" th:text="${article.title}" th:id="${article.id}" style="cursor:pointer;" onclick="titleClick(this)"></h3>
 						<p class="blog-post-meta">
 							<th:block th:text="${article.lastModifyTimeView}"></th:block>
-							&nbsp;by
+							by
 							<a href="#" th:text="${article.author.name}"></a>
 							<th:block th:each="badge:${article.badges}" th:switch="${badge.colorView}">
 								<span th:case="BLUE" class="badge badge-primary" th:text="${badge.name}"></span>

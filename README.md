@@ -77,3 +77,10 @@ Controller design
 >>5. Get blog statistic for admin representation.
 >>6. Go to Admin controller.
 
+* [AdminController](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/java/ca/seanforfun/blog/controller/AdminController.java)
+>1. Get blog access data.
+>2. Get blog articles infromation.
+>3. Get comments information.
+>4. Get Friend's link information.
+>5. Get Blog & Server information.
+

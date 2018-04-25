@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
@@ -47,14 +48,16 @@ public interface ArticleMapper {
 	public List<Badge> getBadgesByAritcleId(@Param("aid") Integer aid);
 
 	@Results(value = {
+			@Result(property = "id", column = "id"),
 			@Result(property = "title", column = "title"),
 			@Result(property = "hit", column = "hit"),
 			@Result(property = "abst", column = "abst"),
 			@Result(property = "content", column = "content"),
 			@Result(property = "author", column = "uid", javaType = User.class, one = @One(select = "ca.seanforfun.blog.dao.UserMapper.getUserById")),
 			@Result(property = "lastModifyTime", column = "lastmodifytime"),
+			@Result(property = "accessTime", column = "accessTime"),
 			@Result(property = "badges", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getBadgesByAritcleId")) })
-	@Select("SELECT id, title, hit, lastmodifytime, uid, abst, content FROM article WHERE id=#{id};")
+	@Select("SELECT id, title, hit, lastmodifytime, uid, abst, content, accessTime FROM article WHERE id=#{id};")
 	public Article getArticleById(Long id);
 
 	@Cacheable("articleNumByCategory")
@@ -85,4 +88,7 @@ public interface ArticleMapper {
 	
 	@Select("SELECT id,path FROM image WHERE aid = #{aid}")
 	public List<Image> getImagesByArticleId(@Param("aid") Long aid);
+
+	@Update("UPDATE article SET accessTime = accessTime + 1 WHERE id = #{id}")
+	public void updateAccesstimeById(Long articleId);
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ca.seanforfun.blog.dao.ArticleMapper;
 import ca.seanforfun.blog.exception.SeanForFunException;
@@ -37,11 +38,20 @@ public class ArticleService implements ArticleEbi{
 	}
 
 	@Override
+	@Transactional
 	public Article getArticleById(Long id) {
+		// Get Ariticle information.
 		Article article =  articleMapper.getArticleById(id);
 		if(null == article){
 			throw new SeanForFunException("Article not read error....");
 		}
+		
+		//Update Article accessTime.
+		Long articleId = article.getId();
+		if(null == articleId){
+			throw new SeanForFunException("Article id error...");
+		}
+		articleMapper.updateAccesstimeById(articleId);
 		return article;
 	}
 

@@ -101,6 +101,13 @@ public class Article {
 	private String lastModifyTimeView;
 	private String publishTimeView;
 	
+	/**
+	 * name: accessTime
+	 * type: Long 
+	 * @Description: The number of the article be viewed.
+	 */
+	private Long accessTime;
+	
 	public Long getId() {
 		return id;
 	}
@@ -184,5 +191,11 @@ public class Article {
 	}
 	public void setImages(List<Image> images) {
 		this.images = images;
+	}
+	public Long getAccessTime() {
+		return accessTime;
+	}
+	public void setAccessTime(Long accessTime) {
+		this.accessTime = accessTime;
 	}
 }

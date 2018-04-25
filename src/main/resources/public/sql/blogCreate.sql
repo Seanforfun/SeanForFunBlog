@@ -56,7 +56,8 @@ CREATE TABLE article(
 	uid BIGINT NOT NULL,
 	FOREIGN KEY(uid) REFERENCES USER(id),
 	abst TEXT NOT NULL,
-	content TEXT NOT NULL
+	content TEXT NOT NULL,
+	accessTime bigint not null default 0
 );
 
 #Intermediate article_badge
