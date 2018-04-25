@@ -5,6 +5,7 @@ package ca.seanforfun.blog.model.entity.entity;
  * @version 1.0
  */
 public class Access {
+	public static final Integer MAX_SAVE_ITEMS = 100;
 	/**
 	 * name: id
 	 * type: Long 

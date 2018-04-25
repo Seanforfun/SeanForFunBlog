@@ -4,6 +4,7 @@ import java.util.Properties;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+
 import ca.seanforfun.blog.model.entity.config.BlogInfo;
 import ca.seanforfun.blog.utils.PropertiesUtil;
 
@@ -14,7 +15,6 @@ import ca.seanforfun.blog.utils.PropertiesUtil;
  */
 @Configuration
 public class AccessTimeRunner implements CommandLineRunner {
-
 	@Override
 	public void run(String... args) throws Exception {
 		//Read access statistic data from properties file.

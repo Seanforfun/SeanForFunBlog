@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.seanforfun.blog.dao.AccessMapper;
+import ca.seanforfun.blog.model.entity.entity.Access;
 import ca.seanforfun.blog.service.ebi.AccessEbi;
 
 /**
@@ -21,7 +22,11 @@ public class AccessService implements AccessEbi {
 	@Override
 	@Transactional
 	public void createDailyAccess(Long accessNum) {
+		Long count = accessMapper.getTotelCount();
+		if(count > Access.MAX_SAVE_ITEMS){
+			Long id = accessMapper.getOldestId();
+			accessMapper.deleteOldAccessinfo(id);
+		}
 		accessMapper.createDailyAccessInfo(accessNum, System.currentTimeMillis() - HOUR);
 	}
-
 }
