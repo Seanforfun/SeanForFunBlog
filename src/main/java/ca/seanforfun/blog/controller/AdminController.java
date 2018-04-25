@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,11 +16,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import ca.seanforfun.blog.config.runner.CategoryRunner;
 import ca.seanforfun.blog.exception.SeanForFunException;
 import ca.seanforfun.blog.model.entity.config.ConfigBean;
 import ca.seanforfun.blog.model.entity.config.SqlInfo;
 import ca.seanforfun.blog.model.entity.config.SysInfo;
 import ca.seanforfun.blog.model.entity.entity.Access;
+import ca.seanforfun.blog.model.entity.entity.Category;
 import ca.seanforfun.blog.model.entity.entity.User;
 import ca.seanforfun.blog.service.ebo.AccessService;
 import ca.seanforfun.blog.service.ebo.ArticleService;
@@ -47,15 +51,19 @@ public class AdminController {
 	@RequestMapping("/toAdmin")
 	public ModelAndView toAdminPage(ModelAndView mv, HttpSession session,
 			HttpServletRequest request) throws SQLException {
+		User loginUser = (User) session.getAttribute("loginUser");
+		if (null == loginUser){
+			mv.setViewName("redirect:/tologin");
+			return mv;
+		}
+		if (null == loginUser.getId()) {
+			throw new SeanForFunException("Login information error...");
+		}
 		// Get yesterday's blog access data.
 		Access access = accessService.getYesterdayAccessInfo();
 		mv.addObject("access", access);
 
 		// Get blog articles infromation.
-		User loginUser = (User) session.getAttribute("loginUser");
-		if (null == loginUser || null == loginUser.getId()) {
-			throw new SeanForFunException("Login information error...");
-		}
 		Integer articleNum = articleService.getCountByUid(loginUser.getId());
 		mv.addObject("articleNum", articleNum);
 
@@ -64,6 +72,7 @@ public class AdminController {
 		// Get Friend's link information.
 		Integer linkCount = linkService.getLinkCount();
 		mv.addObject("linkCount", linkCount);
+		
 		// Get Blog & Server information.
 		Properties props = System.getProperties();
 		sysInfo.setCountry(request.getLocale().getDisplayCountry());
@@ -77,6 +86,16 @@ public class AdminController {
 		sysInfo.setDatabaseName(metaData.getDatabaseProductName());
 		sysInfo.setDatabaseVersion(metaData.getDatabaseProductVersion());
 		sysInfo.setDatabaseDriverName(metaData.getDriverName());
+		mv.addObject("sysInfo", sysInfo);
+		
+		//Add category inforamtion
+		Map<Category, List<Category>> adminCategoryMap = CategoryRunner.getAdminCategoryMap();
+		if(null == adminCategoryMap || adminCategoryMap.size() <= 0){
+			throw new SeanForFunException("Blog Category setting error....");
+		}else {
+			mv.addObject("pacategory", adminCategoryMap);
+		}
+		
 		mv.setViewName("admin/admin.html");
 		return mv;
 	}
