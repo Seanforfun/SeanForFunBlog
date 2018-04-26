@@ -54,7 +54,7 @@ public class LoginController {
 		String loginIp = getIpAddr(request);
 		//Set a token and check the token
 		if(null != rememberToken && rememberToken.equals(MD5Utils.md5(loginIp + configBean.getRememberSalt()))){
-			mv.setViewName("redirect:/toAdmin");
+			mv.setViewName("redirect:/admin/toAdmin");
 			return mv;
 		}
 		// Dispatcher to login page.
@@ -92,7 +92,7 @@ public class LoginController {
 
 		// Update user information
 		userService.loginUpdate(loginUser.getId(), loginIp);
-		mv.setViewName("redirect:/toAdmin");
+		mv.setViewName("redirect:/admin/toAdmin");
 		return mv;
 	}
 }

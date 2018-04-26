@@ -34,6 +34,7 @@ import ca.seanforfun.blog.service.ebo.LinkService;
  * @version 1.0
  */
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
 	@Autowired
 	private ConfigBean configBean;
@@ -51,7 +52,7 @@ public class AdminController {
 	@RequestMapping("/toAdmin")
 	public ModelAndView toAdminPage(ModelAndView mv, HttpSession session,
 			HttpServletRequest request) throws SQLException {
-		// TODO Use AOP to replace the login check.
+		// Use Interceptor to replace the login check.
 		User loginUser = (User) session.getAttribute("loginUser");
 		if (null == loginUser){
 			mv.setViewName("redirect:/tologin");
