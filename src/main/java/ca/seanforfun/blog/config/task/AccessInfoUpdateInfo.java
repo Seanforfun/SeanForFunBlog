@@ -34,7 +34,7 @@ public class AccessInfoUpdateInfo {
 	 * @Description: Write daily access information to db every night at 12:00:00.
 	 * @Return: void
 	 */
-	@Scheduled(cron="* * 0 * * ?")
+	@Scheduled(cron="0 0 0 * * ?")
 	public void updateDailyAccessToDb(){
 		// TODO Write value to database.
 		accessService.createDailyAccess(BlogInfo.oneDayAccessTime.get());

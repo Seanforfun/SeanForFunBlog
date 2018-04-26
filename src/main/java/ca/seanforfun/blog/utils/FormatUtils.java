@@ -40,3 +40,4 @@ public class FormatUtils {
 		return df.format(money);
 	}
 }
+
