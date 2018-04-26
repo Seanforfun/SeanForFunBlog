@@ -22,7 +22,6 @@ import ca.seanforfun.blog.model.entity.config.BlogInfo;
 import ca.seanforfun.blog.model.entity.config.ConfigBean;
 import ca.seanforfun.blog.model.entity.config.SqlInfo;
 import ca.seanforfun.blog.model.entity.config.SysInfo;
-import ca.seanforfun.blog.model.entity.entity.Access;
 import ca.seanforfun.blog.model.entity.entity.Category;
 import ca.seanforfun.blog.model.entity.entity.User;
 import ca.seanforfun.blog.service.ebo.AccessService;
@@ -52,6 +51,7 @@ public class AdminController {
 	@RequestMapping("/toAdmin")
 	public ModelAndView toAdminPage(ModelAndView mv, HttpSession session,
 			HttpServletRequest request) throws SQLException {
+		// TODO Use AOP to replace the login check.
 		User loginUser = (User) session.getAttribute("loginUser");
 		if (null == loginUser){
 			mv.setViewName("redirect:/tologin");
@@ -102,6 +102,20 @@ public class AdminController {
 		}
 		
 		mv.setViewName("admin/admin.html");
+		return mv;
+	}
+	
+	@RequestMapping("/toWrite")
+	public ModelAndView toWriteBlog(ModelAndView mv){
+		// TODO Use AOP to replace the login check.
+		Map<Category, List<Category>> adminCategoryMap = CategoryRunner.getAdminCategoryMap();
+		if(null == adminCategoryMap || adminCategoryMap.size() <= 0){
+			throw new SeanForFunException("Blog Category setting error....");
+		}else {
+			mv.addObject("pacategory", adminCategoryMap);
+		}
+		
+		mv.setViewName("admin/write.html");
 		return mv;
 	}
 

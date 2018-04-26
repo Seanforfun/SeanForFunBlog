@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/images/icon/seanforfun.ico">
+	<script type="text/javascript" src="/jquery/jquery-2.1.0.js"></script>
+
+    <title>Write Blog</title>
+
+    <!-- Bootstrap core CSS -->
+	<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/bootstrap/css/dashboard.css" rel="stylesheet">
+    <script type="text/javascript">
+    	$(function(){
+    		$(".hover-class").hover(function() {
+    			$(this).attr("style", "color: #000;background-color:#fff;padding-left: 0px;padding-right: 0px;");
+    		}, function() {
+    			$(this).attr("style", "color: #fff;background-color:#343A40;padding-left: 0px;padding-right: 0px;");
+    		});
+    		
+    		$("#github").click(function(){
+    			window.location.href="https://github.com/Seanforfun";
+    		})
+    	})
+    </script>
+  </head>
+
+  <body>
+    <div th:replace="include/titleAdmin :: titleAdmin"></div>
+
+    <div class="container-fluid">
+      <div class="row">
+    	<div th:replace="include/categoryAdmin :: categoryAdmin"></div>
+
+        <main class="col-md-11 ml-sm-auto col-lg-11 pt-3 px-4">
+	          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+	            <h1 class="h1 font-italic">
+	            	<strong>
+	            		Write Blog
+	            	</strong>
+	            </h1>
+	            <div class="btn-toolbar mb-2 mb-md-0">
+	              <button id="github" class="btn btn-sm btn-outline-secondary">
+	                <span data-feather="github"></span>
+	                	Seanforfun
+	              </button>
+	            </div>
+	          </div>
+			
+	         <div class="row">
+	         	
+	    	</div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+	<script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="/bootstrap/assets/js/vendor/holder.min.js"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+  </body>
+</html>
