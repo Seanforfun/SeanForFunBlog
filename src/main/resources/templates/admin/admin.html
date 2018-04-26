@@ -134,17 +134,76 @@
 	          </div>
 	          
 	           <div class="col-md-6">
-	           <h2 class="h2 font-italic">
-	           		<span data-feather="info" style="width: 30px;height: 30px;margin-bottom: 7px;"></span>
-	            	<strong>
-	            		Abstract
-	            	</strong>
-	            </h2>
-	          <div class="table-responsive">
-	            	
+		           <h2 class="h2 font-italic">
+	           			<span data-feather="info" style="width: 30px;height: 30px;margin-bottom: 7px;"></span>
+		            	<strong>
+		            		Abstract
+		            	</strong>
+		            </h2>
+		            <div class="row">
+		            	<div class="col-5" style="margin-left: 1rem;">
+						    <div class="card text-white bg-dark mb-3">
+								  <div class="card-body" style="margin-top: 0px;padding-top: 0.5rem;padding-bottom: 0.5rem;">
+								  	<div class="row">
+								  		<div class="col-6 text-left" style="margin-top: 1rem;">
+								  			<span data-feather="file-text" style="width: 50px;height: 50px;margin-bottom: 7px;"></span>
+								  		</div>
+									    <div class="card-text text-right col-6" style="font-size: 1.5rem;margin-top: 0px;">
+									    	Published&nbsp;
+									    	<div  style="font-size: 2rem;"><strong th:text="${articleNum}"></strong></div>
+									    	Blogs
+									    </div>
+								    </div>
+								 </div>
+							</div>
+						    <div class="card text-white bg-dark mb-3">
+								  <div class="card-body" style="margin-top: 0px;padding-top: 0.5rem;padding-bottom: 0.5rem;">
+								  	<div class="row">
+								  		<div class="col-6 text-left" style="margin-top: 1rem;">
+								  			<span data-feather="eye" style="width: 50px;height: 50px;margin-bottom: 7px;"></span>
+								  		</div>
+									    <div class="card-text text-right col-6" style="font-size: 1.5rem;margin-top: 0px;">
+									    	Viewed&nbsp;
+									    	<div  style="font-size: 2rem;"><strong th:text="${access}"></strong></div>
+									    	times today
+									    </div>
+								    </div>
+								 </div>
+							</div>
+						</div>
+						<div class="col-5" style="margin-left: 1rem;">
+							 <div class="card text-white bg-dark mb-3">
+								  <div class="card-body" style="margin-top: 0px;padding-top: 0.5rem;padding-bottom: 0.5rem;">
+								  	<div class="row">
+								  		<div class="col-6 text-left" style="margin-top: 1rem;">
+								  			<span data-feather="message-square" style="width: 50px;height: 50px;margin-bottom: 7px;"></span>
+								  		</div>
+									    <div class="card-text text-right col-6" style="font-size: 1.5rem;margin-top: 0px;">
+									    	Received&nbsp;
+									    	<div  style="font-size: 2rem;"><strong>0</strong></div>
+									    	Comments
+									    </div>
+								    </div>
+								 </div>
+							</div>
+							 <div class="card text-white bg-dark mb-3">
+								  <div class="card-body" style="margin-top: 0px;padding-top: 0.5rem;padding-bottom: 0.5rem;">
+								  	<div class="row">
+								  		<div class="col-6 text-left" style="margin-top: 1rem;">
+								  			<span data-feather="link" style="width: 50px;height: 50px;margin-bottom: 7px;"></span>
+								  		</div>
+									    <div class="card-text text-right col-6" style="font-size: 1.5rem;margin-top: 0px;">
+									    	Linked&nbsp;
+									    	<div  style="font-size: 2rem;"><strong th:text="${linkCount}"></strong></div>
+									    	websites
+									    </div>
+								    </div>
+								 </div>
+							</div>
+						</div>
+					</div>
 	          </div>
-	          </div>
-	          </div>
+	    	</div>
         </main>
       </div>
     </div>

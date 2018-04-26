@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ca.seanforfun.blog.config.runner.CategoryRunner;
 import ca.seanforfun.blog.exception.SeanForFunException;
+import ca.seanforfun.blog.model.entity.config.BlogInfo;
 import ca.seanforfun.blog.model.entity.config.ConfigBean;
 import ca.seanforfun.blog.model.entity.config.SqlInfo;
 import ca.seanforfun.blog.model.entity.config.SysInfo;
@@ -47,7 +48,7 @@ public class AdminController {
 	private SysInfo sysInfo;
 	@Autowired
 	private SqlInfo sqlInfo;
-
+	
 	@RequestMapping("/toAdmin")
 	public ModelAndView toAdminPage(ModelAndView mv, HttpSession session,
 			HttpServletRequest request) throws SQLException {
@@ -60,7 +61,9 @@ public class AdminController {
 			throw new SeanForFunException("Login information error...");
 		}
 		// Get yesterday's blog access data.
-		Access access = accessService.getYesterdayAccessInfo();
+		//	 Access access = accessService.getYesterdayAccessInfo();
+		//Get view time today.
+		Long access = BlogInfo.oneDayAccessTime.get();
 		mv.addObject("access", access);
 
 		// Get blog articles infromation.

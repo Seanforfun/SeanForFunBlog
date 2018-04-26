@@ -36,6 +36,8 @@ Interfaces demos
 ![article](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/readme/article.png)
 * login page:
 ![login](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/readme/login.png)
+* Terminal page:
+![terminal](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/readme/admin_terminal.png)
 
 DataBase design
 ======================================
@@ -78,7 +80,7 @@ Controller design
 >>6. Go to Admin controller.
 
 * [AdminController](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/java/ca/seanforfun/blog/controller/AdminController.java)
->1. Get blog access data.
+>1. Get blog today's access data.
 >2. Get blog articles infromation.
 >3. Get comments information.
 >4. Get Friend's link information.
