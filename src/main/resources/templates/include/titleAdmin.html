@@ -1,0 +1,25 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+	<th:block th:fragment="titleAdmin">
+		<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-1">
+	      <a class="navbar-brand col-sm-1 col-md-1 mr-0  font-italic" th:href="${session.loginUser.url}" style="background-color:#343A40;padding-left: 0;width: 14%;margin-left: 0;padding-left: 0">
+	      	<font size="4">
+	      		<span data-feather="home"></span>
+	      		<strong>SeanForFunBlog</strong>
+	      	</font>
+	      </a>
+	      <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+	      <ul class="navbar-nav px-3">
+	        <li class="nav-item text-nowrap">
+	          <a class="nav-link nav-font font-italic" href="/adminSignout">
+	          	<span data-feather="log-out"></span>
+	          	Sign out
+	          </a>
+	        </li>
+	      </ul>
+	    </nav>
+	</th:block>
+</body>
+</html>

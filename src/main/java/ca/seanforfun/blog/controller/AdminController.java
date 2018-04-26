@@ -86,6 +86,8 @@ public class AdminController {
 		sysInfo.setDatabaseName(metaData.getDatabaseProductName());
 		sysInfo.setDatabaseVersion(metaData.getDatabaseProductVersion());
 		sysInfo.setDatabaseDriverName(metaData.getDriverName());
+		sysInfo.setProjectName(configBean.getName());
+		sysInfo.setProjectVersion(configBean.getVersion());
 		mv.addObject("sysInfo", sysInfo);
 		
 		//Add category inforamtion

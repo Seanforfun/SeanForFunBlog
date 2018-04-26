@@ -21,11 +21,18 @@ public class ConfigBean {
 	public String version;
 	public Integer maxArticlePerPage;
 	public String rememberSalt;
+	public String name;
 	public String getRememberSalt() {
 		return rememberSalt;
 	}
 	public void setRememberSalt(String rememberSalt) {
 		this.rememberSalt = rememberSalt;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getAuthor() {
 		return author;

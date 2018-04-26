@@ -1,0 +1,26 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+	<th:block th:fragment="categoryAdmin">
+		 <nav class="col-sm-1 col-md-1 d-none d-md-block bg-dark sidebar mr-0" style="width: 14%;">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">
+                  <span data-feather="home"></span>
+                  <strong class="nav-font font-italic">SeanForFunBlog<span class="sr-only">(current)</span></strong>
+                </a>
+              </li>
+              <li class="nav-item" th:each="category:${pacategory}"  style="margin-bottom: 10px;margin-top: 10px">
+                <a class="nav-link hover-class" th:href="${category.key.link}" style="color:#fff;background-color:#343A40;padding-left: 0px;padding-right: 0px;">
+                  <span th:data-feather="${category.key.icon}"></span>
+                  <font size="3">
+                  	<strong class="nav-font font-italic" th:text="${category.key.name}"></strong>
+                  </font>
+                </a>
+              </li>
+        </nav>
+	</th:block>
+</body>
+</html>

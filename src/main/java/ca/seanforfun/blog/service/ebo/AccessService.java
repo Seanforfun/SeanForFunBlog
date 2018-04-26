@@ -33,6 +33,12 @@ public class AccessService implements AccessEbi {
 
 	@Override
 	public Access getYesterdayAccessInfo() {
+		Long accessCount = accessMapper.getTotelCount();
+		if(accessCount.equals(0L)){
+			Access tempAccess = new Access();
+			tempAccess.setDayAccessNum(0L);
+			return tempAccess;
+		}
 		Access access = accessMapper.getNewestAccessInfo();
 		if(null == access){
 			throw new SeanForFunException("Get access information error...");
