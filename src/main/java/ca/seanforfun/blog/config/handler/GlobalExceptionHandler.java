@@ -18,11 +18,12 @@ public class GlobalExceptionHandler implements HandlerExceptionResolver {
 	public ModelAndView resolveException(HttpServletRequest request,
 			HttpServletResponse response, Object handler, Exception ex) {
 		if(ex instanceof SeanForFunException){
-			System.out.println(ex.getStackTrace());
+			// TODO Add log.
+			ex.printStackTrace();
 		}
 		else{
 			// Check the state of server and redirect to error page.
-			System.out.println(ex.getStackTrace());
+			ex.printStackTrace();
 		}
 		return null;
 	}
