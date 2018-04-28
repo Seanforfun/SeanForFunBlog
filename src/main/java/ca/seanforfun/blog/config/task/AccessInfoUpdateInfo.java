@@ -38,7 +38,7 @@ public class AccessInfoUpdateInfo {
 	public void updateDailyAccessToDb(){
 		// TODO Write value to database.
 		accessService.createDailyAccess(BlogInfo.oneDayAccessTime.get());
-		
+		BlogInfo.oneDayAccessTime.set(0L);
 		Properties statistic = PropertiesUtil.getClasspathProperties("properties/access.properties");
 		//Clear values in properties file.
 		PropertiesUtil.setClasspathProperties(statistic, "properties/access.properties", "com.seanforfun.blog.access.day", "0");
