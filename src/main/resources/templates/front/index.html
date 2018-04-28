@@ -121,11 +121,17 @@
 		$main.empty();
 		var articles = data.articles;
 		var article_num = articles.length;
+		
 		for(var i = 0; i < article_num; i++){
-			var article = articles[i];					
-			$blogPostDiv = $("<div class='blog-post'></div>");
+			var article = articles[i];
+			$blogPostDiv = $("<div class='card' style='margin-bottom: 15px;' th:each='article:${articles}'></div>");
+			if(null != article.images && 0 != article.images.length){
+				$image = $("<img class='card-img-top' src='"+ article.images[0].path +"' alt='Cover image' style='height: 220px;'>");
+			}
+			$blogPostDiv.append($image);
+			$cardDiv = $("<div class='card-body'></div>");
 			$h3 = $("<h3 class='blog-post-title' id='"+ article.id +"' style='cursor:pointer;' onclick='titleClick(this)'>"+ article.title +"</h3>");
-			$blogPostDiv.append($h3);
+			$cardDiv.append($h3);
 			$p = $("<p class='blog-post-meta'></p>");
 			$p.html(article.lastModifyTimeView + "&nbsp;by ");
 			//Should be modified.
@@ -165,9 +171,10 @@
 				}
 				$p.append($badge);
 			}
-			$blogPostDiv.append($p);
+			$cardDiv.append($p);
 			$pAbs = $("<p>"+article.abst+"</p>");
-			$blogPostDiv.append($pAbs);
+			$cardDiv.append($pAbs);
+			$blogPostDiv.append($cardDiv);
 			$main.append($blogPostDiv);
 		}
 		//Update the pagination information.
@@ -278,9 +285,11 @@
 			<div class="row">
 				<div class="col-md-8 blog-main">
 					<!-- Single Post -->
-					<div class="blog-post" th:each="article:${articles}">
-						<h3 class="blog-post-title" th:text="${article.title}" th:id="${article.id}" style="cursor:pointer;" onclick="titleClick(this)"></h3>
-						<p class="blog-post-meta">
+					<div class="card" style="margin-bottom: 15px;" th:each="article:${articles}">
+					  <img th:if="${article.images != null && not #lists.isEmpty(article.images)}" class="card-img-top" th:src="${article.images[0].path}" alt="Cover image" style="height: 220px;">
+					  <div class="card-body">
+					    <h3 class="blog-post-title" th:text="${article.title}" th:id="${article.id}" style="cursor:pointer;" onclick="titleClick(this)"></h3>
+					    <p class="blog-post-meta">
 							<th:block th:text="${article.lastModifyTimeView}"></th:block>
 							by
 							<a href="#" th:text="${article.author.name}"></a>
@@ -295,7 +304,8 @@
 								<span th:case="INFO" class="badge badge-info" th:text="${badge.name}"></span>
 							</th:block>
 						</p>
-						<p th:text="${article.abst}"></p>
+					    <p th:text="${article.abst}"></p>
+					  </div>
 					</div>
 					<!-- /.blog-post -->
 	
