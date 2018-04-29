@@ -73,6 +73,7 @@ public interface ArticleMapper {
 			@Result(property = "content", column = "content"),
 			@Result(property = "author", column = "uid", javaType = User.class, one = @One(select = "ca.seanforfun.blog.dao.UserMapper.getUserById")),
 			@Result(property = "lastModifyTime", column = "lastmodifytime"),
+			@Result(property = "images", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getImagesByArticleId")),
 			@Result(property = "badges", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getBadgesByAritcleId")) })
 	@Select("SELECT id, title, abst, uid, lastmodifytime FROM article WHERE TYPE = #{type} ORDER BY lastmodifytime LIMIT #{current}, #{perpage}")
 	public List<Article> getArticalByCategoryId(Integer categoryId,

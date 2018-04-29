@@ -81,8 +81,59 @@
 				$.ajax({
 					url:link,
 					success:function(data){
-						changeArticleIndexCb(data, category_id);
-					}				
+						// Check and remove the scrollspy
+						userInfo = data.userVo;
+						$("#article-scrollspy").parent().remove();
+						if(typeof $("aside").attr("class") == 'undefined'){
+							changeArticleIndexCb(data, category_id);
+							$(".blog-main").attr("style", "");
+							//Add the aside
+							$rowDiv = $("#mainRow");
+							$aside = $("<aside class='col-md-4 blog-sidebar'></aside>");
+							$introDiv = $("<div class='p-3 mb-3 rounded'></div>");
+							$center = $("<center></center>");
+							$h4 = $("<h4 class='font-italic'>About Me</h4>");
+							$center.append($h4);
+							$img = $("<img src='" + userInfo.pic + "' height='60px' width='60px' class='rounded-circle'>")
+							$center.append($img);
+							$nameH5 = $("<h5 class='font-italic' th:text="+userInfo.name+"'></h5>");
+							$center.append($nameH5);
+							$bioP = $("<p class='mb-0 font-italic font-weight-bold'>" +userInfo.bio+ "</p>");
+							$center.append($bioP);
+							$introDiv.append($center);
+							$intro = $("<p class='mb-0'>"+userInfo.intro+"</p>")
+							$introDiv.append($intro);
+							$aside.append($introDiv);
+							
+							$archivesDiv = $("<div class='p-3' th:fragment='archives'></div>");
+							$h4 = $("<h4 class='font-italic'>Archives</h4>");
+							$archivesDiv.append($h4);
+							$ol = $("<ol class='list-unstyled mb-0'></ol>")
+							//TODO must rewrite here
+							$li = $("<li><a href=''#'>March 2014</a></li>")
+							$ol.append($li);
+							$archivesDiv.append($ol);
+							$aside.append($archivesDiv);
+							
+							links = data.links;
+							if(null != links && links.length != 0){
+								$linkDiv = $("<div class='p-3'></div>")
+								$h4 = $("<h4 class='font-italic'>Recommand Links</h4>")
+								$linkDiv.append($h4);
+								$ol = $("<ol class='list-unstyled'></ol>");
+								for(var i = 0; i < links.length; i++){
+									link = links[i];
+									$li = $("<li></li>");
+									$a = $("<a href='"+link.link+"'>"+link.name+"</a>");
+									$li.append($a);
+									$ol.append($li);
+								}
+								$linkDiv.append($ol);
+								$aside.append($linkDiv);
+							}
+							$rowDiv.append($aside);
+						}
+					}		
 				})
 			}
 		});
@@ -115,6 +166,7 @@
 	}
 	
 	function changeArticleIndexCb(data, id){
+		$(".blog-main").attr("class","col-md-8 blog-main");
 		var category_id = id;
 		//Refresh the article part.
 		var $main = $(".blog-main"); 
@@ -127,8 +179,8 @@
 			$blogPostDiv = $("<div class='card' style='margin-bottom: 15px;' th:each='article:${articles}'></div>");
 			if(null != article.images && 0 != article.images.length){
 				$image = $("<img class='card-img-top' src='"+ article.images[0].path +"' alt='Cover image' style='height: 220px;'>");
+				$blogPostDiv.append($image);
 			}
-			$blogPostDiv.append($image);
 			$cardDiv = $("<div class='card-body'></div>");
 			$h3 = $("<h3 class='blog-post-title' id='"+ article.id +"' style='cursor:pointer;' onclick='titleClick(this)'>"+ article.title +"</h3>");
 			$cardDiv.append($h3);
@@ -229,7 +281,7 @@
 		$("#carouselExampleIndicators").remove();
 		var $main = $("main");
 		$main.empty();
-		$row = $("<div class='row'></div>")
+		$row = $("<div class='row' id='mainRow'></div>")
 		$colum1 = $("<div class='col-md-2' style='position:fixed;margin-left: 0%;'></div>");
 		$colum2 = $("<div class='col-md-9 blog-main' style='margin-left: 27%;' ></div>");
 		
@@ -282,7 +334,7 @@
 		<br />
 
 		<main role="main" class="container">
-			<div class="row">
+			<div class="row" id="mainRow">
 				<div class="col-md-8 blog-main">
 					<!-- Single Post -->
 					<div class="card" style="margin-bottom: 15px;" th:each="article:${articles}">
