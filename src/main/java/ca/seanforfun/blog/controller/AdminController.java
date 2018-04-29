@@ -108,7 +108,7 @@ public class AdminController {
 	
 	@RequestMapping("/toWrite")
 	public ModelAndView toWriteBlog(ModelAndView mv){
-		// TODO Use AOP to replace the login check.
+		//Add admin category information.
 		Map<Category, List<Category>> adminCategoryMap = CategoryRunner.getAdminCategoryMap();
 		if(null == adminCategoryMap || adminCategoryMap.size() <= 0){
 			throw new SeanForFunException("Blog Category setting error....");
@@ -116,6 +116,13 @@ public class AdminController {
 			mv.addObject("pacategory", adminCategoryMap);
 		}
 		
+		//Add front catefory information for setting article belonging.
+		Map<Category, List<Category>> frontCategoryMap = CategoryRunner.getFrontCategoryMap();
+		if(null == frontCategoryMap || frontCategoryMap.size() <= 0){
+			throw new SeanForFunException("Blog Category setting error....");
+		}else {
+			mv.addObject("pfacategory", frontCategoryMap);
+		}
 		mv.setViewName("admin/write.html");
 		return mv;
 	}
