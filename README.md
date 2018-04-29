@@ -39,7 +39,7 @@ Interfaces demos
 * Terminal page:
 ![terminal](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/readme/admin_terminal.png)
 * Writing page:
-![terminal](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/readme/writing.png)
+![writing](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/readme/write.png)
 
 DataBase design
 ======================================
