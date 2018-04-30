@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,14 +48,19 @@ public class ArticleController {
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public ModelAndView updateArticle(ModelAndView mv,
-			@ModelAttribute(value = "article") Article article,
+			@Validated @ModelAttribute(value = "article") Article article,
 			BindingResult bindingResult,
 			@RequestParam("coverImage") MultipartFile coverImage,
 			String isPublic, String allowComments, String badgeInfo) {
 		// Validation check
-		System.out.println(article.getCid());
-		System.out.println(article.getContent());
-		System.out.println(article.getAbst());
+		if(bindingResult.hasFieldErrors()){
+			mv.addObject("article", article);
+			mv.setViewName("forward:/admin/toWrite");
+			return mv;
+		}
+		System.out.println("1:" + article.getCid());
+		System.out.println("2:" + article.getContent());
+		System.out.println("3:" + article.getAbst());
 
 		// Toggle switch information save.
 		if (isPublic != null && isPublic.equals("on")) {
@@ -70,12 +76,16 @@ public class ArticleController {
 		}
 
 		// Resolve badge infomation
-		if (null != badgeInfo) {
+		if (null != badgeInfo && badgeInfo.trim().length() != 0) {
 			String[] badges = badgeInfo.split(" ");
 			Integer badgeLength = badges.length;
-			if (badgeLength % 2 != 0) {
+			if (badgeLength == 0 || badgeLength % 2 != 0) {
 				// TODO Add validation error
-
+				System.out.println("111111111111111111111111");
+				System.out.println("111111111111111111111111");
+				System.out.println("111111111111111111111111");
+				System.out.println("111111111111111111111111");
+				throw new SeanForFunException();
 			}
 			List<Badge> badgeList = new ArrayList<Badge>();
 			for (int i = 0; i < badgeLength; i += 2) {
@@ -84,7 +94,7 @@ public class ArticleController {
 				if (!Badge.colorMap.values().contains(
 						badges[i + 1].toUpperCase())) {
 					// TODO Validation error.
-
+					
 				} else {
 					badge.setColor(Badge.colorReverseMap.get(badges[i + 1].toUpperCase()));
 				}
@@ -98,6 +108,9 @@ public class ArticleController {
 		if (!coverImage.isEmpty()) {
 			
 		}
+		
+		// Current article is only saved not published.
+		article.setPublish(Article.ARTICLE_NOT_PUBLISH);
 
 		// Save the article into database
 		return mv;
