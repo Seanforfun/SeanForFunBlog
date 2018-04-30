@@ -16,6 +16,10 @@ public class Article {
 	public static final Integer ARTICAL_PRIVATE = 1;
 	private static final String ARTICAL_PUBLIC_VIEW = "public";
 	private static final String ARTICAL_PRIVATE_VIEW = "private";
+	public static final Integer ARTICLE_PUBLISH = 1;
+	public static final Integer ARTICLE_NOT_PUBLISH = 0;
+	public static final Integer ARTICLE_ALLOW_COMMENTS = 1;
+	public static final Integer ARTICLE_DONT_ALLOW_COMMENTS = 0;
 	public static final Map<Integer, String> articleTypeMap  = new HashMap<>();
 	static{
 		articleTypeMap.put(ARTICAL_PRIVATE, ARTICAL_PRIVATE_VIEW);
@@ -30,7 +34,7 @@ public class Article {
 	/**
 	 * name: title
 	 * type: String 
-	 * @Description: 
+	 * @Description: Title of currrent article.
 	 */
 	private String title;
 	/**
@@ -86,7 +90,7 @@ public class Article {
 	 * name: abst
 	 * type: String 
 	 * @Description: Abstract of current artical.
-	 * Can be null.
+	 * Not null.
 	 */
 	private String abst;
 	/**
@@ -96,6 +100,15 @@ public class Article {
 	 */
 	private String content;
 	private List<Image> images;
+	private Integer publish;
+	
+	/**
+	 * name: allowComments
+	 * type: Integer 
+	 * @Description: If current article allows comments.
+	 * 0 - Don't allow 1-allow
+	 */
+	private Integer allowComments;
 	
 	private String typeView;
 	private String lastModifyTimeView;
@@ -108,6 +121,12 @@ public class Article {
 	 */
 	private Long accessTime;
 	
+	public Integer getAllowComments() {
+		return allowComments;
+	}
+	public void setAllowComments(Integer allowComments) {
+		this.allowComments = allowComments;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -197,5 +216,11 @@ public class Article {
 	}
 	public void setAccessTime(Long accessTime) {
 		this.accessTime = accessTime;
+	}
+	public Integer getPublish() {
+		return publish;
+	}
+	public void setPublish(Integer publish) {
+		this.publish = publish;
 	}
 }

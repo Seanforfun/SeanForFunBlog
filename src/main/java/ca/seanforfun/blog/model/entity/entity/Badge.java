@@ -28,6 +28,7 @@ public class Badge {
 	public static final String COLOR_INFO_VIEW = "INFO";
 	
 	public static final Map<Integer, String> colorMap = new HashMap<>();
+	public static final Map<String, Integer> colorReverseMap = new HashMap<>();
 	static{
 		colorMap.put(COLOR_BLUE, COLOR_BLUE_VIEW);
 		colorMap.put(COLOR_GREY, COLOR_GREY_VIEW);
@@ -37,6 +38,15 @@ public class Badge {
 		colorMap.put(COLOR_WHITE, COLOR_WHITE_VIEW);
 		colorMap.put(COLOR_BLACK, COLOR_BLACK_VIEW);
 		colorMap.put(COLOR_INFO, COLOR_INFO_VIEW);
+		
+		colorReverseMap.put(COLOR_BLUE_VIEW, COLOR_BLUE);
+		colorReverseMap.put(COLOR_GREY_VIEW, COLOR_GREY);
+		colorReverseMap.put(COLOR_GREEN_VIEW, COLOR_GREEN);
+		colorReverseMap.put(COLOR_RED_VIEW, COLOR_RED);
+		colorReverseMap.put(COLOR_YELLOW_VIEW, COLOR_YELLOW);
+		colorReverseMap.put(COLOR_WHITE_VIEW, COLOR_WHITE);
+		colorReverseMap.put(COLOR_BLACK_VIEW, COLOR_BLACK);
+		colorReverseMap.put(COLOR_INFO_VIEW, COLOR_INFO);
 	}
 	/**
 	 * name: id

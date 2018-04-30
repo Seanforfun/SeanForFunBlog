@@ -103,29 +103,37 @@
     </script>
     <script type="text/javascript">
 	  $(function() {
-	      editormd("my-editormd", {//注意1：这里的就是上面的DIV的id属性值
+	      editormd("my-editormd", {//??1:????????DIV?id???
 	    	  width   : "100%",
 	           height  : 640,
 	           //markdown : md,
 	           codeFold : true,
 	           syncScrolling : "single",
-	           //你的lib目录的路径
+	           //??lib?????
 	           path    : "/lib/",
-	           imageUpload: true,//关闭图片上传功能
+	           imageUpload: true,//????????
 	           imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-	           theme: "eclipse",//工具栏主题
-	           previewTheme: "eclipse",//预览主题
-	           editorTheme: "eclipse",//编辑主题
+	           theme: "eclipse",//?????
+	           previewTheme: "eclipse",//????
+	           editorTheme: "eclipse",//????
 	           emoji: false,
 	           taskList: true, 
 	           tocm: true,         // Using [TOCM]
-	           tex: true,                   // 开启科学公式TeX语言支持，默认关闭
-	           flowChart: true,             // 开启流程图支持，默认关闭
-	           sequenceDiagram: true,       // 开启时序/序列图支持，默认关闭,
-	          //这个配置在simple.html中并没有，但是为了能够提交表单，使用这个配置可以让构造出来的HTML代码直接在第二个隐藏的textarea域中，方便post提交表单。
+	           tex: true,                   // ??????TeX????,????
+	           flowChart: true,             // ???????,????
+	           sequenceDiagram: true,       // ????/?????,????,
+	          //?????simple.html????,??????????,??????????????HTML???????????textarea??,??post?????
 	           saveHTMLToTextarea : true
 	      });
 	  });
+	  
+	  /* function publish(){
+		  $("form:eq(0)").submit();
+	  } */
+	  
+	  function save(){
+		  $("form:eq(0)").submit();
+	  }
 	</script>
   </head>
 
@@ -150,16 +158,17 @@
 	              </button>
 	            </div>
 	          </div>
-			
+	          
+			<form action="/article/update" method="post" enctype="multipart/form-data">
 	         <div class="row">
 	         	<div class="col-md-10 ml-sm-auto col-lg-10" style="padding-left: 0px;">
 	         		<div class="row">
 	         			<div class="input-group col-7" style="margin-left: 10px;">
-						  <input type="text" class="form-control" placeholder="Title(Required)" aria-label="Title(Required)" aria-describedby="basic-addon1">
+						  <input type="text" name="title" class="form-control" placeholder="Title(Required)" aria-label="Title(Required)" aria-describedby="basic-addon1">
 						</div>
 						
 		         		<div class="input-group col-4 " style="float: right; margin-top:0px; margin-bottom:0px; margin-right: 30px; width: 200px">
-					      <select class="custom-select" id="inlineFormCustomSelect">
+					      <select class="custom-select" name="cid" id="inlineFormCustomSelect">
 					        <option selected>Category</option>
 					        <th:block th:each="category:${pfacategory}">
 					        	<option th:value="${category.key.id}" th:text="${category.key.name}"></option>
@@ -171,11 +180,11 @@
 					    </div>
 				    </div>
 	         		<div id="my-editormd" style="margin-top: 10px;margin-left: 10px;">
-						<textarea id="my-editormd-markdown-doc" name="my-editormd-markdown-doc" ></textarea>
+						<textarea id="my-editormd-markdown-doc" name="content" ></textarea>
 						<textarea id="my-editormd-html-code" name="my-editormd-html-code" ></textarea>
 					</div>
-					<button type="button" class="btn btn-outline-dark" style="float: right;margin-right: 30px;width:80px;">Save</button>
-					<button type="button" class="btn btn-outline-dark" style="float: right;margin-right: 30px;width:80px;">Publish</button>
+					<button type="button" class="btn btn-outline-dark" style="float: right;margin-right: 30px;width:80px;" onclick="save()">Save</button>
+					<button type="button" class="btn btn-outline-dark" style="float: right;margin-right: 30px;width:80px;" onclick="publish()">Publish</button>
 	         	</div>
 	         	<div class="col-md-2 ml-sm-auto col-lg-2">
 	         		<div class="card">
@@ -187,7 +196,7 @@
 					  <div class="card-body" style="padding-bottom: 0px;">
 					    <label class="btn btn-default btn-file">
 					         <img src="/images/admin/upload.png" style="height:75px;width: auto;margin-left: 35%">
-					         <input type="file" style="display: none;">
+					         <input type="file" name="coverImage" style="display: none;">
 					    </label>
 					  </div>
 					</div>
@@ -204,7 +213,7 @@
 							</div>
 						  	<div class="col-6">
 						  		<label class="switch">
-								  <input type="checkbox">
+								  <input type="checkbox" name="allowComments">
 								  <span class="slider"></span>
 								</label>
 							</div>
@@ -215,7 +224,7 @@
 							</div>
 						  	<div class="col-6">
 						  		<label class="switch">
-								  <input type="checkbox">
+								  <input type="checkbox" name="isPublic">
 								  <span class="slider"></span>
 								</label>
 							</div>
@@ -228,7 +237,7 @@
 					    	Abstract
 					    </strong>
 					  </div>
-					  <textarea rows="5"></textarea>
+					  <textarea name="abst" rows="5"></textarea>
 					</div>
 	         		<div class="card" style="margin-top: 10px;">
 					  <div class="card-header">
@@ -236,10 +245,11 @@
 					    	Badge
 					    </strong>
 					  </div>
-					  <textarea rows="4" placeholder="Please add badges in form of: New Blue | Hot Red. "></textarea>
+					  <textarea rows="4" name="badgeInfo" placeholder="Please add badges in form of: New Blue Hot Red"></textarea>
 					</div>
 	         	</div>
 	    	</div>
+	    	</form>
         </main>
       </div>
     </div>
