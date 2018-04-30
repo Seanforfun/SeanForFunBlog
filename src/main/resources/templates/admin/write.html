@@ -132,6 +132,31 @@
 	  } */
 	  
 	  function save(){
+		  var file = document.getElementById('fileToUpload').files[0];
+		  var form = new FormData();
+		  form.append("image", file);
+		  
+		  $.ajax({
+			  async: false,
+			  crossDomain: true,
+			  url: "https://api.imgur.com/3/image",
+			  method: "POST",
+			  headers: {
+			      "Authorization": "Client-ID 38a56741057799f"
+			   },
+			   processData: false,
+			   contentType: false,
+			   mimeType: "multipart/form-data",
+			   data: form,
+			   success:function(response){
+					   obj = JSON.parse(response);
+					   var link = obj.data.link;
+					   var deleteHash = obj.data.deletehash;
+					   $("#imgurResponse").attr("value", link + ";;;;" + deleteHash);
+				   	   $("#fileToUpload").remove();
+			    }
+		  });
+		  
 		  $("form:eq(0)").submit();
 	  }
 	</script>
@@ -196,7 +221,8 @@
 					  <div class="card-body" style="padding-bottom: 0px;">
 					    <label class="btn btn-default btn-file">
 					         <img src="/images/admin/upload.png" style="height:75px;width: auto;margin-left: 35%">
-					         <input type="file" name="coverImage" style="display: none;">
+					         <input type="file" id="fileToUpload" name="coverImage" style="display: none;">
+					         <input type="hidden" value="" name="picInfo" id="imgurResponse">
 					    </label>
 					  </div>
 					</div>

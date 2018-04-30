@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import ca.seanforfun.blog.exception.SeanForFunException;
@@ -54,18 +52,14 @@ public class ArticleController {
 	public ModelAndView updateArticle(ModelAndView mv,
 			@Validated(value={ArticleWriteValidateGroup.class}) @ModelAttribute(value = "article") Article article,
 			BindingResult bindingResult,
-			@RequestParam("coverImage") MultipartFile coverImage,
-			String isPublic, String allowCmts, String badgeInfo, HttpSession session, Integer article_id) {
+			String isPublic, String allowCmts, String badgeInfo, HttpSession session, Integer article_id, String picInfo) {
 		// Validation check
 		if(bindingResult.hasFieldErrors()){
 			mv.addObject("article", article);
 			mv.addObject("badgeInfo", badgeInfo);
 			mv.addObject("isPublic", isPublic);
 			mv.addObject("allowComments", allowCmts);
-			
-			if(null != coverImage){
-				// TODO If coverImage is not empty, save image to imgur and return the path of getting the image.
-			}
+			mv.addObject("picInfo", picInfo);
 			mv.setViewName("forward:/admin/toWrite");
 			return mv;
 		}
@@ -87,9 +81,19 @@ public class ArticleController {
 			System.out.println(badgeInfo);
 			String[] badges = badgeInfo.split(" ");
 			Integer badgeLength = badges.length;
-			if (badgeLength == 0 || badgeLength % 2 != 0) {
-				// TODO Add validation error
-				throw new SeanForFunException();
+			if (badgeLength % 2 != 0) {
+				mv.addObject("article", article);
+				mv.addObject("badgeInfo", badgeInfo);
+				mv.addObject("isPublic", isPublic);
+				mv.addObject("allowComments", allowCmts);
+				if(picInfo != null){
+					String[] tokens = picInfo.split(";;;;");
+					mv.addObject("link", tokens[0]);
+					mv.addObject("removeHash", tokens[1]);
+				}
+				mv.addObject("picInfo", picInfo);
+				mv.setViewName("forward:/admin/toWrite");
+				return mv;
 			}
 			List<Badge> badgeList = new ArrayList<Badge>();
 			for (int i = 0; i < badgeLength; i += 2) {
@@ -108,11 +112,6 @@ public class ArticleController {
 		} else {
 			article.setBadges(null);
 		}
-
-		// TODO Save images to imgur.
-		if (!coverImage.isEmpty()) {
-			
-		}
 		
 		// Current article is only saved not published.
 		article.setPublish(Article.ARTICLE_NOT_PUBLISH);
@@ -123,8 +122,9 @@ public class ArticleController {
 		}else{
 			//TODO Update article information.
 		}
-		// Save the article into database
-		mv.setViewName("/admin/admin.html");
+		
+		//TODO Go to article management action.
+		mv.setViewName("");
 		return mv;
 	}
 
