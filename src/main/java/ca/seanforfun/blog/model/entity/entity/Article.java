@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import ca.seanforfun.blog.utils.FormatUtils;
 import ca.seanforfun.blog.validator.ArticleWriteValidateGroup;
@@ -105,6 +106,7 @@ public class Article {
 	 * @Description:Content of current article.
 	 */
 	@NotNull(groups={ArticleWriteValidateGroup.class})
+	@Size(min=1, groups={ArticleWriteValidateGroup.class})
 	private String content;
 	private List<Image> images;
 	/**

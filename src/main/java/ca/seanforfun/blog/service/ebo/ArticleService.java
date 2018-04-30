@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ca.seanforfun.blog.dao.ArticleMapper;
 import ca.seanforfun.blog.dao.BadgeMapper;
+import ca.seanforfun.blog.dao.ImageMapper;
 import ca.seanforfun.blog.exception.SeanForFunException;
 import ca.seanforfun.blog.model.entity.entity.Article;
 import ca.seanforfun.blog.model.entity.entity.Badge;
@@ -24,6 +25,8 @@ public class ArticleService implements ArticleEbi {
 	private ArticleMapper articleMapper;
 	@Autowired
 	private BadgeMapper badgeMapper;
+	@Autowired
+	private ImageMapper imageMapper;
 
 	@Override
 	public Integer getArticleTotalNum() {
@@ -90,7 +93,7 @@ public class ArticleService implements ArticleEbi {
 
 	@Override
 	@Transactional
-	public void saveArticle(Article article) {
+	public void saveArticle(Article article, String[] tokens) {
 		// Create new Article object in database.
 		articleMapper.createArticle(article.getTitle(), article.getCid(),
 				article.getType(), 0L, System.currentTimeMillis(), article
@@ -98,6 +101,10 @@ public class ArticleService implements ArticleEbi {
 						.getContent(), 0L, Article.ARTICLE_NOT_PUBLISH, article
 						.getAllowComments());
 		Long articleId = articleMapper.findLastInsertId();
+		
+		if(tokens != null && tokens.length == 2){
+			imageMapper.createImageByAid(tokens[0], tokens[1], articleId);
+		}
 		
 		// Save badges information in article_badge table.
 		if(null != article.getBadges()){

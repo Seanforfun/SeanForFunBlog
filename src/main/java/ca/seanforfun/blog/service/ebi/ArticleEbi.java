@@ -53,5 +53,5 @@ public interface ArticleEbi {
 	 * @Description:Create article or update article.
 	 * @Return: void
 	 */
-	void saveArticle(Article article);
+	void saveArticle(Article article,  String[] tokens);
 }

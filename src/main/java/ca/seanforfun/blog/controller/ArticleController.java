@@ -53,13 +53,21 @@ public class ArticleController {
 			@Validated(value={ArticleWriteValidateGroup.class}) @ModelAttribute(value = "article") Article article,
 			BindingResult bindingResult,
 			String isPublic, String allowCmts, String badgeInfo, HttpSession session, Integer article_id, String picInfo) {
+		String[] tokens = null;
+		if(picInfo != null){
+			tokens = picInfo.split(";;;;");
+		}
+		System.out.println(article.getContent());
 		// Validation check
 		if(bindingResult.hasFieldErrors()){
 			mv.addObject("article", article);
 			mv.addObject("badgeInfo", badgeInfo);
 			mv.addObject("isPublic", isPublic);
 			mv.addObject("allowComments", allowCmts);
-			mv.addObject("picInfo", picInfo);
+			if(null != tokens && tokens.length == 2){
+				mv.addObject("link", tokens[0]);
+				mv.addObject("removeHash", tokens[1]);
+			}
 			mv.setViewName("forward:/admin/toWrite");
 			return mv;
 		}
@@ -78,7 +86,6 @@ public class ArticleController {
 
 		// Resolve badge infomation
 		if (null != badgeInfo && badgeInfo.trim().length() != 0) {
-			System.out.println(badgeInfo);
 			String[] badges = badgeInfo.split(" ");
 			Integer badgeLength = badges.length;
 			if (badgeLength % 2 != 0) {
@@ -86,8 +93,7 @@ public class ArticleController {
 				mv.addObject("badgeInfo", badgeInfo);
 				mv.addObject("isPublic", isPublic);
 				mv.addObject("allowComments", allowCmts);
-				if(picInfo != null){
-					String[] tokens = picInfo.split(";;;;");
+				if(tokens != null && tokens.length == 2){
 					mv.addObject("link", tokens[0]);
 					mv.addObject("removeHash", tokens[1]);
 				}
@@ -118,7 +124,7 @@ public class ArticleController {
 		article.setAuthor((User) session.getAttribute("loginUser"));
 		
 		if(null == article_id){
-			articleService.saveArticle(article);
+			articleService.saveArticle(article, tokens);
 		}else{
 			//TODO Update article information.
 		}

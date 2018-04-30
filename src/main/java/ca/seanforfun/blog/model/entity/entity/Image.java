@@ -35,6 +35,18 @@ public class Image {
 	 * @Description: Album id.
 	 */
 	private Long alid;
+	/**
+	 * name: removeHash
+	 * type: String 
+	 * @Description:Used for remove image from imgur.
+	 */
+	private String removeHash;
+	public String getRemoveHash() {
+		return removeHash;
+	}
+	public void setRemoveHash(String removeHash) {
+		this.removeHash = removeHash;
+	}
 	public Long getAlid() {
 		return alid;
 	}
