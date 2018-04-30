@@ -3,6 +3,8 @@ package ca.seanforfun.blog.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -21,6 +23,7 @@ import ca.seanforfun.blog.model.entity.config.ConfigBean;
 import ca.seanforfun.blog.model.entity.entity.Article;
 import ca.seanforfun.blog.model.entity.entity.Badge;
 import ca.seanforfun.blog.model.entity.entity.Link;
+import ca.seanforfun.blog.model.entity.entity.User;
 import ca.seanforfun.blog.model.entity.vo.PaginationVo;
 import ca.seanforfun.blog.model.entity.vo.UserVo;
 import ca.seanforfun.blog.service.ebo.ArticleService;
@@ -52,13 +55,13 @@ public class ArticleController {
 			@Validated(value={ArticleWriteValidateGroup.class}) @ModelAttribute(value = "article") Article article,
 			BindingResult bindingResult,
 			@RequestParam("coverImage") MultipartFile coverImage,
-			String isPublic, String allowComments, String badgeInfo) {
+			String isPublic, String allowCmts, String badgeInfo, HttpSession session, Integer article_id) {
 		// Validation check
 		if(bindingResult.hasFieldErrors()){
 			mv.addObject("article", article);
 			mv.addObject("badgeInfo", badgeInfo);
 			mv.addObject("isPublic", isPublic);
-			mv.addObject("allowComments", allowComments);
+			mv.addObject("allowComments", allowCmts);
 			
 			if(null != coverImage){
 				// TODO If coverImage is not empty, save image to imgur and return the path of getting the image.
@@ -73,7 +76,7 @@ public class ArticleController {
 			article.setType(Article.ARTICAL_PRIVATE);
 		}
 
-		if (allowComments != null && allowComments.equals("on")) {
+		if (allowCmts != null && allowCmts.equals("on")) {
 			article.setAllowComments(Article.ARTICLE_ALLOW_COMMENTS);
 		} else {
 			article.setAllowComments(Article.ARTICLE_DONT_ALLOW_COMMENTS);
@@ -81,6 +84,7 @@ public class ArticleController {
 
 		// Resolve badge infomation
 		if (null != badgeInfo && badgeInfo.trim().length() != 0) {
+			System.out.println(badgeInfo);
 			String[] badges = badgeInfo.split(" ");
 			Integer badgeLength = badges.length;
 			if (badgeLength == 0 || badgeLength % 2 != 0) {
@@ -93,13 +97,14 @@ public class ArticleController {
 				badge.setName(badges[i]);
 				if (!Badge.colorMap.values().contains(
 						badges[i + 1].toUpperCase())) {
-					// TODO Validation error.
-					
+					//If color doesn't exist, set to COLOR_INFO
+					badge.setColor(Badge.COLOR_INFO);
 				} else {
 					badge.setColor(Badge.colorReverseMap.get(badges[i + 1].toUpperCase()));
 				}
 				badgeList.add(badge);
 			}
+			article.setBadges(badgeList);
 		} else {
 			article.setBadges(null);
 		}
@@ -111,8 +116,15 @@ public class ArticleController {
 		
 		// Current article is only saved not published.
 		article.setPublish(Article.ARTICLE_NOT_PUBLISH);
+		article.setAuthor((User) session.getAttribute("loginUser"));
 		
+		if(null == article_id){
+			articleService.saveArticle(article);
+		}else{
+			//TODO Update article information.
+		}
 		// Save the article into database
+		mv.setViewName("/admin/admin.html");
 		return mv;
 	}
 

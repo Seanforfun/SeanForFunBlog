@@ -48,4 +48,10 @@ public interface ArticleEbi {
 	 * @Return: Integer
 	 */
 	Integer getCountByUid(Long id);
+
+	/**
+	 * @Description:Create article or update article.
+	 * @Return: void
+	 */
+	void saveArticle(Article article);
 }

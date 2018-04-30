@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import ca.seanforfun.blog.utils.FormatUtils;
@@ -41,7 +40,6 @@ public class Article {
 	 * @Description: Title of currrent article.
 	 */
 	@NotNull(groups={ArticleWriteValidateGroup.class})
-	@NotEmpty(groups={ArticleWriteValidateGroup.class})
 	private String title;
 	/**
 	 * name: cid
@@ -100,7 +98,6 @@ public class Article {
 	 * Not null.
 	 */
 	@NotNull(groups={ArticleWriteValidateGroup.class})
-	@NotEmpty(groups={ArticleWriteValidateGroup.class})
 	private String abst;
 	/**
 	 * name: content
@@ -108,7 +105,6 @@ public class Article {
 	 * @Description:Content of current article.
 	 */
 	@NotNull(groups={ArticleWriteValidateGroup.class})
-	@NotEmpty(groups={ArticleWriteValidateGroup.class})
 	private String content;
 	private List<Image> images;
 	/**

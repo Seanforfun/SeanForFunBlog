@@ -27,6 +27,7 @@ Technical selections
 * Url style: Restful
 * Connection pool: [Druid](https://github.com/alibaba/druid)
 * Markdown to HTML converter: [showdown](https://github.com/showdownjs/showdown)
+* Comment plugin: [GITTALK](https://github.com/gitalk/gitalk)
 
 Interfaces demos
 ======================================
