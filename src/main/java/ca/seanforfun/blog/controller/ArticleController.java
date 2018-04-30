@@ -26,6 +26,7 @@ import ca.seanforfun.blog.model.entity.vo.UserVo;
 import ca.seanforfun.blog.service.ebo.ArticleService;
 import ca.seanforfun.blog.service.ebo.LinkService;
 import ca.seanforfun.blog.service.ebo.UserService;
+import ca.seanforfun.blog.validator.ArticleWriteValidateGroup;
 
 /**
  * @author SeanForFun E-mail:xiaob6@mcmaster.ca
@@ -48,20 +49,23 @@ public class ArticleController {
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public ModelAndView updateArticle(ModelAndView mv,
-			@Validated @ModelAttribute(value = "article") Article article,
+			@Validated(value={ArticleWriteValidateGroup.class}) @ModelAttribute(value = "article") Article article,
 			BindingResult bindingResult,
 			@RequestParam("coverImage") MultipartFile coverImage,
 			String isPublic, String allowComments, String badgeInfo) {
 		// Validation check
 		if(bindingResult.hasFieldErrors()){
 			mv.addObject("article", article);
+			mv.addObject("badgeInfo", badgeInfo);
+			mv.addObject("isPublic", isPublic);
+			mv.addObject("allowComments", allowComments);
+			
+			if(null != coverImage){
+				// TODO If coverImage is not empty, save image to imgur and return the path of getting the image.
+			}
 			mv.setViewName("forward:/admin/toWrite");
 			return mv;
 		}
-		System.out.println("1:" + article.getCid());
-		System.out.println("2:" + article.getContent());
-		System.out.println("3:" + article.getAbst());
-
 		// Toggle switch information save.
 		if (isPublic != null && isPublic.equals("on")) {
 			article.setType(Article.ARTICAL_PUBLIC);
@@ -81,10 +85,6 @@ public class ArticleController {
 			Integer badgeLength = badges.length;
 			if (badgeLength == 0 || badgeLength % 2 != 0) {
 				// TODO Add validation error
-				System.out.println("111111111111111111111111");
-				System.out.println("111111111111111111111111");
-				System.out.println("111111111111111111111111");
-				System.out.println("111111111111111111111111");
 				throw new SeanForFunException();
 			}
 			List<Badge> badgeList = new ArrayList<Badge>();
@@ -111,7 +111,7 @@ public class ArticleController {
 		
 		// Current article is only saved not published.
 		article.setPublish(Article.ARTICLE_NOT_PUBLISH);
-
+		
 		// Save the article into database
 		return mv;
 	}

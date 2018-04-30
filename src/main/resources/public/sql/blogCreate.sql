@@ -52,7 +52,7 @@ CREATE TABLE article(
 	#badge many to many relatioship
 	hit BIGINT NOT NULL,
 	lastmodifytime BIGINT NOT NULL,
-	publishTime BIGINT NOT NULL,
+	publishTime BIGINT,
 	uid BIGINT NOT NULL,
 	FOREIGN KEY(uid) REFERENCES USER(id),
 	abst TEXT NOT NULL,

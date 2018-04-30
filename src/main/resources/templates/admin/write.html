@@ -164,24 +164,23 @@
 	         	<div class="col-md-10 ml-sm-auto col-lg-10" style="padding-left: 0px;">
 	         		<div class="row">
 	         			<div class="input-group col-7" style="margin-left: 10px;">
-						  <input type="text" name="title" th:if="${article != null && article.title != null}" th:value="${article.title}" class="form-control" placeholder="Title(Required)" aria-label="Title(Required)" aria-describedby="basic-addon1">
-						  <input type="text" name="title" th:unless="${article != null && article.title != null}" class="form-control" placeholder="Title(Required)" aria-label="Title(Required)" aria-describedby="basic-addon1">
+						  <input type="text" name="title" th:value="${article?.title}" class="form-control"  placeholder="Title(Required)" aria-label="Title(Required)" aria-describedby="basic-addon1">
 						</div>
 						
 		         		<div class="input-group col-4 " style="float: right; margin-top:0px; margin-bottom:0px; margin-right: 30px; width: 200px">
 					      <select class="custom-select" name="cid" id="inlineFormCustomSelect">
-					        <option selected>Category</option>
+					        <option selected>Category(Required)</option>
 					        <th:block th:each="category:${pfacategory}">
-					        	<option th:value="${category.key.id}" th:text="${category.key.name}"></option>
+					        	<option th:value="${category.key.id}" th:text="${category.key.name}" th:selected="${category.key.id == article?.cid ? true:flase}"></option>
 					        	<th:block th:each="subcategory:${category.value}">
-						        	<option th:value="${subcategory.id}" th:text="${subcategory.name}"></option>
+						        	<option th:value="${subcategory.id}" th:text="${subcategory.name}" th:selected="${subcategory.id == article?.cid ? true:flase}"></option>
 					        	</th:block>
 					        </th:block>
 					      </select>
 					    </div>
 				    </div>
 	         		<div id="my-editormd" style="margin-top: 10px;margin-left: 10px;">
-						<textarea id="my-editormd-markdown-doc" name="content" ></textarea>
+						<textarea id="my-editormd-markdown-doc"  name="content" th:text="${article?.content}"></textarea>
 						<textarea id="my-editormd-html-code" name="my-editormd-html-code" ></textarea>
 					</div>
 					<button type="button" class="btn btn-outline-dark" style="float: right;margin-right: 30px;width:80px;" onclick="save()">Save</button>
@@ -214,7 +213,7 @@
 							</div>
 						  	<div class="col-6">
 						  		<label class="switch">
-								  <input type="checkbox" name="allowComments">
+								  <input type="checkbox" name="allowComments" th:checked="${allowComments == 'on'}">
 								  <span class="slider"></span>
 								</label>
 							</div>
@@ -225,7 +224,7 @@
 							</div>
 						  	<div class="col-6">
 						  		<label class="switch">
-								  <input type="checkbox" name="isPublic">
+								  <input type="checkbox" name="isPublic" th:checked="${isPublic == 'on'}">
 								  <span class="slider"></span>
 								</label>
 							</div>
@@ -238,7 +237,7 @@
 					    	Abstract
 					    </strong>
 					  </div>
-					  <textarea name="abst" rows="5"></textarea>
+					  <textarea name="abst" rows="5" th:text="${article?.abst}" placeholder="A good abstract is the best way to conclude an article!(Required)"></textarea>
 					</div>
 	         		<div class="card" style="margin-top: 10px;">
 					  <div class="card-header">
@@ -246,7 +245,7 @@
 					    	Badge
 					    </strong>
 					  </div>
-					  <textarea rows="4" name="badgeInfo" placeholder="Please add badges in form of: New Blue Hot Red"></textarea>
+					  <textarea rows="4" name="badgeInfo" th:text="${badgeInfo}" placeholder="Please add badges in form of: New Blue Hot Red"></textarea>
 					</div>
 	         	</div>
 	    	</div>

@@ -4,7 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import ca.seanforfun.blog.utils.FormatUtils;
+import ca.seanforfun.blog.validator.ArticleWriteValidateGroup;
 
 /**
  * @author SeanForFun E-mail:xiaob6@mcmaster.ca
@@ -36,12 +40,15 @@ public class Article {
 	 * type: String 
 	 * @Description: Title of currrent article.
 	 */
+	@NotNull(groups={ArticleWriteValidateGroup.class})
+	@NotEmpty(groups={ArticleWriteValidateGroup.class})
 	private String title;
 	/**
 	 * name: cid
 	 * type: Long 
 	 * @Description: Which category this article belongs to.
 	 */
+	@NotNull(groups={ArticleWriteValidateGroup.class})
 	private Long cid;
 	
 	/**
@@ -92,14 +99,24 @@ public class Article {
 	 * @Description: Abstract of current artical.
 	 * Not null.
 	 */
+	@NotNull(groups={ArticleWriteValidateGroup.class})
+	@NotEmpty(groups={ArticleWriteValidateGroup.class})
 	private String abst;
 	/**
 	 * name: content
 	 * type: String 
 	 * @Description:Content of current article.
 	 */
+	@NotNull(groups={ArticleWriteValidateGroup.class})
+	@NotEmpty(groups={ArticleWriteValidateGroup.class})
 	private String content;
 	private List<Image> images;
+	/**
+	 * name: publish
+	 * type: Integer 
+	 * @Description:If current article is published.
+	 * 1-published 0-not published
+	 */
 	private Integer publish;
 	
 	/**
