@@ -81,6 +81,66 @@
 				$.ajax({
 					url:link,
 					success:function(data){
+						var articles = data.articles;
+						var article_num = articles.length;
+						var carouselImageCount = 0;
+						
+						//1.Check if still exists carousel.
+						$carouselDiv = $("#carouselExampleIndicators"); 
+						$carouselDiv.empty();
+						
+						//2.Rewrite carousel.
+						$ol = $("<ol class='carousel-indicators'></ol>");
+						for(var i = 0; i < 3; i++){
+							$li = $("<li data-target='#carouselExampleIndicators' data-slide-to='"+ i +"'></li>");
+							if(i == 0){
+								$li.attr("class", "active");
+							}else{
+								$li.attr("class","")
+							}
+							$ol.append($li);
+						}
+						$carouselDiv.append($ol);
+						$carouselInnerDiv = $("<div class='carousel-inner'></div>");
+						for(var i = 0; i < article_num; i++){
+							var article = articles[i];
+							if(null != article.images && article.images.length >= 1){
+								var image = article.images[0];
+								$carouselItermDiv = $("<div class='carousel-item' index='"+carouselImageCount+"'></div>");
+								if(carouselImageCount == 0){
+									$carouselItermDiv.attr("class", "carousel-item active");
+								}
+								$img = $("<img class='d-block w-100' src='"+ image.path +"' height='250px' alt='"+image.id+"'>");
+								$carouselItermDiv.append($img);
+								carouselImageCount ++;
+								$captionDiv = $("<div class='carousel-caption d-none d-md-block'></div>");
+								$a = $("<a herf='javascript:void(0)'></a>");
+								$h3 = $("<h3 class='carouselTitle' id='"+article.id+"' style='color:black;cursor:pointer;'>"+article.title+"</h3>");
+								$a.append($h3);
+								$captionDiv.append($a);
+								$p = $("<p style='color:black;'>"+article.abst+"</p>");
+								$captionDiv.append($p);
+								$carouselItermDiv.append($captionDiv);
+								$carouselDiv.append($carouselItermDiv);
+								if(carouselImageCount == 3){
+									break;
+								}
+							}
+						}
+						$aPrev = $("<a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'></a>");
+						$spanIcon = $("<span class='carousel-control-prev-icon' aria-hidden='true'></span>");
+						$aPrev.append($spanIcon);
+						$spanText = $("<span class='sr-only'>Previous</span>")
+						$aPrev.append($spanText);
+						$carouselDiv.append($aPrev);
+						
+						$aNext = $("<a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'></a>");
+						$spanIcon = $("<span class='carousel-control-next-icon' aria-hidden='true'></span>");
+						$aNext.append($spanIcon);
+						$spanText = $("<span class='sr-only'>Next</span>")
+						$aNext.append($spanText);
+						$carouselDiv.append($aNext);
+						
 						// Check and remove the scrollspy
 						userInfo = data.userVo;
 						$("#article-scrollspy").parent().remove();
@@ -168,6 +228,7 @@
 	function changeArticleIndexCb(data, id){
 		$(".blog-main").attr("class","col-md-8 blog-main");
 		var category_id = id;
+		
 		//Refresh the article part.
 		var $main = $(".blog-main"); 
 		$main.empty();
@@ -270,15 +331,29 @@
 			url:"/article/" + article_id,				
 			success: function(data){
 				var content = data.content;
+				//Load the cover image path.
+				var image = data.images;
 				var contentHTML = converter.makeHtml(content);
-				getArticleByIdCb(contentHTML);
+				getArticleByIdCb(contentHTML, image);
 			}
 		});
 	}
 	
-	function getArticleByIdCb(content){
+	function getArticleByIdCb(content, image){
 		//Remove original elements in index.html and append the article.
-		$("#carouselExampleIndicators").remove();
+		$carouselDiv = $("#carouselExampleIndicators");
+		if(null != image && image.length > 0){
+			$carouselDiv.empty();
+			$carouselInnerDiv = $("<div class='carousel-inner'></div>");
+			$carouselItemDiv = $("<div class='carousel-item active'></div>");
+			$image = $("<img class='d-block w-100' height='250px' src='"+ image[0].path +"'>");
+			$carouselItemDiv.append($image);
+			$carouselInnerDiv.append($carouselItemDiv);
+			$carouselDiv.append($carouselInnerDiv);
+		}else{
+			$carouselDiv.empty();
+		}
+		
 		var $main = $("main");
 		$main.empty();
 		$row = $("<div class='row' id='mainRow'></div>")

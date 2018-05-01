@@ -2,6 +2,7 @@ package ca.seanforfun.blog.dao;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -12,9 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface ImageMapper {
-
-	//TODO Finish this part tomorrow!
-	@Insert("")
-	void createImageByAid(String path, String removeHash, Long articleId);
-	
+	@Insert("INSERT INTO image (path, aid, removehash) VALUES (#{path}, #{articleId}, #{removeHash})")
+	void createImageByAid(@Param("path") String path, @Param("removeHash") String removeHash, @Param("articleId") Long articleId);
 }

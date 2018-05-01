@@ -32,7 +32,7 @@ public interface ArticleMapper {
 	public Integer getArticalCount();
 
 	@Cacheable("articlePagination")
-	@Select("SELECT id, title, abst, uid, lastmodifytime FROM article WHERE TYPE = #{type} and publish = 1 ORDER BY lastmodifytime LIMIT #{current}, #{perpage}")
+	@Select("SELECT id, title, abst, uid, lastmodifytime FROM article WHERE TYPE = #{type} and publish = 1 ORDER BY lastmodifytime desc LIMIT #{current}, #{perpage}")
 	@Results(value = {
 			@Result(property = "id", column = "id"),
 			@Result(property = "title", column = "title"),
@@ -58,9 +58,13 @@ public interface ArticleMapper {
 			@Result(property = "author", column = "uid", javaType = User.class, one = @One(select = "ca.seanforfun.blog.dao.UserMapper.getUserById")),
 			@Result(property = "lastModifyTime", column = "lastmodifytime"),
 			@Result(property = "accessTime", column = "accessTime"),
-			@Result(property = "badges", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getBadgesByAritcleId")) })
-	@Select("SELECT id, title, hit, lastmodifytime, uid, abst, content, accessTime FROM article WHERE id=#{id};")
+			@Result(property = "badges", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getBadgesByAritcleId")),
+			@Result(property = "images", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getImageByAid"))})
+	@Select("SELECT id, title, hit, lastmodifytime, uid, abst, content, accessTime FROM article WHERE id=#{id}")
 	public Article getArticleById(Long id);
+	
+	@Select("SELECT path FROM image WHERE aid = #{id}")
+	public List<Image> getImageByAid(Long aid);
 
 	@Cacheable("articleNumByCategory")
 	@Select("select count(id) from article where cid = #{category}")
@@ -76,7 +80,7 @@ public interface ArticleMapper {
 			@Result(property = "lastModifyTime", column = "lastmodifytime"),
 			@Result(property = "images", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getImagesByArticleId")),
 			@Result(property = "badges", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getBadgesByAritcleId")) })
-	@Select("SELECT id, title, abst, uid, lastmodifytime FROM article WHERE TYPE = #{type} ORDER BY lastmodifytime LIMIT #{current}, #{perpage} where publish = 1")
+	@Select("SELECT id, title, abst, uid, lastmodifytime FROM article WHERE TYPE = #{type} and publish = 1 ORDER BY lastmodifytime desc LIMIT #{current}, #{perpage}")
 	public List<Article> getArticalByCategoryId(Integer categoryId,
 			@Param("current") Integer currentIndex,
 			@Param("perpage") Integer numPerPage, @Param("type") Integer type);
