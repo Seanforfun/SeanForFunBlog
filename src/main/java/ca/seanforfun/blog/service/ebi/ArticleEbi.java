@@ -56,4 +56,16 @@ public interface ArticleEbi {
 	 * @Return: Article
 	 */
 	Article createArticle(Article article, List<Image> imageList);
+
+	/**
+	 * @Description:Update article information according to id.
+	 * @Return: void
+	 */
+	void updateArticle(Article article);
+
+	/**
+	 * @Description:Publish an article.
+	 * @Return: void
+	 */
+	void publishArticle(Long id);
 }

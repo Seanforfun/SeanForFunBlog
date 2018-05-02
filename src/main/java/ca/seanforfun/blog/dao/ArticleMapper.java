@@ -62,10 +62,10 @@ public interface ArticleMapper {
 			@Result(property = "lastModifyTime", column = "lastmodifytime"),
 			@Result(property = "accessTime", column = "accessTime"),
 			@Result(property = "badges", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getBadgesByAritcleId")),
-			@Result(property = "images", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getImageByAid"))})
+			@Result(property = "images", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getImageByAid")) })
 	@Select("SELECT id, title, hit, lastmodifytime, uid, abst, content, cid, type, allowComments, accessTime FROM article WHERE id=#{id}")
 	public Article getArticleById(Long id);
-	
+
 	@Select("SELECT path FROM image WHERE aid = #{id}")
 	public List<Image> getImageByAid(Long aid);
 
@@ -106,14 +106,31 @@ public interface ArticleMapper {
 	public Long getArticleByUid(@Param("id") Long id);
 
 	@Insert("INSERT INTO article (title, cid, TYPE, hit, lastmodifytime, uid, abst, content, accessTime, publish, allowComments) VALUES (#{title}, #{cid}, #{type}, #{hit}, #{lastmodifytime}, #{uid}, #{abst}, #{content}, #{accessTime}, #{publish}, #{allowComments});")
-	public void createArticle(@Param("title") String title, @Param("cid") Long cid, @Param("type") Integer type,
-			@Param("hit") Long hit, @Param("lastmodifytime") Long lastmodifytime, @Param("uid") Long uid, @Param("abst") String abst,
-			@Param("content") String content, @Param("accessTime") Long accessTime, @Param("publish") Integer publish,
+	public void createArticle(@Param("title") String title,
+			@Param("cid") Long cid, @Param("type") Integer type,
+			@Param("hit") Long hit,
+			@Param("lastmodifytime") Long lastmodifytime,
+			@Param("uid") Long uid, @Param("abst") String abst,
+			@Param("content") String content,
+			@Param("accessTime") Long accessTime,
+			@Param("publish") Integer publish,
 			@Param("allowComments") Integer allowComments);
 
 	@Insert("INSERT INTO article_badge (aid, bid) VALUES(#{articleId}, #{badgeId})")
-	public void saveBagesInfo(@Param("articleId") Long articleId, @Param("badgeId") Long badgeId);
+	public void saveBagesInfo(@Param("articleId") Long articleId,
+			@Param("badgeId") Long badgeId);
 
 	@Select("select LAST_INSERT_ID()")
 	public Long findLastInsertId();
+
+	@Update("UPDATE article SET title = #{title}, cid = #{cid}, TYPE = #{TYPE}, lastmodifytime = #{lastmodifytime}, abst = #{abst}, content = #{content}, allowComments = #{allowComments} WHERE id = #{id}")
+	public void updateArticle(@Param("title") String title, @Param("cid") Long cid,
+			@Param("TYPE") Integer type,
+			@Param("lastmodifytime") Long lastmodifytime,
+			@Param("abst") String abst, @Param("content") String content,
+			@Param("allowComments") Integer allowComments, @Param("id") Long id);
+
+	@Update("UPDATE article SET publish = #{publish}, publishTime = #{publishTime} where id = #{id}")
+	public void updateArticlePublishById(@Param("id") Long id, @Param("publishTime") long currentTimeMillis,
+			@Param("publish") Integer articlePublish);
 }

@@ -103,30 +103,45 @@ public class ArticleService implements ArticleEbi {
 						.getAllowComments());
 		Long articleId = articleMapper.findLastInsertId();
 		article.setId(articleId);
-		
-		if(imageList != null && imageList.size() > 0){
-			for(Image image:imageList){
-				imageMapper.createImageByAid(image.getPath(), image.getRemoveHash(), articleId, image.getName());
+
+		if (imageList != null && imageList.size() > 0) {
+			for (Image image : imageList) {
+				imageMapper.createImageByAid(image.getPath(),
+						image.getRemoveHash(), articleId, image.getName());
 			}
 		}
-		
+
 		// Save badges information in article_badge table.
-		if(null != article.getBadges()){
+		if (null != article.getBadges()) {
 			List<Badge> badges = article.getBadges();
-			for(Badge b:badges){
+			for (Badge b : badges) {
 				String name = b.getName();
 				Integer color = b.getColor();
 				Long badgeId = null;
 				badgeId = badgeMapper.getBadgeByNameAndColor(name, color);
-				if(null == badgeId){
+				if (null == badgeId) {
 					badgeMapper.createBadge(name, color);
 					badgeId = badgeMapper.getLastInsertId();
 				}
 				articleMapper.saveBagesInfo(articleId, badgeId);
 			}
 		}
-		
+
 		return article;
+	}
+
+	@Override
+	@Transactional
+	public void updateArticle(Article article) {
+		articleMapper.updateArticle(article.getTitle(), article.getCid(),
+				article.getType(), System.currentTimeMillis(),
+				article.getAbst(), article.getContent(),
+				article.getAllowComments(), article.getId());
+	}
+
+	@Override
+	public void publishArticle(Long id) {
+		articleMapper.updateArticlePublishById(id, System.currentTimeMillis(), Article.ARTICLE_PUBLISH);
 	}
 
 }

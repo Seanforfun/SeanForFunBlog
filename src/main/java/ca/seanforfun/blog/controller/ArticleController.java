@@ -54,11 +54,11 @@ public class ArticleController {
 			ModelAndView mv,
 			@Validated(value = { ArticleWriteValidateGroup.class }) @ModelAttribute(value = "article") Article article,
 			BindingResult bindingResult, String isPublic, String allowCmts,
-			String badgeInfo, HttpSession session, Integer article_id,
-			String picInfo) {
+			String badgeInfo, HttpSession session, Long article_id,
+			String picInfo, String requestMethod) {
 		String[] tokens = null;
 		List<Image> imageList = null;
-
+		
 		if (picInfo != null) {
 			tokens = picInfo.split("&&&");
 			if (null != tokens && tokens.length >= 2) {
@@ -139,8 +139,14 @@ public class ArticleController {
 			article = articleService.createArticle(article, imageList);
 			mv.addObject("article", article);
 		} else {
-			// TODO Update article information.
-			
+			article.setId(article_id);
+			articleService.updateArticle(article);
+		}
+		
+		if(requestMethod != null && requestMethod.equals("publish")){
+			articleService.publishArticle(article.getId());
+			mv.setViewName("redirect:/admin/toManageArticle");
+			return mv;
 		}
 
 		// TODO Go to article management action.

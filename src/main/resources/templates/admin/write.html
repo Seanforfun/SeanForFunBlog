@@ -183,6 +183,15 @@
 		  }
 		  $("form:eq(0)").submit();
 	  }
+	  
+	  function publishArticle(){
+		  while(!allowSubmit){
+			  
+		  }
+		  $("#submitType").val("publish");
+		  alert($("#submitType").val());
+		  $("form:eq(0)").submit();
+	  }
 	</script>
   </head>
 
@@ -210,6 +219,7 @@
 	          
 			<form class="was-validated" action="/article/update" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="article_id" th:value="${article?.id}">
+			<input type="hidden" id="submitType" name="requestMethod" value="save">
 	         <div class="row">
 	         	<div class="col-md-10 ml-sm-auto col-lg-10" style="padding-left: 0px;">
 	         		<div class="row">
@@ -236,7 +246,7 @@
 					<div id="imagesUpload" style="margin-left: 10px;font-size:medium">
 						<span th:if="${imageList != null && not #lists.isEmpty(imageList)}" th:each="image:${imageList}" class='badge badge-light' th:text="${image.name}+':'+${image.path}"></span>
 					</div>
-					<button type="button" class="btn btn-outline-dark" style="float: right;margin-right: 30px;width:80px;" onclick="publish()">Publish</button>
+					<button type="button" class="btn btn-outline-dark" style="float: right;margin-right: 30px;width:80px;" onclick="publishArticle()">Publish</button>
 					<button type="button" class="btn btn-outline-dark" style="float: right;margin-right: 30px;width:80px;" onclick="save()">Save</button>
 					<button type="button" class="btn btn-outline-dark" style="float: right;margin-right: 30px;width:140px;" onclick="uploadImages()">Upload Images</button>
 	         	</div>
