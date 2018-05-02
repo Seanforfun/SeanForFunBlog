@@ -209,6 +209,7 @@
 	          </div>
 	          
 			<form class="was-validated" action="/article/update" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="article_id" th:value="${article?.id}">
 	         <div class="row">
 	         	<div class="col-md-10 ml-sm-auto col-lg-10" style="padding-left: 0px;">
 	         		<div class="row">

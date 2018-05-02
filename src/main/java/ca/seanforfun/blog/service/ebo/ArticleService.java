@@ -94,7 +94,7 @@ public class ArticleService implements ArticleEbi {
 
 	@Override
 	@Transactional
-	public void saveArticle(Article article, List<Image> imageList) {
+	public Article createArticle(Article article, List<Image> imageList) {
 		// Create new Article object in database.
 		articleMapper.createArticle(article.getTitle(), article.getCid(),
 				article.getType(), 0L, System.currentTimeMillis(), article
@@ -102,6 +102,7 @@ public class ArticleService implements ArticleEbi {
 						.getContent(), 0L, Article.ARTICLE_NOT_PUBLISH, article
 						.getAllowComments());
 		Long articleId = articleMapper.findLastInsertId();
+		article.setId(articleId);
 		
 		if(imageList != null && imageList.size() > 0){
 			for(Image image:imageList){
@@ -124,6 +125,8 @@ public class ArticleService implements ArticleEbi {
 				articleMapper.saveBagesInfo(articleId, badgeId);
 			}
 		}
+		
+		return article;
 	}
 
 }

@@ -51,8 +51,9 @@ public interface ArticleEbi {
 	Integer getCountByUid(Long id);
 
 	/**
+	 * @return 
 	 * @Description:Create article or update article.
-	 * @Return: void
+	 * @Return: Article
 	 */
-	void saveArticle(Article article, List<Image> imageList);
+	Article createArticle(Article article, List<Image> imageList);
 }

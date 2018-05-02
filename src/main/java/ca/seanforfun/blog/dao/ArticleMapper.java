@@ -54,13 +54,16 @@ public interface ArticleMapper {
 			@Result(property = "title", column = "title"),
 			@Result(property = "hit", column = "hit"),
 			@Result(property = "abst", column = "abst"),
+			@Result(property = "cid", column = "cid"),
 			@Result(property = "content", column = "content"),
+			@Result(property = "type", column = "type"),
+			@Result(property = "allowComments", column = "allowComments"),
 			@Result(property = "author", column = "uid", javaType = User.class, one = @One(select = "ca.seanforfun.blog.dao.UserMapper.getUserById")),
 			@Result(property = "lastModifyTime", column = "lastmodifytime"),
 			@Result(property = "accessTime", column = "accessTime"),
 			@Result(property = "badges", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getBadgesByAritcleId")),
 			@Result(property = "images", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getImageByAid"))})
-	@Select("SELECT id, title, hit, lastmodifytime, uid, abst, content, accessTime FROM article WHERE id=#{id}")
+	@Select("SELECT id, title, hit, lastmodifytime, uid, abst, content, cid, type, allowComments, accessTime FROM article WHERE id=#{id}")
 	public Article getArticleById(Long id);
 	
 	@Select("SELECT path FROM image WHERE aid = #{id}")
@@ -93,7 +96,7 @@ public interface ArticleMapper {
 	@Select("SELECT id, title,abst FROM article WHERE id IN (SELECT DISTINCT aid FROM image WHERE aid IS NOT NULL) and publish = 1 LIMIT 0, 3")
 	public List<Article> getArticalsWithImage();
 
-	@Select("SELECT id,path FROM image WHERE aid = #{aid}")
+	@Select("SELECT id,path,name FROM image WHERE aid = #{aid}")
 	public List<Image> getImagesByArticleId(@Param("aid") Long aid);
 
 	@Update("UPDATE article SET accessTime = accessTime + 1 WHERE id = #{id}")

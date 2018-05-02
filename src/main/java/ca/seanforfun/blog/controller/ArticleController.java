@@ -136,16 +136,18 @@ public class ArticleController {
 		article.setAuthor((User) session.getAttribute("loginUser"));
 
 		if (null == article_id) {
-			articleService.saveArticle(article, imageList);
+			article = articleService.createArticle(article, imageList);
+			mv.addObject("article", article);
 		} else {
 			// TODO Update article information.
+			
 		}
 
 		// TODO Go to article management action.
-		mv.setViewName("");
+		mv.setViewName("redirect:/admin/toWrite/" + article.getId());
 		return mv;
 	}
-
+	
 	// ---------------------------------------AJAX---------------------------------------------------------
 	@RequestMapping("/category/{category}/{pagenum}")
 	public @ResponseBody PaginationVo getArticlesByCategory(

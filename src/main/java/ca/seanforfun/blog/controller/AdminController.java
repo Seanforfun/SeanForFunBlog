@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,6 +23,8 @@ import ca.seanforfun.blog.model.entity.config.BlogInfo;
 import ca.seanforfun.blog.model.entity.config.ConfigBean;
 import ca.seanforfun.blog.model.entity.config.SqlInfo;
 import ca.seanforfun.blog.model.entity.config.SysInfo;
+import ca.seanforfun.blog.model.entity.entity.Article;
+import ca.seanforfun.blog.model.entity.entity.Badge;
 import ca.seanforfun.blog.model.entity.entity.Category;
 import ca.seanforfun.blog.model.entity.entity.User;
 import ca.seanforfun.blog.service.ebo.AccessService;
@@ -106,8 +109,8 @@ public class AdminController {
 		return mv;
 	}
 	
-	@RequestMapping("/toWrite")
-	public ModelAndView toWriteBlog(ModelAndView mv){
+	@RequestMapping(value={"/toWrite/{id}", "/toWrite"})
+	public ModelAndView toWriteBlog(ModelAndView mv, @PathVariable(name="id", required=false) String id){
 		//Add admin category information.
 		Map<Category, List<Category>> adminCategoryMap = CategoryRunner.getAdminCategoryMap();
 		if(null == adminCategoryMap || adminCategoryMap.size() <= 0){
@@ -123,7 +126,39 @@ public class AdminController {
 		}else {
 			mv.addObject("pfacategory", frontCategoryMap);
 		}
+		
+		if(null != id){
+			Long articleId = new Long(id);
+			Article article = articleService.getArticleById(articleId);
+			mv.addObject("article", article);
+			if(article.getAllowComments() == Article.ARTICLE_ALLOW_COMMENTS){
+				mv.addObject("allowComments", "on");
+			}else{
+				mv.addObject("allowComments", "off");
+			}
+			if(article.getType() == Article.ARTICAL_PUBLIC){
+				mv.addObject("isPublic", "on");
+			}else{
+				mv.addObject("isPublic", "off");
+			}
+			if(null != article.getImages()){
+				mv.addObject("imageList", article.getImages());
+			}
+			if(null != article.getBadges()){
+				StringBuilder sb = new StringBuilder();
+				for(Badge b:article.getBadges()){
+					sb.append(b.getName() + " ");
+					sb.append(b.getColorView() + " ");
+				}
+				mv.addObject("badgeInfo", sb.toString());
+			}
+		}
 		mv.setViewName("admin/write.html");
+		return mv;
+	}
+	
+	@RequestMapping("/toManageBlog")
+	public ModelAndView toManageBlog(ModelAndView mv){
 		return mv;
 	}
 
