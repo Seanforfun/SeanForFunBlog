@@ -121,12 +121,13 @@
 								$p = $("<p style='color:black;'>"+article.abst+"</p>");
 								$captionDiv.append($p);
 								$carouselItermDiv.append($captionDiv);
-								$carouselDiv.append($carouselItermDiv);
+								$carouselInnerDiv.append($carouselItermDiv);
 								if(carouselImageCount == 3){
 									break;
 								}
 							}
 						}
+						$carouselDiv.append($carouselInnerDiv);
 						$aPrev = $("<a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'></a>");
 						$spanIcon = $("<span class='carousel-control-prev-icon' aria-hidden='true'></span>");
 						$aPrev.append($spanIcon);
