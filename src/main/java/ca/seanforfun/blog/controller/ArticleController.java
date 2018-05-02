@@ -20,6 +20,7 @@ import ca.seanforfun.blog.exception.SeanForFunException;
 import ca.seanforfun.blog.model.entity.config.ConfigBean;
 import ca.seanforfun.blog.model.entity.entity.Article;
 import ca.seanforfun.blog.model.entity.entity.Badge;
+import ca.seanforfun.blog.model.entity.entity.Image;
 import ca.seanforfun.blog.model.entity.entity.Link;
 import ca.seanforfun.blog.model.entity.entity.User;
 import ca.seanforfun.blog.model.entity.vo.PaginationVo;
@@ -49,25 +50,38 @@ public class ArticleController {
 	private LinkService linkService;
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public ModelAndView updateArticle(ModelAndView mv,
-			@Validated(value={ArticleWriteValidateGroup.class}) @ModelAttribute(value = "article") Article article,
-			BindingResult bindingResult,
-			String isPublic, String allowCmts, String badgeInfo, HttpSession session, Integer article_id, String picInfo) {
+	public ModelAndView updateArticle(
+			ModelAndView mv,
+			@Validated(value = { ArticleWriteValidateGroup.class }) @ModelAttribute(value = "article") Article article,
+			BindingResult bindingResult, String isPublic, String allowCmts,
+			String badgeInfo, HttpSession session, Integer article_id,
+			String picInfo) {
 		String[] tokens = null;
-		if(picInfo != null){
-			tokens = picInfo.split(";;;;");
+		List<Image> imageList = null;
+
+		if (picInfo != null) {
+			tokens = picInfo.split("&&&");
+			if (null != tokens && tokens.length >= 2) {
+				imageList = new ArrayList<>();
+				for (int i = 1; i < tokens.length; i++) {
+					String token = tokens[i];
+					String[] imagesInfo = token.split(";;;;");
+					Image image = new Image();
+					image.setName(imagesInfo[0]);
+					image.setPath(imagesInfo[1]);
+					image.setRemoveHash(imagesInfo[2]);
+					imageList.add(image);
+				}
+			}
 		}
-		System.out.println(article.getContent());
 		// Validation check
-		if(bindingResult.hasFieldErrors()){
+		if (bindingResult.hasFieldErrors()) {
 			mv.addObject("article", article);
 			mv.addObject("badgeInfo", badgeInfo);
 			mv.addObject("isPublic", isPublic);
 			mv.addObject("allowComments", allowCmts);
-			if(null != tokens && tokens.length == 2){
-				mv.addObject("link", tokens[0]);
-				mv.addObject("removeHash", tokens[1]);
-			}
+			mv.addObject("imageList", imageList);
+			mv.addObject("picInfo", picInfo);
 			mv.setViewName("forward:/admin/toWrite");
 			return mv;
 		}
@@ -93,10 +107,7 @@ public class ArticleController {
 				mv.addObject("badgeInfo", badgeInfo);
 				mv.addObject("isPublic", isPublic);
 				mv.addObject("allowComments", allowCmts);
-				if(tokens != null && tokens.length == 2){
-					mv.addObject("link", tokens[0]);
-					mv.addObject("removeHash", tokens[1]);
-				}
+				mv.addObject("imageList", imageList);
 				mv.addObject("picInfo", picInfo);
 				mv.setViewName("forward:/admin/toWrite");
 				return mv;
@@ -107,10 +118,11 @@ public class ArticleController {
 				badge.setName(badges[i]);
 				if (!Badge.colorMap.values().contains(
 						badges[i + 1].toUpperCase())) {
-					//If color doesn't exist, set to COLOR_INFO
+					// If color doesn't exist, set to COLOR_INFO
 					badge.setColor(Badge.COLOR_INFO);
 				} else {
-					badge.setColor(Badge.colorReverseMap.get(badges[i + 1].toUpperCase()));
+					badge.setColor(Badge.colorReverseMap.get(badges[i + 1]
+							.toUpperCase()));
 				}
 				badgeList.add(badge);
 			}
@@ -118,18 +130,18 @@ public class ArticleController {
 		} else {
 			article.setBadges(null);
 		}
-		
+
 		// Current article is only saved not published.
 		article.setPublish(Article.ARTICLE_NOT_PUBLISH);
 		article.setAuthor((User) session.getAttribute("loginUser"));
-		
-		if(null == article_id){
-			articleService.saveArticle(article, tokens);
-		}else{
-			//TODO Update article information.
+
+		if (null == article_id) {
+			articleService.saveArticle(article, imageList);
+		} else {
+			// TODO Update article information.
 		}
-		
-		//TODO Go to article management action.
+
+		// TODO Go to article management action.
 		mv.setViewName("");
 		return mv;
 	}

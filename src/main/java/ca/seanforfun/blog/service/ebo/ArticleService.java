@@ -12,6 +12,7 @@ import ca.seanforfun.blog.dao.ImageMapper;
 import ca.seanforfun.blog.exception.SeanForFunException;
 import ca.seanforfun.blog.model.entity.entity.Article;
 import ca.seanforfun.blog.model.entity.entity.Badge;
+import ca.seanforfun.blog.model.entity.entity.Image;
 import ca.seanforfun.blog.service.ebi.ArticleEbi;
 
 /**
@@ -93,7 +94,7 @@ public class ArticleService implements ArticleEbi {
 
 	@Override
 	@Transactional
-	public void saveArticle(Article article, String[] tokens) {
+	public void saveArticle(Article article, List<Image> imageList) {
 		// Create new Article object in database.
 		articleMapper.createArticle(article.getTitle(), article.getCid(),
 				article.getType(), 0L, System.currentTimeMillis(), article
@@ -102,8 +103,10 @@ public class ArticleService implements ArticleEbi {
 						.getAllowComments());
 		Long articleId = articleMapper.findLastInsertId();
 		
-		if(tokens != null && tokens.length == 2){
-			imageMapper.createImageByAid(tokens[0], tokens[1], articleId);
+		if(imageList != null && imageList.size() > 0){
+			for(Image image:imageList){
+				imageMapper.createImageByAid(image.getPath(), image.getRemoveHash(), articleId, image.getName());
+			}
 		}
 		
 		// Save badges information in article_badge table.

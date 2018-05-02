@@ -3,6 +3,7 @@ package ca.seanforfun.blog.service.ebi;
 import java.util.List;
 
 import ca.seanforfun.blog.model.entity.entity.Article;
+import ca.seanforfun.blog.model.entity.entity.Image;
 
 /**
  * @author SeanForFun E-mail:xiaob6@mcmaster.ca
@@ -53,5 +54,5 @@ public interface ArticleEbi {
 	 * @Description:Create article or update article.
 	 * @Return: void
 	 */
-	void saveArticle(Article article,  String[] tokens);
+	void saveArticle(Article article, List<Image> imageList);
 }

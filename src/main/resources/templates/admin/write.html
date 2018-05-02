@@ -128,8 +128,10 @@
 	  /* function publish(){
 		  $("form:eq(0)").submit();
 	  } */
+	  var allowSubmit =true;
 	  
 	  function uploadImages(){
+		  allowSubmit = false;
 		  var suffixs = ["jpg", "png", "bmp", "jpeg"];
 		  var files = document.getElementById('fileToUpload').files;
 		  var fileNum = files.length;
@@ -141,6 +143,7 @@
 			  var type = filename.substring(iDot + 1);
 			  if(!suffixs.includes(type)){
 				  alert(filename + " is not a image file");
+				  continue;
 			  }
 			  
 			  var form = new FormData();
@@ -166,15 +169,18 @@
 						   $span = $("<span class='badge badge-light'>"+ filename + ":" + link+"</span>");
 						   $imageInfoDiv.append($span);
 						   var imageInfo = $("#imgurResponse").attr("value");
-						   imageInfo = imageInfo + "&&&" + link + ";;;;" + deleteHash;
+						   imageInfo = imageInfo + "&&&" +filename+";;;;"+ link + ";;;;" + deleteHash;
 						   $("#imgurResponse").attr("value", imageInfo);
-					   	  /*  $("#fileToUpload").remove(); */
 				    }
 			  });
 		  }
+		  allowSubmit = true;
 	  }
 	  
 	  function save(){
+		  while(!allowSubmit){
+			  
+		  }
 		  $("form:eq(0)").submit();
 	  }
 	</script>
@@ -226,7 +232,9 @@
 						<textarea id="my-editormd-markdown-doc"  name="content" th:text="${article?.content}"></textarea>
 						<textarea id="my-editormd-html-code" name="my-editormd-html-code" ></textarea>
 					</div>
-					<div id="imagesUpload" style="margin-left: 10px;font-size:medium"></div>
+					<div id="imagesUpload" style="margin-left: 10px;font-size:medium">
+						<span th:if="${imageList != null && not #lists.isEmpty(imageList)}" th:each="image:${imageList}" class='badge badge-light' th:text="${image.name}+':'+${image.path}"></span>
+					</div>
 					<button type="button" class="btn btn-outline-dark" style="float: right;margin-right: 30px;width:80px;" onclick="publish()">Publish</button>
 					<button type="button" class="btn btn-outline-dark" style="float: right;margin-right: 30px;width:80px;" onclick="save()">Save</button>
 					<button type="button" class="btn btn-outline-dark" style="float: right;margin-right: 30px;width:140px;" onclick="uploadImages()">Upload Images</button>
@@ -235,15 +243,14 @@
 	         		<div class="card">
 					  <div class="card-header">
 					  	<strong>
-					    	Upload Cover Image
+					    	Upload Image
 					    </strong>
 					  </div>
 					  <div class="card-body" style="padding-bottom: 0px;">
 					    <label class="btn btn-default btn-file">
-					         <img th:if="${link == null}" src="/images/admin/upload.png" style="height:75px;width: auto;margin-left: 35%">
-					         <img th:unless="${link == null}" th:src="${link}" style="height:75px;width: auto;margin-left: 35%">
+					         <img src="/images/admin/upload.png" style="height:75px;width: auto;margin-left: 35%">
 					         <input type="file" id="fileToUpload" name="coverImage" multiple="multiple">
-					         <input type="hidden" value="" name="picInfo" id="imgurResponse">
+					         <input type="hidden" th:value="${picInfo}" name="picInfo" id="imgurResponse">
 					    </label>
 					  </div>
 					</div>

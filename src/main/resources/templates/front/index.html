@@ -358,8 +358,8 @@
 		var $main = $("main");
 		$main.empty();
 		$row = $("<div class='row' id='mainRow'></div>")
-		$colum1 = $("<div class='col-md-2' style='position:fixed;margin-left: 0%;'></div>");
-		$colum2 = $("<div class='col-md-9 blog-main' style='margin-left: 27%;' ></div>");
+		$colum1 = $("<div class='col-3' style='margin-left: 0%;'></div>");
+		$colum2 = $("<div class='col-9 blog-main' style='' ></div>");
 		
 		$articleDiv = $("<div data-spy='scroll' data-target='#article-scrollspy' data-offset='0'></div>")
 		$html = $(content);
@@ -370,8 +370,10 @@
 		var h3Num = $html.parent().children("h3").length;
 		if(h3Num > 0){
 			$nav = $("<nav id='article-scrollspy' class='navbar navbar-light bg-light' ></nav>");
-			$title = $("<a class='navbar-brand' href='#'><b>"+ h3.eq(0).html() + "</b></a>");
-			$nav.append($title);
+			$ul = $("<ul></ul>");
+			$title = $("<li><a class='navbar-brand' href='#'><b>"+ h3.eq(0).html() + "</b></a><br></li>");
+			$ul.append($title);
+			$nav.append($ul);
 			//Iterate all h3
 			if(h3Num > 1){
 				for(var i = 1; i < h3Num; i++ ){

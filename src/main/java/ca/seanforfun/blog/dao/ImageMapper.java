@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface ImageMapper {
-	@Insert("INSERT INTO image (path, aid, removehash) VALUES (#{path}, #{articleId}, #{removeHash})")
-	void createImageByAid(@Param("path") String path, @Param("removeHash") String removeHash, @Param("articleId") Long articleId);
+	@Insert("INSERT INTO image (name, path, aid, removehash) VALUES (#{name}, #{path}, #{articleId}, #{removeHash})")
+	void createImageByAid(@Param("path") String path, @Param("removeHash") String removeHash, @Param("articleId") Long articleId, @Param("name") String name);
 }
