@@ -20,6 +20,7 @@ public class ConfigBean {
 	public String author;
 	public String version;
 	public Integer maxArticlePerPage;
+	public Integer maxManagePerPage;
 	public String rememberSalt;
 	public String name;
 	public String getRememberSalt() {
@@ -51,5 +52,11 @@ public class ConfigBean {
 	}
 	public void setMaxArticlePerPage(Integer maxArticlePerPage) {
 		this.maxArticlePerPage = maxArticlePerPage;
+	}
+	public Integer getMaxManagePerPage() {
+		return maxManagePerPage;
+	}
+	public void setMaxManagePerPage(Integer maxManagePerPage) {
+		this.maxManagePerPage = maxManagePerPage;
 	}
 }

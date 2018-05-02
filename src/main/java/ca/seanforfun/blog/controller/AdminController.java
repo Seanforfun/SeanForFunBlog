@@ -157,8 +157,18 @@ public class AdminController {
 		return mv;
 	}
 	
-	@RequestMapping("/toManageBlog")
-	public ModelAndView toManageBlog(ModelAndView mv){
+	@RequestMapping("/toManageBlog/{pageNum}")
+	public ModelAndView toManageBlog(ModelAndView mv, HttpSession session, @PathVariable("pageNum") Integer pageNum){
+		//Add category inforamtion
+		Map<Category, List<Category>> adminCategoryMap = CategoryRunner.getAdminCategoryMap();
+		if(null == adminCategoryMap || adminCategoryMap.size() <= 0){
+			throw new SeanForFunException("Blog Category setting error....");
+		}else {
+			mv.addObject("pacategory", adminCategoryMap);
+		}
+		
+		//TODO Get All article information from database.
+		List<Article> articleList = articleService.getPaginationArticleByUid(((User)session.getAttribute("loginUser")).getId(), configBean.getMaxManagePerPage(), pageNum);
 		return mv;
 	}
 

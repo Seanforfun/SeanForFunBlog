@@ -145,7 +145,7 @@ public class ArticleController {
 		
 		if(requestMethod != null && requestMethod.equals("publish")){
 			articleService.publishArticle(article.getId());
-			mv.setViewName("redirect:/admin/toManageArticle");
+			mv.setViewName("redirect:/admin/toManageBlog/0");
 			return mv;
 		}
 
