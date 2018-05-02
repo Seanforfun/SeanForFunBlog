@@ -129,32 +129,52 @@
 		  $("form:eq(0)").submit();
 	  } */
 	  
+	  function uploadImages(){
+		  var suffixs = ["jpg", "png", "bmp", "jpeg"];
+		  var files = document.getElementById('fileToUpload').files;
+		  var fileNum = files.length;
+		  //Check suffix
+		  for(var i = 0; i < fileNum; i++){
+			  var filename = files[i].name;
+			  var file = files[i];
+			  var iDot = filename.lastIndexOf(".");
+			  var type = filename.substring(iDot + 1);
+			  if(!suffixs.includes(type)){
+				  alert(filename + " is not a image file");
+			  }
+			  
+			  var form = new FormData();
+			  form.append("image", file);
+			  
+			  $.ajax({
+				  async: false,
+				  crossDomain: true,
+				  url: "https://api.imgur.com/3/image",
+				  method: "POST",
+				  headers: {
+				      "Authorization": "Client-ID 38a56741057799f"
+				   },
+				   processData: false,
+				   contentType: false,
+				   mimeType: "multipart/form-data",
+				   data: form,
+				   success:function(response){
+						   obj = JSON.parse(response);
+						   var link = obj.data.link;
+						   var deleteHash = obj.data.deletehash;
+						   $imageInfoDiv = $("#imagesUpload");
+						   $span = $("<span class='badge badge-light'>"+ filename + ":" + link+"</span>");
+						   $imageInfoDiv.append($span);
+						   var imageInfo = $("#imgurResponse").attr("value");
+						   imageInfo = imageInfo + "&&&" + link + ";;;;" + deleteHash;
+						   $("#imgurResponse").attr("value", imageInfo);
+					   	  /*  $("#fileToUpload").remove(); */
+				    }
+			  });
+		  }
+	  }
+	  
 	  function save(){
-		  var file = document.getElementById('fileToUpload').files[0];
-		  var form = new FormData();
-		  form.append("image", file);
-		  
-		  $.ajax({
-			  async: false,
-			  crossDomain: true,
-			  url: "https://api.imgur.com/3/image",
-			  method: "POST",
-			  headers: {
-			      "Authorization": "Client-ID 38a56741057799f"
-			   },
-			   processData: false,
-			   contentType: false,
-			   mimeType: "multipart/form-data",
-			   data: form,
-			   success:function(response){
-					   obj = JSON.parse(response);
-					   var link = obj.data.link;
-					   var deleteHash = obj.data.deletehash;
-					   $("#imgurResponse").attr("value", link + ";;;;" + deleteHash);
-				   	   $("#fileToUpload").remove();
-			    }
-		  });
-		  
 		  $("form:eq(0)").submit();
 	  }
 	</script>
@@ -182,17 +202,17 @@
 	            </div>
 	          </div>
 	          
-			<form action="/article/update" method="post" enctype="multipart/form-data">
+			<form class="was-validated" action="/article/update" method="post" enctype="multipart/form-data">
 	         <div class="row">
 	         	<div class="col-md-10 ml-sm-auto col-lg-10" style="padding-left: 0px;">
 	         		<div class="row">
 	         			<div class="input-group col-7" style="margin-left: 10px;">
-						  <input type="text" name="title" th:value="${article?.title}" class="form-control"  placeholder="Title(Required)" aria-label="Title(Required)" aria-describedby="basic-addon1">
+						  <input class="form-control is-invalid" type="text" name="title" th:value="${article?.title}"  placeholder="Title(Required)" aria-label="Title(Required)" aria-describedby="basic-addon1" required>
 						</div>
 						
-		         		<div class="input-group col-4 " style="float: right; margin-top:0px; margin-bottom:0px; margin-right: 30px; width: 200px">
-					      <select class="custom-select" name="cid" id="inlineFormCustomSelect">
-					        <option selected>Category(Required)</option>
+		         		<div class="input-group col-4 form-group" style="float: right; margin-top:0px; margin-bottom:0px; margin-right: 30px; width: 200px">
+					      <select class="custom-select" name="cid" id="inlineFormCustomSelect" required>
+					        <option value="">Category(Required)</option>
 					        <th:block th:each="category:${pfacategory}">
 					        	<option th:value="${category.key.id}" th:text="${category.key.name}" th:selected="${category.key.id == article?.cid ? true:flase}"></option>
 					        	<th:block th:each="subcategory:${category.value}">
@@ -206,8 +226,10 @@
 						<textarea id="my-editormd-markdown-doc"  name="content" th:text="${article?.content}"></textarea>
 						<textarea id="my-editormd-html-code" name="my-editormd-html-code" ></textarea>
 					</div>
-					<button type="button" class="btn btn-outline-dark" style="float: right;margin-right: 30px;width:80px;" onclick="save()">Save</button>
+					<div id="imagesUpload" style="margin-left: 10px;font-size:medium"></div>
 					<button type="button" class="btn btn-outline-dark" style="float: right;margin-right: 30px;width:80px;" onclick="publish()">Publish</button>
+					<button type="button" class="btn btn-outline-dark" style="float: right;margin-right: 30px;width:80px;" onclick="save()">Save</button>
+					<button type="button" class="btn btn-outline-dark" style="float: right;margin-right: 30px;width:140px;" onclick="uploadImages()">Upload Images</button>
 	         	</div>
 	         	<div class="col-md-2 ml-sm-auto col-lg-2">
 	         		<div class="card">
@@ -220,7 +242,7 @@
 					    <label class="btn btn-default btn-file">
 					         <img th:if="${link == null}" src="/images/admin/upload.png" style="height:75px;width: auto;margin-left: 35%">
 					         <img th:unless="${link == null}" th:src="${link}" style="height:75px;width: auto;margin-left: 35%">
-					         <input type="file" id="fileToUpload" name="coverImage" style="display: none;">
+					         <input type="file" id="fileToUpload" name="coverImage" multiple="multiple">
 					         <input type="hidden" value="" name="picInfo" id="imgurResponse">
 					    </label>
 					  </div>
@@ -262,7 +284,7 @@
 					    	Abstract
 					    </strong>
 					  </div>
-					  <textarea name="abst" rows="5" th:text="${article?.abst}" placeholder="A good abstract is the best way to conclude an article!(Required)"></textarea>
+					  <textarea class="form-control" name="abst" rows="5" th:text="${article?.abst}" placeholder="A good abstract is the best way to conclude an article!(Required)" required></textarea>
 					</div>
 	         		<div class="card" style="margin-top: 10px;">
 					  <div class="card-header">

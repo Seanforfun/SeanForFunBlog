@@ -41,6 +41,7 @@ public class Article {
 	 * @Description: Title of currrent article.
 	 */
 	@NotNull(groups={ArticleWriteValidateGroup.class})
+	@Size(min=1, groups={ArticleWriteValidateGroup.class})
 	private String title;
 	/**
 	 * name: cid
