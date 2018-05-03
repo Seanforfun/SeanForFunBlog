@@ -41,6 +41,8 @@ Interfaces demos
 ![terminal](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/readme/admin_terminal.png)
 * Writing page:
 ![writing](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/readme/write.png)
+* Blog management:
+![Blog management](https://github.com/Seanforfun/SeanForFunBlog/blob/master/src/main/resources/static/images/readme/blogmanage.png)
 
 DataBase design
 ======================================
