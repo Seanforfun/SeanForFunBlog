@@ -51,9 +51,51 @@
 	              </button>
 	            </div>
 	          </div>
-	          
-	          
-			
+	          <table class="table table-bordered table-striped">
+				  <thead>
+				    <tr>
+				      <th scope="col" style="width: 26.67%;">Title</th>
+				      <th scope="col" style="width: 11.67%;">Last Modify Time</th>
+				      <th scope="col" style="width: 8.67%;">View</th>
+				      <th scope="col" style="width: 16.67%;">Category</th>
+				      <th scope="col" style="width: 9.67%;">Publish Status</th>
+				      <th scope="col" style="width: 26.67%;">Operations</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <tr th:each="article:${paginationVo.articles}">
+				      <th scope="row" th:text="${article.title}"></th>
+				      <th th:text="${article.lastModifyTimeView}"></th>
+				      <th th:text="${article.accessTime}"></th>
+				      <th th:text="${article.category.name}"></th>
+				      <th th:if="${article.publish == 1}">
+				      	<h5><span class="badge badge-success">Published</span></h5>
+				      </th>
+				      <th th:unless="${article.publish == 1}">
+				      	<h5><span class="badge badge-danger">Saved</span></h5>
+				      </th>
+				      <th>
+				      	<button type="button" class="btn btn-outline-dark" style="width: 100px;">Modify</button>
+				      	<button type="button" class="btn btn-outline-danger" style="width: 100px;">Delete</button>
+				      	<button type="button" class="btn btn-outline-info" style="width: 100px;">Preview</button>
+				      	<button  type="button" th:classappend="${article.publish == 1} ? 'disabled':''" class="btn btn-outline-success" style="width: 100px;">Publish</button>
+				      </th>
+				    </tr>
+				  </tbody>
+				</table>
+				<nav aria-label="Page navigation example">
+				  <ul class="pagination justify-content-center">
+				    <li class="page-item disabled">
+				      <a class="page-link" href="#" tabindex="-1">Previous</a>
+				    </li>
+				    <li class="page-item"><a class="page-link" href="#">1</a></li>
+				    <li class="page-item"><a class="page-link" href="#">2</a></li>
+				    <li class="page-item"><a class="page-link" href="#">3</a></li>
+				    <li class="page-item">
+				      <a class="page-link" href="#">Next</a>
+				    </li>
+				  </ul>
+				</nav>
         </main>
       </div>
     </div>

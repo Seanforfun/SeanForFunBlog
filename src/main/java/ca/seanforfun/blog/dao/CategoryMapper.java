@@ -33,4 +33,7 @@ public interface CategoryMapper {
 	
 	@Select("select id, name, icon, link from category where pid = #{pid}")
 	public List<Category> getCategorieByPid(@Param("pid") Long pid);
+	
+	@Select("SELECT NAME FROM category WHERE id = #{id}")
+	public Category getCategoryById(@Param("id") Long id);
 }

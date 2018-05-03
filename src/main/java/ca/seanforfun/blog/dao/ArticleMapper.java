@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import ca.seanforfun.blog.model.entity.entity.Article;
 import ca.seanforfun.blog.model.entity.entity.Badge;
+import ca.seanforfun.blog.model.entity.entity.Category;
 import ca.seanforfun.blog.model.entity.entity.Image;
 import ca.seanforfun.blog.model.entity.entity.User;
 
@@ -138,7 +139,16 @@ public interface ArticleMapper {
 			@Param("publishTime") long currentTimeMillis,
 			@Param("publish") Integer articlePublish);
 
-	@Select("SELECT id, title, cid, TYPE, lastmodifytime, publish FROM article WHERE uid = #{uid} ORDER BY id DESC LIMIT #{index} ,#{numPerPage}")
+	@Results(value = {
+			@Result(property = "id", column = "id"),
+			@Result(property = "title", column = "title"),
+			@Result(property = "cid", column = "cid"),
+			@Result(property = "type", column = "type"),
+			@Result(property = "accessTime", column = "accessTime"),
+			@Result(property = "lastModifyTime", column = "lastmodifytime"),
+			@Result(property = "publish", column = "publish"),
+			@Result(property = "category", column = "cid", javaType = Category.class, one = @One(select = "ca.seanforfun.blog.dao.CategoryMapper.getCategoryById")) })
+	@Select("SELECT id, title, cid, accessTime, TYPE, lastmodifytime, publish FROM article WHERE uid = #{uid} ORDER BY id DESC LIMIT #{index} ,#{numPerPage}")
 	public List<Article> getArticlePaginationByUid(@Param("uid") Long uid,
 			@Param("index") int index, @Param("numPerPage") Integer numPerPage);
 }

@@ -125,6 +125,12 @@ public class Article {
 	 * 0 - Don't allow 1-allow
 	 */
 	private Integer allowComments;
+	/**
+	 * name: category
+	 * type: Category 
+	 * @Description:The category of the blog belongs to. 
+	 */
+	private Category category;
 	
 	private String typeView;
 	private String lastModifyTimeView;
@@ -136,6 +142,13 @@ public class Article {
 	 * @Description: The number of the article be viewed.
 	 */
 	private Long accessTime;
+	
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 	
 	public Integer getAllowComments() {
 		return allowComments;
@@ -185,7 +198,7 @@ public class Article {
 	}
 	public void setLastModifyTime(Long lastModifyTime) {
 		this.lastModifyTime = lastModifyTime;
-		this.lastModifyTimeView = FormatUtils.formatDate(lastModifyTime);
+		this.lastModifyTimeView = FormatUtils.formatDateTime(lastModifyTime);
 	}
 	public Long getPublishTime() {
 		return publishTime;
