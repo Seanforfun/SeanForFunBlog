@@ -144,4 +144,15 @@ public class ArticleService implements ArticleEbi {
 		articleMapper.updateArticlePublishById(id, System.currentTimeMillis(), Article.ARTICLE_PUBLISH);
 	}
 
+	@Override
+	public Integer getArticleNumByUid(Long uid) {
+		return articleMapper.getArticleByUid(uid).intValue();
+	}
+
+	@Override
+	public List<Article> getPaginationArticleByUid(Long uid,
+			Integer numPerPage, Integer pageNum) {
+		return articleMapper.getArticlePaginationByUid(uid, (pageNum - 1) * numPerPage, numPerPage);
+	}
+
 }

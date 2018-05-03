@@ -31,6 +31,9 @@ public interface ArticleMapper {
 	@Select("select count(id) from article where publish = 1")
 	public Integer getArticalCount();
 
+	@Select("select count(id) from article where uid = #{uid}")
+	public Long getArticleCountByUid(@Param("uid") Long uid);
+
 	@Cacheable("articlePagination")
 	@Select("SELECT id, title, abst, uid, lastmodifytime FROM article WHERE TYPE = #{type} and publish = 1 ORDER BY lastmodifytime desc LIMIT #{current}, #{perpage}")
 	@Results(value = {
@@ -124,13 +127,18 @@ public interface ArticleMapper {
 	public Long findLastInsertId();
 
 	@Update("UPDATE article SET title = #{title}, cid = #{cid}, TYPE = #{TYPE}, lastmodifytime = #{lastmodifytime}, abst = #{abst}, content = #{content}, allowComments = #{allowComments} WHERE id = #{id}")
-	public void updateArticle(@Param("title") String title, @Param("cid") Long cid,
-			@Param("TYPE") Integer type,
+	public void updateArticle(@Param("title") String title,
+			@Param("cid") Long cid, @Param("TYPE") Integer type,
 			@Param("lastmodifytime") Long lastmodifytime,
 			@Param("abst") String abst, @Param("content") String content,
 			@Param("allowComments") Integer allowComments, @Param("id") Long id);
 
 	@Update("UPDATE article SET publish = #{publish}, publishTime = #{publishTime} where id = #{id}")
-	public void updateArticlePublishById(@Param("id") Long id, @Param("publishTime") long currentTimeMillis,
+	public void updateArticlePublishById(@Param("id") Long id,
+			@Param("publishTime") long currentTimeMillis,
 			@Param("publish") Integer articlePublish);
+
+	@Select("SELECT id, title, cid, TYPE, lastmodifytime, publish FROM article WHERE uid = #{uid} ORDER BY id DESC LIMIT #{index} ,#{numPerPage}")
+	public List<Article> getArticlePaginationByUid(@Param("uid") Long uid,
+			@Param("index") int index, @Param("numPerPage") Integer numPerPage);
 }

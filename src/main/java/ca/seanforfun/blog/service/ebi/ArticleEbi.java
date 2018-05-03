@@ -68,4 +68,17 @@ public interface ArticleEbi {
 	 * @Return: void
 	 */
 	void publishArticle(Long id);
+
+	/**
+	 * @Description:Get current user's article number.
+	 * @Return: Integer
+	 */
+	Integer getArticleNumByUid(Long uid);
+
+	/**
+	 * @Description:Get paginationed article list from database.
+	 * @Return: List<Article>
+	 */
+	List<Article> getPaginationArticleByUid(Long uid, Integer numPerPage,
+			Integer pageNum);
 }

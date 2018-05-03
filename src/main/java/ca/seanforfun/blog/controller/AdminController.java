@@ -27,6 +27,7 @@ import ca.seanforfun.blog.model.entity.entity.Article;
 import ca.seanforfun.blog.model.entity.entity.Badge;
 import ca.seanforfun.blog.model.entity.entity.Category;
 import ca.seanforfun.blog.model.entity.entity.User;
+import ca.seanforfun.blog.model.entity.vo.PaginationVo;
 import ca.seanforfun.blog.service.ebo.AccessService;
 import ca.seanforfun.blog.service.ebo.ArticleService;
 import ca.seanforfun.blog.service.ebo.LinkService;
@@ -51,6 +52,8 @@ public class AdminController {
 	private SysInfo sysInfo;
 	@Autowired
 	private SqlInfo sqlInfo;
+	@Autowired
+	private PaginationVo paginationVo;
 	
 	@RequestMapping("/toAdmin")
 	public ModelAndView toAdminPage(ModelAndView mv, HttpSession session,
@@ -167,8 +170,16 @@ public class AdminController {
 			mv.addObject("pacategory", adminCategoryMap);
 		}
 		
-		//TODO Get All article information from database.
-		List<Article> articleList = articleService.getPaginationArticleByUid(((User)session.getAttribute("loginUser")).getId(), configBean.getMaxManagePerPage(), pageNum);
+		//Get All article information from database.
+		paginationVo.setNumPerPage(configBean.getMaxManagePerPage());
+		paginationVo.setCurrentPageNum(pageNum);
+		Long uid = ((User)session.getAttribute("loginUser")).getId();
+		Integer articleNum = articleService.getArticleNumByUid(uid);
+		paginationVo.calculationMaxPage(articleNum, paginationVo.getNumPerPage());
+		List<Article> articleList = articleService.getPaginationArticleByUid(uid, paginationVo.getNumPerPage(), pageNum);
+		paginationVo.setArticles(articleList);
+		mv.addObject("paginationVo", paginationVo);
+		mv.setViewName("admin/articleManage.html");
 		return mv;
 	}
 
