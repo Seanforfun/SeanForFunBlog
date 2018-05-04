@@ -59,7 +59,8 @@ CREATE TABLE article(
 	content TEXT NOT NULL,
 	accessTime bigint not null default 0,
 	publish int(2) not null default 0,
-	allowComments INT(3) NOT NULL DEFAULT 0
+	allowComments INT(3) NOT NULL DEFAULT 0,
+	inuse int(3) not null default 1
 );
 
 #Intermediate article_badge

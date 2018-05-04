@@ -35,6 +35,10 @@
     	function publishBlog(obj){
     		window.location.href="/article/publish/" + $(obj).attr("id");
     	}
+    	
+    	function deleteBlog(obj){
+    		window.location.href="/article/delete/" + $(obj).attr("id");
+    	}
     </script>
   </head>
 
@@ -84,7 +88,27 @@
 				      </th>
 				      <th>
 				      	<button type="button" class="btn btn-outline-dark" style="width: 100px;" th:id="${article.id}" onclick="modifyBlog(this)">Modify</button>
-				      	<button type="button" class="btn btn-outline-danger" style="width: 100px;" th:id="${article.id}">Delete</button>
+				      	<button type="button" class="btn btn-outline-danger" style="width: 100px;" data-toggle="modal" th:data-target="'#exampleModal'+${article.id}">Delete</button>
+				      	<!-- Modal -->
+						<div class="modal fade" th:id="'exampleModal'+${article.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span aria-hidden="true">&times;</span>
+						        </button>
+						      </div>
+						      <div class="modal-body">
+						       	Are you sure you want to delete this article?
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+						        <button type="button" class="btn btn-primary" onclick="deleteBlog(this)"  th:id="${article.id}">Delete</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
 				      	<button type="button" class="btn btn-outline-info" style="width: 100px;" th:id="${article.id}">Preview</button>
 				      	<button  type="button" th:classappend="${article.publish == 1} ? 'disabled':''" class="btn btn-outline-success" style="width: 100px;" th:id="${article.id}" onclick="publishBlog(this)">Publish</button>
 				      </th>

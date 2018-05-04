@@ -87,4 +87,10 @@ public interface ArticleEbi {
 	 * @Return: Article
 	 */
 	Article adminGetArticleById(Long id);
+
+	/**
+	 * @Description:Delete article according to id
+	 * @Return: void
+	 */
+	void deleteArticleById(Long id);
 }

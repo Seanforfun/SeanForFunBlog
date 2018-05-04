@@ -24,6 +24,8 @@ public class Article {
 	public static final Integer ARTICLE_NOT_PUBLISH = 0;
 	public static final Integer ARTICLE_ALLOW_COMMENTS = 1;
 	public static final Integer ARTICLE_DONT_ALLOW_COMMENTS = 0;
+	public static final Integer ARTICLE_INUSE = 1;
+	public static final Integer ARTICLE_DELETE = 0;
 	public static final Map<Integer, String> articleTypeMap  = new HashMap<>();
 	static{
 		articleTypeMap.put(ARTICAL_PRIVATE, ARTICAL_PRIVATE_VIEW);
@@ -131,6 +133,13 @@ public class Article {
 	 * @Description:The category of the blog belongs to. 
 	 */
 	private Category category;
+	
+	/**
+	 * name: inuse
+	 * type: Integer 
+	 * @Description: Default in use, will alter to 0 after delete the blog.
+	 */
+	private Integer inuse;
 	
 	private String typeView;
 	private String lastModifyTimeView;
@@ -251,5 +260,11 @@ public class Article {
 	}
 	public void setPublish(Integer publish) {
 		this.publish = publish;
+	}
+	public Integer getInuse() {
+		return inuse;
+	}
+	public void setInuse(Integer inuse) {
+		this.inuse = inuse;
 	}
 }

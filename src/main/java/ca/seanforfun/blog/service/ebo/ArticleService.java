@@ -31,7 +31,7 @@ public class ArticleService implements ArticleEbi {
 
 	@Override
 	public Integer getArticleTotalNum() {
-		return articleMapper.getArticalCount();
+		return articleMapper.getArticalCount(Article.ARTICLE_INUSE);
 	}
 
 	@Override
@@ -39,7 +39,8 @@ public class ArticleService implements ArticleEbi {
 			Integer articlePerPage) {
 		Integer currentPageIndex = (pageIndex - 1) * articlePerPage;
 		List<Article> articles = articleMapper.getArticlePaginationByType(
-				currentPageIndex, articlePerPage, Article.ARTICAL_PUBLIC);
+				currentPageIndex, articlePerPage, Article.ARTICAL_PUBLIC,
+				Article.ARTICLE_INUSE);
 		if (null == articles) {
 			throw new SeanForFunException("Article not read error....");
 		}
@@ -63,7 +64,7 @@ public class ArticleService implements ArticleEbi {
 		articleMapper.updateAccesstimeById(articleId);
 		return article;
 	}
-	
+
 	@Override
 	@Transactional
 	public Article adminGetArticleById(Long id) {
@@ -80,12 +81,12 @@ public class ArticleService implements ArticleEbi {
 			Integer currentPageNum, Integer numPerPage) {
 		Integer currentIndex = (currentPageNum - 1) * numPerPage;
 		return articleMapper.getArticalByCategoryId(categoryId, currentIndex,
-				numPerPage, Article.ARTICAL_PUBLIC);
+				numPerPage, Article.ARTICAL_PUBLIC, Article.ARTICLE_INUSE);
 	}
 
 	@Override
 	public Integer getArticleNumByCategory(Integer category) {
-		return articleMapper.getArticalCountByCategoryId(category);
+		return articleMapper.getArticalCountByCategoryId(category, Article.ARTICLE_INUSE);
 	}
 
 	@Override
@@ -96,7 +97,7 @@ public class ArticleService implements ArticleEbi {
 
 	@Override
 	public Integer getCountByUid(Long id) {
-		Long count = articleMapper.getArticleByUid(id);
+		Long count = articleMapper.getArticleCountByUid(id, Article.ARTICLE_INUSE);
 		if (null == count) {
 			throw new SeanForFunException("Get article information error...");
 		}
@@ -152,18 +153,24 @@ public class ArticleService implements ArticleEbi {
 
 	@Override
 	public void publishArticle(Long id) {
-		articleMapper.updateArticlePublishById(id, System.currentTimeMillis(), Article.ARTICLE_PUBLISH);
+		articleMapper.updateArticlePublishById(id, System.currentTimeMillis(),
+				Article.ARTICLE_PUBLISH);
 	}
 
 	@Override
 	public Integer getArticleNumByUid(Long uid) {
-		return articleMapper.getArticleByUid(uid).intValue();
+		return articleMapper.getArticleCountByUid(uid, Article.ARTICLE_INUSE).intValue();
 	}
 
 	@Override
 	public List<Article> getPaginationArticleByUid(Long uid,
 			Integer numPerPage, Integer pageNum) {
-		return articleMapper.getArticlePaginationByUid(uid, (pageNum - 1) * numPerPage, numPerPage);
+		return articleMapper.getArticlePaginationByUid(uid, (pageNum - 1)
+				* numPerPage, numPerPage);
 	}
 
+	@Override
+	public void deleteArticleById(Long id) {
+		articleMapper.deleteArticleById(id);
+	}
 }

@@ -161,6 +161,13 @@ public class ArticleController {
 		return mv;
 	}
 	
+	@RequestMapping("/delete/{id}")
+	public ModelAndView deleteArticle(ModelAndView mv, @PathVariable("id") Long id){
+		articleService.deleteArticleById(id);
+		mv.setViewName("redirect:/admin/toManageBlog/1");
+		return mv;
+	}
+	
 	// ---------------------------------------AJAX---------------------------------------------------------
 	@RequestMapping("/category/{category}/{pagenum}")
 	public @ResponseBody PaginationVo getArticlesByCategory(

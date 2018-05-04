@@ -29,13 +29,13 @@ import ca.seanforfun.blog.model.entity.entity.User;
 @Repository
 public interface ArticleMapper {
 	@Cacheable("articleNum")
-	@Select("select count(id) from article where publish = 1")
-	public Integer getArticalCount();
+	@Select("select count(id) from article where publish = 1 and inuse=#{inuse}")
+	public Integer getArticalCount(@Param("inuse") Integer articleInuse);
 
-	@Select("select count(id) from article where uid = #{uid}")
-	public Long getArticleCountByUid(@Param("uid") Long uid);
+	@Select("select count(id) from article where uid = #{uid} and inuse = #{inuse}")
+	public Long getArticleCountByUid(@Param("uid") Long uid, @Param("inuse") Integer articleInuse);
 
-	@Select("SELECT id, title, abst, uid, lastmodifytime FROM article WHERE TYPE = #{type} and publish = 1 ORDER BY lastmodifytime desc LIMIT #{current}, #{perpage}")
+	@Select("SELECT id, title, abst, uid, lastmodifytime FROM article WHERE TYPE = #{type} and publish = 1 and inuse=#{inuse} ORDER BY lastmodifytime desc LIMIT #{current}, #{perpage}")
 	@Results(value = {
 			@Result(property = "id", column = "id"),
 			@Result(property = "title", column = "title"),
@@ -47,7 +47,7 @@ public interface ArticleMapper {
 	public List<Article> getArticlePaginationByType(
 			@Param("current") Integer nextIndex,
 			@Param("perpage") Integer articlePerPage,
-			@Param("type") Integer type);
+			@Param("type") Integer type, @Param("inuse") Integer articleInuse);
 
 	@Select("SELECT id, NAME, color FROM badge b WHERE b.id IN(SELECT bid FROM article_badge WHERE aid = #{aid})")
 	public List<Badge> getBadgesByAritcleId(@Param("aid") Integer aid);
@@ -72,8 +72,8 @@ public interface ArticleMapper {
 	@Select("SELECT path FROM image WHERE aid = #{id}")
 	public List<Image> getImageByAid(Long aid);
 
-	@Select("select count(id) from article where cid = #{category}")
-	public Integer getArticalCountByCategoryId(Integer category);
+	@Select("select count(id) from article where cid = #{category} and inuse = #{inuse}")
+	public Integer getArticalCountByCategoryId(@Param("category") Integer category, @Param("inuse") Integer articleInuse);
 
 	@Results(value = {
 			@Result(property = "id", column = "id"),
@@ -85,17 +85,17 @@ public interface ArticleMapper {
 			@Result(property = "lastModifyTime", column = "lastmodifytime"),
 			@Result(property = "images", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getImagesByArticleId")),
 			@Result(property = "badges", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getBadgesByAritcleId")) })
-	@Select("SELECT id, title, abst, uid, lastmodifytime FROM article WHERE TYPE = #{type} and publish = 1 ORDER BY lastmodifytime desc LIMIT #{current}, #{perpage}")
+	@Select("SELECT id, title, abst, uid, lastmodifytime FROM article WHERE TYPE = #{type} and publish = 1 and inuse = #{inuse} ORDER BY lastmodifytime desc LIMIT #{current}, #{perpage}")
 	public List<Article> getArticalByCategoryId(Integer categoryId,
 			@Param("current") Integer currentIndex,
-			@Param("perpage") Integer numPerPage, @Param("type") Integer type);
+			@Param("perpage") Integer numPerPage, @Param("type") Integer type, @Param("inuse") Integer articleInuse);
 
 	@Results(value = {
 			@Result(property = "id", column = "id"),
 			@Result(property = "title", column = "title"),
 			@Result(property = "abst", column = "abst"),
 			@Result(property = "images", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getImagesByArticleId")) })
-	@Select("SELECT id, title,abst FROM article WHERE id IN (SELECT DISTINCT aid FROM image WHERE aid IS NOT NULL) and publish = 1 LIMIT 0, 3")
+	@Select("SELECT id, title,abst FROM article WHERE id IN (SELECT DISTINCT aid FROM image WHERE aid IS NOT NULL) and publish = 1 and inuse = 1 LIMIT 0, 3")
 	public List<Article> getArticalsWithImage();
 
 	@Select("SELECT id,path,name FROM image WHERE aid = #{aid}")
@@ -103,9 +103,6 @@ public interface ArticleMapper {
 
 	@Update("UPDATE article SET accessTime = accessTime + 1 WHERE id = #{id}")
 	public void updateAccesstimeById(@Param("id") Long articleId);
-
-	@Select("SELECT COUNT(id) FROM article WHERE uid = #{id}")
-	public Long getArticleByUid(@Param("id") Long id);
 
 	@Insert("INSERT INTO article (title, cid, TYPE, hit, lastmodifytime, uid, abst, content, accessTime, publish, allowComments) VALUES (#{title}, #{cid}, #{type}, #{hit}, #{lastmodifytime}, #{uid}, #{abst}, #{content}, #{accessTime}, #{publish}, #{allowComments});")
 	public void createArticle(@Param("title") String title,
@@ -146,7 +143,10 @@ public interface ArticleMapper {
 			@Result(property = "lastModifyTime", column = "lastmodifytime"),
 			@Result(property = "publish", column = "publish"),
 			@Result(property = "category", column = "cid", javaType = Category.class, one = @One(select = "ca.seanforfun.blog.dao.CategoryMapper.getCategoryById")) })
-	@Select("SELECT id, title, cid, accessTime, TYPE, lastmodifytime, publish FROM article WHERE uid = #{uid} ORDER BY id DESC LIMIT #{index} ,#{numPerPage}")
+	@Select("SELECT id, title, cid, accessTime, TYPE, lastmodifytime, publish FROM article WHERE uid = #{uid} and inuse = 1 ORDER BY id DESC LIMIT #{index} ,#{numPerPage}")
 	public List<Article> getArticlePaginationByUid(@Param("uid") Long uid,
 			@Param("index") int index, @Param("numPerPage") Integer numPerPage);
+	
+	@Update(value="UPDATE article SET inuse = 0 WHERE id = #{id}")
+	public void deleteArticleById(@Param("id") Long id);
 }
