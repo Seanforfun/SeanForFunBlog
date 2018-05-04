@@ -81,4 +81,10 @@ public interface ArticleEbi {
 	 */
 	List<Article> getPaginationArticleByUid(Long uid, Integer numPerPage,
 			Integer pageNum);
+
+	/**
+	 * @Description:Admin get article to update.
+	 * @Return: Article
+	 */
+	Article adminGetArticleById(Long id);
 }

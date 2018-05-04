@@ -63,6 +63,17 @@ public class ArticleService implements ArticleEbi {
 		articleMapper.updateAccesstimeById(articleId);
 		return article;
 	}
+	
+	@Override
+	@Transactional
+	public Article adminGetArticleById(Long id) {
+		// Get Ariticle information.
+		Article article = articleMapper.getArticleById(id);
+		if (null == article) {
+			throw new SeanForFunException("Article not read error....");
+		}
+		return article;
+	}
 
 	@Override
 	public List<Article> getArticleByCategory(Integer categoryId,

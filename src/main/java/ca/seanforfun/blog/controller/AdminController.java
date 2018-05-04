@@ -132,7 +132,7 @@ public class AdminController {
 		
 		if(null != id){
 			Long articleId = new Long(id);
-			Article article = articleService.getArticleById(articleId);
+			Article article = articleService.adminGetArticleById(articleId);
 			mv.addObject("article", article);
 			if(article.getAllowComments() == Article.ARTICLE_ALLOW_COMMENTS){
 				mv.addObject("allowComments", "on");
@@ -163,6 +163,9 @@ public class AdminController {
 	@RequestMapping("/toManageBlog/{pageNum}")
 	public ModelAndView toManageBlog(ModelAndView mv, HttpSession session, @PathVariable("pageNum") Integer pageNum){
 		//Add category inforamtion
+		if(pageNum < 0){
+			throw new SeanForFunException("Incorrect index number...");
+		}
 		Map<Category, List<Category>> adminCategoryMap = CategoryRunner.getAdminCategoryMap();
 		if(null == adminCategoryMap || adminCategoryMap.size() <= 0){
 			throw new SeanForFunException("Blog Category setting error....");

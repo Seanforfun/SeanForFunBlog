@@ -35,7 +35,6 @@ public interface ArticleMapper {
 	@Select("select count(id) from article where uid = #{uid}")
 	public Long getArticleCountByUid(@Param("uid") Long uid);
 
-	@Cacheable("articlePagination")
 	@Select("SELECT id, title, abst, uid, lastmodifytime FROM article WHERE TYPE = #{type} and publish = 1 ORDER BY lastmodifytime desc LIMIT #{current}, #{perpage}")
 	@Results(value = {
 			@Result(property = "id", column = "id"),
@@ -73,7 +72,6 @@ public interface ArticleMapper {
 	@Select("SELECT path FROM image WHERE aid = #{id}")
 	public List<Image> getImageByAid(Long aid);
 
-	@Cacheable("articleNumByCategory")
 	@Select("select count(id) from article where cid = #{category}")
 	public Integer getArticalCountByCategoryId(Integer category);
 

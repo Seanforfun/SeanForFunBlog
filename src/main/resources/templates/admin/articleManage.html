@@ -27,6 +27,14 @@
     			window.location.href="https://github.com/Seanforfun";
     		})
     	})
+    	
+    	function modifyBlog(obj){
+    		window.location.href="/admin/toWrite/" + $(obj).attr("id");
+    	}
+    	
+    	function publishBlog(obj){
+    		window.location.href="/article/publish/" + $(obj).attr("id");
+    	}
     </script>
   </head>
 
@@ -75,10 +83,10 @@
 				      	<h5><span class="badge badge-danger">Saved</span></h5>
 				      </th>
 				      <th>
-				      	<button type="button" class="btn btn-outline-dark" style="width: 100px;">Modify</button>
-				      	<button type="button" class="btn btn-outline-danger" style="width: 100px;">Delete</button>
-				      	<button type="button" class="btn btn-outline-info" style="width: 100px;">Preview</button>
-				      	<button  type="button" th:classappend="${article.publish == 1} ? 'disabled':''" class="btn btn-outline-success" style="width: 100px;">Publish</button>
+				      	<button type="button" class="btn btn-outline-dark" style="width: 100px;" th:id="${article.id}" onclick="modifyBlog(this)">Modify</button>
+				      	<button type="button" class="btn btn-outline-danger" style="width: 100px;" th:id="${article.id}">Delete</button>
+				      	<button type="button" class="btn btn-outline-info" style="width: 100px;" th:id="${article.id}">Preview</button>
+				      	<button  type="button" th:classappend="${article.publish == 1} ? 'disabled':''" class="btn btn-outline-success" style="width: 100px;" th:id="${article.id}" onclick="publishBlog(this)">Publish</button>
 				      </th>
 				    </tr>
 				  </tbody>

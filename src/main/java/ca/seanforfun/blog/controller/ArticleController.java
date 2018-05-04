@@ -145,12 +145,19 @@ public class ArticleController {
 		
 		if(requestMethod != null && requestMethod.equals("publish")){
 			articleService.publishArticle(article.getId());
-			mv.setViewName("redirect:/admin/toManageBlog/0");
+			mv.setViewName("redirect:/admin/toManageBlog/1");
 			return mv;
 		}
 
-		// TODO Go to article management action.
+		// Go to article management action.
 		mv.setViewName("redirect:/admin/toWrite/" + article.getId());
+		return mv;
+	}
+	
+	@RequestMapping("/publish/{id}")
+	public ModelAndView publishAricle(ModelAndView mv, @PathVariable("id") Long id){
+		articleService.publishArticle(id);
+		mv.setViewName("redirect:/admin/toManageBlog/1");
 		return mv;
 	}
 	
