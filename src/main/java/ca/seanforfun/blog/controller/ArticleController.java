@@ -82,6 +82,7 @@ public class ArticleController {
 			mv.addObject("allowComments", allowCmts);
 			mv.addObject("imageList", imageList);
 			mv.addObject("picInfo", picInfo);
+			mv.addObject("alertMessage", "Validation check error!");
 			mv.setViewName("forward:/admin/toWrite");
 			return mv;
 		}
@@ -109,6 +110,7 @@ public class ArticleController {
 				mv.addObject("allowComments", allowCmts);
 				mv.addObject("imageList", imageList);
 				mv.addObject("picInfo", picInfo);
+				mv.addObject("alertMessage", "Validation check error!");
 				mv.setViewName("forward:/admin/toWrite");
 				return mv;
 			}
@@ -149,8 +151,9 @@ public class ArticleController {
 			return mv;
 		}
 
-		// Go to article management action.
-		mv.setViewName("redirect:/admin/toWrite/" + article.getId());
+		// Save success, go back to writing page.
+		mv.addObject("SaveSuccess", "SaveSuccess");
+		mv.setViewName("forward:/admin/toWrite/" + article.getId());
 		return mv;
 	}
 	

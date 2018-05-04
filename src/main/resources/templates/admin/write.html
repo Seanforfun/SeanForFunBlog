@@ -203,6 +203,18 @@
     	<div th:replace="include/categoryAdmin :: categoryAdmin"></div>
 
         <main class="col-md-11 ml-sm-auto col-lg-11">
+        	  <div th:if="${alertMessage!=null}" class="alert alert-warning alert-dismissible fade show" role="alert">
+				  <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+        	  <div th:if="${SaveSuccess!=null}" class="alert alert-success alert-dismissible fade show" role="alert">
+				  <strong>Good Job!</strong> Current article has been successfully saved.
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
 	          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
 	            <h1 class="h1 font-italic">
 	            	<strong>
