@@ -141,6 +141,15 @@ public class Article {
 	 */
 	private Integer inuse;
 	
+	
+	/**
+	 * name: mid
+	 * type: Long 
+	 * @Description: Foreign key to month info.
+	 * NOT NULL
+	 */
+	private Long mid;
+	
 	private String typeView;
 	private String lastModifyTimeView;
 	private String publishTimeView;
@@ -266,5 +275,11 @@ public class Article {
 	}
 	public void setInuse(Integer inuse) {
 		this.inuse = inuse;
+	}
+	public Long getMid() {
+		return mid;
+	}
+	public void setMid(Long mid) {
+		this.mid = mid;
 	}
 }

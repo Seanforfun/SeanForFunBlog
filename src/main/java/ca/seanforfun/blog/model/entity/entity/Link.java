@@ -23,6 +23,7 @@ public class Link {
 	 * @Description:Path
 	 */
 	private String link;
+	
 	public Long getId() {
 		return id;
 	}

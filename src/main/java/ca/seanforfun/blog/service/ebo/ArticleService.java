@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ca.seanforfun.blog.dao.ArticleMapper;
 import ca.seanforfun.blog.dao.BadgeMapper;
 import ca.seanforfun.blog.dao.ImageMapper;
+import ca.seanforfun.blog.dao.MonthMapper;
 import ca.seanforfun.blog.exception.SeanForFunException;
 import ca.seanforfun.blog.model.entity.entity.Article;
 import ca.seanforfun.blog.model.entity.entity.Badge;
@@ -28,6 +29,8 @@ public class ArticleService implements ArticleEbi {
 	private BadgeMapper badgeMapper;
 	@Autowired
 	private ImageMapper imageMapper;
+	@Autowired
+	private MonthMapper monthMapper;
 
 	@Override
 	public Integer getArticleTotalNum() {
@@ -66,7 +69,6 @@ public class ArticleService implements ArticleEbi {
 	}
 
 	@Override
-	@Transactional
 	public Article adminGetArticleById(Long id) {
 		// Get Ariticle information.
 		Article article = articleMapper.getArticleById(id);
@@ -153,8 +155,9 @@ public class ArticleService implements ArticleEbi {
 
 	@Override
 	public void publishArticle(Long id) {
+		Long mid = monthMapper.getCurrentMonthId();
 		articleMapper.updateArticlePublishById(id, System.currentTimeMillis(),
-				Article.ARTICLE_PUBLISH);
+				Article.ARTICLE_PUBLISH, mid);
 	}
 
 	@Override

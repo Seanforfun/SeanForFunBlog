@@ -60,7 +60,9 @@ CREATE TABLE article(
 	accessTime bigint not null default 0,
 	publish int(2) not null default 0,
 	allowComments INT(3) NOT NULL DEFAULT 0,
-	inuse int(3) not null default 1
+	inuse int(3) not null default 1,
+	mid bigint,
+	FOREIGN KEY(mid) REFERENCES MONTH(id)
 );
 
 #Intermediate article_badge
@@ -80,7 +82,8 @@ ALTER TABLE article_badge ADD FOREIGN KEY (aid) REFERENCES article(id)
 CREATE TABLE link(
 	id BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	NAME VARCHAR(100) NOT NULL,
-	link VARCHAR(255) NOT NULL
+	link VARCHAR(255) NOT NULL,
+	descript varchar(255) not null
 );
 
 #Album
@@ -106,4 +109,10 @@ CREATE TABLE access(
 	id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	dayAccessNum BIGINT NOT NULL DEFAULT 0,
 	currentTime BIGINT NOT NULL
+);
+
+#Month
+CREATE TABLE MONTH(
+	id BIGINT primary key AUTO_INCREMENT NOT NULL,
+	DATE DATETIME NOT NULL
 );

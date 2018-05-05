@@ -58,6 +58,7 @@ public interface ArticleMapper {
 			@Result(property = "hit", column = "hit"),
 			@Result(property = "abst", column = "abst"),
 			@Result(property = "cid", column = "cid"),
+			@Result(property = "publish", column = "publish"),
 			@Result(property = "content", column = "content"),
 			@Result(property = "type", column = "type"),
 			@Result(property = "allowComments", column = "allowComments"),
@@ -66,7 +67,7 @@ public interface ArticleMapper {
 			@Result(property = "accessTime", column = "accessTime"),
 			@Result(property = "badges", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getBadgesByAritcleId")),
 			@Result(property = "images", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getImageByAid")) })
-	@Select("SELECT id, title, hit, lastmodifytime, uid, abst, content, cid, type, allowComments, accessTime FROM article WHERE id=#{id}")
+	@Select("SELECT id, title, hit, lastmodifytime, uid, abst, content, cid, type, allowComments, accessTime, publish FROM article WHERE id=#{id}")
 	public Article getArticleById(Long id);
 
 	@Select("SELECT path FROM image WHERE aid = #{id}")
@@ -129,10 +130,10 @@ public interface ArticleMapper {
 			@Param("abst") String abst, @Param("content") String content,
 			@Param("allowComments") Integer allowComments, @Param("id") Long id);
 
-	@Update("UPDATE article SET publish = #{publish}, publishTime = #{publishTime} where id = #{id}")
+	@Update("UPDATE article SET publish = #{publish}, publishTime = #{publishTime}, mid=#{mid} where id = #{id}")
 	public void updateArticlePublishById(@Param("id") Long id,
 			@Param("publishTime") long currentTimeMillis,
-			@Param("publish") Integer articlePublish);
+			@Param("publish") Integer articlePublish, @Param("mid") Long mid);
 
 	@Results(value = {
 			@Result(property = "id", column = "id"),

@@ -184,12 +184,15 @@
 		  $("form:eq(0)").submit();
 	  }
 	  
-	  function publishArticle(){
+	  function publishArticle(obj){
 		  while(!allowSubmit){
 			  
 		  }
+		  var btnClass = $(obj).attr("class");
+		  if(btnClass.includes("disabled")){
+			  return;
+		  }
 		  $("#submitType").val("publish");
-		  alert($("#submitType").val());
 		  $("form:eq(0)").submit();
 	  }
 	</script>
@@ -258,7 +261,7 @@
 					<div id="imagesUpload" style="margin-left: 10px;font-size:medium">
 						<span th:if="${imageList != null && not #lists.isEmpty(imageList)}" th:each="image:${imageList}" class='badge badge-light' th:text="${image.name}+':'+${image.path}"></span>
 					</div>
-					<button type="button" class="btn btn-outline-dark" style="float: right;margin-right: 30px;width:80px;" onclick="publishArticle()">Publish</button>
+					<button th:classappend="${article?.publish == 1}? 'disabled':''" type="button" class="btn btn-outline-dark" style="float: right;margin-right: 30px;width:80px;" onclick="publishArticle(this)">Publish</button>
 					<button type="button" class="btn btn-outline-dark" style="float: right;margin-right: 30px;width:80px;" onclick="save()">Save</button>
 					<button type="button" class="btn btn-outline-dark" style="float: right;margin-right: 30px;width:140px;" onclick="uploadImages()">Upload Images</button>
 	         	</div>
