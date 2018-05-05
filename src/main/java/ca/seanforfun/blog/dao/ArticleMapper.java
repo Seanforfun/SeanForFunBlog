@@ -150,4 +150,7 @@ public interface ArticleMapper {
 	
 	@Update(value="UPDATE article SET inuse = 0 WHERE id = #{id}")
 	public void deleteArticleById(@Param("id") Long id);
+	
+	@Select("SELECT COUNT(id) FROM article WHERE MID = #{id}")
+	public Integer getArticleCountByMid(@Param("id") Long id);
 }

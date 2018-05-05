@@ -1,12 +1,14 @@
 package ca.seanforfun.blog.service.ebo;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.seanforfun.blog.dao.MonthMapper;
+import ca.seanforfun.blog.model.entity.entity.Month;
 import ca.seanforfun.blog.service.ebi.MonthEbi;
 
 /**
@@ -28,5 +30,10 @@ public class MonthService implements MonthEbi {
 	@Override
 	public Long getCurrentMonth(){
 		return monthMapper.getCurrentMonthId();
+	}
+	
+	@Override
+	public List<Month> getArchiveInfo(){
+		return monthMapper.getArticleCountList();
 	}
 }

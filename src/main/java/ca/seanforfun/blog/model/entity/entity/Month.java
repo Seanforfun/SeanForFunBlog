@@ -1,7 +1,8 @@
 package ca.seanforfun.blog.model.entity.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+import java.util.Locale;
 
 /**
  * @author SeanForFun E-mail:xiaob6@mcmaster.ca
@@ -22,16 +23,21 @@ public class Month {
 	 */
 	private Date date;
 	/**
-	 * name: articleList
-	 * type: List<Article> 
-	 * @Description: Articles published in this month.
+	 * name: articleCount
+	 * type: Integer 
+	 * @Description: Number of articles published in this month.
 	 */
-	private List<Article> articleList;
-	public List<Article> getArticleList() {
-		return articleList;
+	private Integer articleCount;
+	
+	private String dateView;
+	public String getDateView() {
+		return dateView;
 	}
-	public void setArticleList(List<Article> articleList) {
-		this.articleList = articleList;
+	public Integer getArticleCount() {
+		return articleCount;
+	}
+	public void setArticleCount(Integer articleCount) {
+		this.articleCount = articleCount;
 	}
 	public Long getId() {
 		return id;
@@ -44,5 +50,6 @@ public class Month {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+		this.dateView = new SimpleDateFormat("MMM, yyyy", Locale.CANADA).format(date);
 	}
 }

@@ -19,9 +19,11 @@ import ca.seanforfun.blog.model.entity.config.PaginationBean;
 import ca.seanforfun.blog.model.entity.entity.Article;
 import ca.seanforfun.blog.model.entity.entity.Category;
 import ca.seanforfun.blog.model.entity.entity.Link;
+import ca.seanforfun.blog.model.entity.entity.Month;
 import ca.seanforfun.blog.model.entity.vo.UserVo;
 import ca.seanforfun.blog.service.ebo.ArticleService;
 import ca.seanforfun.blog.service.ebo.LinkService;
+import ca.seanforfun.blog.service.ebo.MonthService;
 import ca.seanforfun.blog.service.ebo.UserService;
 
 /**
@@ -41,6 +43,8 @@ public class IndexController {
 	private LinkService linkService;
 	@Autowired
 	private PaginationBean paginationBean;
+	@Autowired
+	private MonthService monthService;
 
 	@RequestMapping("/")
 	public ModelAndView index(HttpServletRequest request,
@@ -101,6 +105,12 @@ public class IndexController {
 		 */
 		List<Link> friendsLinks = linkService.getAllFriendsLinks();
 		mv.addObject("links", friendsLinks);
+		
+		/**
+		 * Get archive information from database.
+		 */
+		List<Month> months = monthService.getArchiveInfo();
+		mv.addObject("months", months);
 		
 		/**
 		 * Blog access statistic update

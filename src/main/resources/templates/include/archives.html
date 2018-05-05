@@ -5,7 +5,7 @@
 	<div class="p-3" th:fragment="archives">
 		<h4 class="font-italic">Archives</h4>
 		<ol class="list-unstyled mb-0">
-			<li><a href="#">March 2014</a></li>
+			<li th:each="month:${months}"><a href="#" th:text="${month.dateView} + ' ('+${month.articleCount}+')'"></a></li>
 		</ol>
 	</div>
 </body>
