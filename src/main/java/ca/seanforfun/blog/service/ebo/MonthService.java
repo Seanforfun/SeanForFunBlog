@@ -20,20 +20,20 @@ import ca.seanforfun.blog.service.ebi.MonthEbi;
 public class MonthService implements MonthEbi {
 	@Autowired
 	private MonthMapper monthMapper;
-	
+
 	@Override
 	@Transactional
 	public void createMonth() {
 		monthMapper.addMonth(new Timestamp(System.currentTimeMillis()));
 	}
-	
+
 	@Override
-	public Long getCurrentMonth(){
+	public Long getCurrentMonth() {
 		return monthMapper.getCurrentMonthId();
 	}
-	
+
 	@Override
-	public List<Month> getArchiveInfo(){
+	public List<Month> getArchiveInfo() {
 		return monthMapper.getArticleCountList();
 	}
 }

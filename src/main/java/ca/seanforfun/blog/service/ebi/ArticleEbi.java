@@ -93,4 +93,17 @@ public interface ArticleEbi {
 	 * @Return: void
 	 */
 	void deleteArticleById(Long id);
+
+	/**
+	 * @Description: Get archive articles by month
+	 * @Return: List<Article>
+	 */
+	List<Article> getArchivesArticles(Long id, Integer currentPageNum,
+			Integer numPerPage);
+
+	/**
+	 * @Description: Get archive article count by month
+	 * @Return: Integer
+	 */
+	Integer getArchiveCountByMid(Long mid);
 }

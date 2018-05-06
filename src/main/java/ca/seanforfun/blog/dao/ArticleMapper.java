@@ -33,7 +33,8 @@ public interface ArticleMapper {
 	public Integer getArticalCount(@Param("inuse") Integer articleInuse);
 
 	@Select("select count(id) from article where uid = #{uid} and inuse = #{inuse}")
-	public Long getArticleCountByUid(@Param("uid") Long uid, @Param("inuse") Integer articleInuse);
+	public Long getArticleCountByUid(@Param("uid") Long uid,
+			@Param("inuse") Integer articleInuse);
 
 	@Select("SELECT id, title, abst, uid, lastmodifytime FROM article WHERE TYPE = #{type} and publish = 1 and inuse=#{inuse} ORDER BY lastmodifytime desc LIMIT #{current}, #{perpage}")
 	@Results(value = {
@@ -74,7 +75,9 @@ public interface ArticleMapper {
 	public List<Image> getImageByAid(Long aid);
 
 	@Select("select count(id) from article where cid = #{category} and inuse = #{inuse}")
-	public Integer getArticalCountByCategoryId(@Param("category") Integer category, @Param("inuse") Integer articleInuse);
+	public Integer getArticalCountByCategoryId(
+			@Param("category") Integer category,
+			@Param("inuse") Integer articleInuse);
 
 	@Results(value = {
 			@Result(property = "id", column = "id"),
@@ -89,7 +92,8 @@ public interface ArticleMapper {
 	@Select("SELECT id, title, abst, uid, lastmodifytime FROM article WHERE TYPE = #{type} and publish = 1 and inuse = #{inuse} ORDER BY lastmodifytime desc LIMIT #{current}, #{perpage}")
 	public List<Article> getArticalByCategoryId(Integer categoryId,
 			@Param("current") Integer currentIndex,
-			@Param("perpage") Integer numPerPage, @Param("type") Integer type, @Param("inuse") Integer articleInuse);
+			@Param("perpage") Integer numPerPage, @Param("type") Integer type,
+			@Param("inuse") Integer articleInuse);
 
 	@Results(value = {
 			@Result(property = "id", column = "id"),
@@ -147,10 +151,23 @@ public interface ArticleMapper {
 	@Select("SELECT id, title, cid, accessTime, TYPE, lastmodifytime, publish FROM article WHERE uid = #{uid} and inuse = 1 ORDER BY id DESC LIMIT #{index} ,#{numPerPage}")
 	public List<Article> getArticlePaginationByUid(@Param("uid") Long uid,
 			@Param("index") int index, @Param("numPerPage") Integer numPerPage);
-	
-	@Update(value="UPDATE article SET inuse = 0 WHERE id = #{id}")
+
+	@Update(value = "UPDATE article SET inuse = 0 WHERE id = #{id}")
 	public void deleteArticleById(@Param("id") Long id);
+
+	@Select("SELECT id, title, abst, uid, lastmodifytime FROM article WHERE TYPE = #{type} and publish = 1 and inuse=#{inuse} and mid=#{mid} ORDER BY lastmodifytime desc LIMIT #{current}, #{perpage}")
+	@Results(value = {
+			@Result(property = "id", column = "id"),
+			@Result(property = "title", column = "title"),
+			@Result(property = "abst", column = "abst"),
+			@Result(property = "author", column = "uid", javaType = User.class, one = @One(select = "ca.seanforfun.blog.dao.UserMapper.getUserById")),
+			@Result(property = "lastModifyTime", column = "lastmodifytime"),
+			@Result(property = "images", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getImagesByArticleId")),
+			@Result(property = "badges", column = "id", javaType = List.class, many = @Many(select = "ca.seanforfun.blog.dao.ArticleMapper.getBadgesByAritcleId")) })
+	public List<Article> getPaginationArticleByMid(@Param("mid") Long id,
+			@Param("inuse") Integer inuse, @Param("type") Integer type,
+			@Param("current") Integer current, @Param("perpage") Integer perpage);
 	
-	@Select("SELECT COUNT(id) FROM article WHERE MID = #{id}")
-	public Integer getArticleCountByMid(@Param("id") Long id);
+	@Select("SELECT COUNT(id) FROM article WHERE MID = #{mid} AND publish = 1 AND inuse=1")
+	public Integer getArticleCountByMid(@Param("mid") Long mid);
 }

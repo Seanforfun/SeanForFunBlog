@@ -401,6 +401,17 @@
 			$main.append($html);
 		}
 	}
+	
+	function getArchiveArticle(obj){
+		alert("test");
+		var archiveId = $(obj).attr("id");
+		$.ajax({
+			url:"/article/archives/" + archiveId +"/1",
+			success:function(data){
+				
+			}
+		});
+	}
 </script>
 </head>
 <body data-spy="scroll" data-offset="200" data-target="#article-scrollspy" style="position: relative;">

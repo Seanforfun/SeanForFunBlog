@@ -176,4 +176,14 @@ public class ArticleService implements ArticleEbi {
 	public void deleteArticleById(Long id) {
 		articleMapper.deleteArticleById(id);
 	}
+	
+	@Override
+	public List<Article> getArchivesArticles(Long id, Integer currentPageNum, Integer numPerPage){
+		return articleMapper.getPaginationArticleByMid(id, Article.ARTICLE_INUSE, Article.ARTICAL_PUBLIC, currentPageNum, numPerPage);
+	}
+	
+	@Override
+	public Integer getArchiveCountByMid(Long mid){
+		return articleMapper.getArticleCountByMid(mid);
+	}
 }

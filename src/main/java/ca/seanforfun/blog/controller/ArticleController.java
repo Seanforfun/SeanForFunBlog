@@ -239,4 +239,20 @@ public class ArticleController {
 		paginationVo.setArticles(articles);
 		return paginationVo;
 	}
+	
+	@RequestMapping("/archives/{id}/{pageNum}")
+	public @ResponseBody PaginationVo ajaxArchivesArticles(ModelAndView mv, @PathVariable("id") Long id, @PathVariable(value="pageNum",required=false) Integer pageNum){
+		if(null == pageNum){
+			paginationVo.setCurrentPageNum(1);
+		}else{
+			paginationVo.setCurrentPageNum(pageNum);
+		}
+		Integer numPerPage = configBean.getMaxArticlePerPage();
+		paginationVo.setNumPerPage(numPerPage);
+		Integer totalCount = articleService.getArchiveCountByMid(id);
+		paginationVo.calculationMaxPage(totalCount, numPerPage);
+		List<Article> articles = articleService.getArchivesArticles(id, paginationVo.getCurrentPageNum(), numPerPage);
+		paginationVo.setArticles(articles);
+		return paginationVo;
+	}
 }
