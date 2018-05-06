@@ -145,8 +145,9 @@
 						// Check and remove the scrollspy
 						userInfo = data.userVo;
 						$("#article-scrollspy").parent().remove();
-						if(typeof $("aside").attr("class") == 'undefined'){
-							changeArticleIndexCb(data, category_id);
+						
+						changeArticleIndexCb(data, category_id);
+						if(typeof $("aside").attr("class") == typeof undefined){
 							$(".blog-main").attr("style", "");
 							//Add the aside
 							$rowDiv = $("#mainRow");
@@ -226,16 +227,7 @@
 		}
 	}
 	
-	function changeArticleIndexCb(data, id){
-		$(".blog-main").attr("class","col-md-8 blog-main");
-		var category_id = id;
-		
-		//Refresh the article part.
-		var $main = $(".blog-main"); 
-		$main.empty();
-		var articles = data.articles;
-		var article_num = articles.length;
-		
+	function appendArticleCards(main, articles, article_num){
 		for(var i = 0; i < article_num; i++){
 			var article = articles[i];
 			$blogPostDiv = $("<div class='card' style='margin-bottom: 15px;' th:each='article:${articles}'></div>");
@@ -289,9 +281,11 @@
 			$pAbs = $("<p>"+article.abst+"</p>");
 			$cardDiv.append($pAbs);
 			$blogPostDiv.append($cardDiv);
-			$main.append($blogPostDiv);
+			main.append($blogPostDiv);
 		}
-		//Update the pagination information.
+	}
+	
+	function appendPagination(main,data, id){
 		var currentPageNum = data.currentPageNum;
 		var totalPageNum = data.totalPageNum;
 		var numPerPage = data.numPerPage;
@@ -308,7 +302,7 @@
 				$newer = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
 			}
 		}else{
-			$nav = $("<nav id='pagination' class='blog-pagination text-center' category='"+ category_id +"' numPerPage='"+ numPerPage +"'></nav>");	
+			$nav = $("<nav id='pagination' class='blog-pagination text-center' category='"+ id +"' numPerPage='"+ numPerPage +"'></nav>");	
 			if(currentPageNum == 1){
 				$older = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
 				$newer = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
@@ -322,7 +316,23 @@
 		}
 		$nav.append($older);
 		$nav.append($newer);
-		$main.append($nav);
+		main.append($nav);
+	}
+	
+	function changeArticleIndexCb(data, id){
+		$(".blog-main").attr("class","col-md-8 blog-main");
+		var category_id = id;
+		
+		//Refresh the article part.
+		var $main = $(".blog-main"); 
+		$main.empty();
+		var articles = data.articles;
+		var article_num = articles.length;
+		//-------------------appendArticleCards----------------------------
+		appendArticleCards($main, articles, article_num);
+		
+		//Update the pagination information.
+		appendPagination($main,data, id);
 	}
 	
 	var converter = new showdown.Converter({'headerLevelStart': '3'});

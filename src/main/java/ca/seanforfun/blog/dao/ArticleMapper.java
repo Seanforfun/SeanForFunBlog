@@ -74,7 +74,7 @@ public interface ArticleMapper {
 	@Select("SELECT path FROM image WHERE aid = #{id}")
 	public List<Image> getImageByAid(Long aid);
 
-	@Select("select count(id) from article where cid = #{category} and inuse = #{inuse}")
+	@Select("select count(id) from article where cid = #{category} and inuse = #{inuse} and publish = 1")
 	public Integer getArticalCountByCategoryId(
 			@Param("category") Integer category,
 			@Param("inuse") Integer articleInuse);
