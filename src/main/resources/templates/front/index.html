@@ -205,10 +205,20 @@
 		var type = $(obj).html();
 		var wantPageNum;
 		var category_id = $(obj).parent().attr("category");
+		var archive_id = $(obj).parent().attr("archive");
 		if(type == "Older"){
 			wantPageNum = parseInt($(obj).attr("currentPage")) + 1;
 		}else{
 			wantPageNum = parseInt($(obj).attr("currentPage")) - 1;
+		}
+		if(typeof archive_id != typeof undefined && archive_id != false){
+			$.ajax({
+				url:"/article/archive/" + archive_id + "/" + wantPageNum,
+				success:function(data){
+					changeArchiveArticleIndexCb(data, null);
+				}
+			});
+			return;
 		}
 		if(typeof category_id == typeof undefined && category_id != false){
 			$.ajax({
@@ -227,7 +237,17 @@
 		}
 	}
 	
-	function appendArticleCards(main, articles, article_num){
+	function changeArchiveArticleIndexCb(data){
+		//Refresh the article part.
+		var $main = $(".blog-main"); 
+		$main.empty();
+		appendArticleCards($main, data);
+		appendArchivePagination($main, data);
+	}
+	
+	function appendArticleCards(main, data){
+		var articles = data.articles;
+		var article_num = articles.length;
 		for(var i = 0; i < article_num; i++){
 			var article = articles[i];
 			$blogPostDiv = $("<div class='card' style='margin-bottom: 15px;' th:each='article:${articles}'></div>");
@@ -294,9 +314,12 @@
 			if(currentPageNum == 1){
 				$older = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
 				$newer = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
-			}else if(currentPageNum >= totalPageNum){
+			}else if(currentPageNum >= totalPageNum && currentPageNum!= 1){
 				$older = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
 				$newer = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
+			}else if(currentPageNum == 1 && currentPageNum == totalPageNum){
+				$older = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
+				$newer = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
 			}else{
 				$older = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
 				$newer = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
@@ -306,13 +329,40 @@
 			if(currentPageNum == 1){
 				$older = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
 				$newer = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
-			}else if(currentPageNum >= totalPageNum){
+			}else if(currentPageNum >= totalPageNum && currentPageNum!= 1){
 				$older = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
 				$newer = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
+			}else if(currentPageNum == 1 && currentPageNum == totalPageNum){
+				$older = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
+				$newer = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
 			}else{
 				$older = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
 				$newer = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
 			}
+		}
+		$nav.append($older);
+		$nav.append($newer);
+		main.append($nav);
+	}
+	
+	function appendArchivePagination(main,data){
+		var currentPageNum = data.currentPageNum;
+		var totalPageNum = data.totalPageNum;
+		var archiveId = data.archiveId;
+		var numPerPage = data.numPerPage;
+		$nav = $("<nav id='pagination' class='blog-pagination text-center' archive='"+ archiveId +"' numPerPage='"+ numPerPage +"'></nav>");	
+		if(currentPageNum == 1 && currentPageNum != totalPageNum){
+			$older = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
+			$newer = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
+		}else if(currentPageNum >= totalPageNum && currentPageNum!= 1){
+			$older = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
+			$newer = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
+		}else if(currentPageNum == 1 && currentPageNum == totalPageNum){
+			$older = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
+			$newer = $("<a class='btn btn-outline-primary disabled' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
+		}else{
+			$older = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Older</a>");
+			$newer = $("<a class='btn btn-outline-primary' href='javascript:void(0);' currentPage='"+currentPageNum+"' onclick='goAnotherPage(this)'>Newer</a>");
 		}
 		$nav.append($older);
 		$nav.append($newer);
@@ -326,10 +376,8 @@
 		//Refresh the article part.
 		var $main = $(".blog-main"); 
 		$main.empty();
-		var articles = data.articles;
-		var article_num = articles.length;
 		//-------------------appendArticleCards----------------------------
-		appendArticleCards($main, articles, article_num);
+		appendArticleCards($main, data);
 		
 		//Update the pagination information.
 		appendPagination($main,data, id);
@@ -413,12 +461,11 @@
 	}
 	
 	function getArchiveArticle(obj){
-		alert("test");
 		var archiveId = $(obj).attr("id");
 		$.ajax({
 			url:"/article/archives/" + archiveId +"/1",
 			success:function(data){
-				
+				changeArchiveArticleIndexCb(data);
 			}
 		});
 	}

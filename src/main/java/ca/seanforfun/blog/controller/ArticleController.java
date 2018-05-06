@@ -253,6 +253,7 @@ public class ArticleController {
 		paginationVo.calculationMaxPage(totalCount, numPerPage);
 		List<Article> articles = articleService.getArchivesArticles(id, paginationVo.getCurrentPageNum(), numPerPage);
 		paginationVo.setArticles(articles);
+		paginationVo.setArchiveId(id);
 		return paginationVo;
 	}
 }

@@ -12,6 +12,7 @@ import ca.seanforfun.blog.model.entity.entity.Link;
 @Component
 @Scope("prototype")
 public class PaginationVo extends PaginationBean {
+	private Long archiveId;
 	private List<Article> articles;
 	private UserVo userVo;
 	private List<Link> links;
@@ -37,5 +38,12 @@ public class PaginationVo extends PaginationBean {
 
 	public void setArticles(List<Article> articles) {
 		this.articles = articles;
+	}
+	public Long getArchiveId() {
+		return archiveId;
+	}
+
+	public void setArchiveId(Long archiveId) {
+		this.archiveId = archiveId;
 	}
 }

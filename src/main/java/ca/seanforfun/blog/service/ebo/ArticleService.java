@@ -179,7 +179,7 @@ public class ArticleService implements ArticleEbi {
 	
 	@Override
 	public List<Article> getArchivesArticles(Long id, Integer currentPageNum, Integer numPerPage){
-		return articleMapper.getPaginationArticleByMid(id, Article.ARTICLE_INUSE, Article.ARTICAL_PUBLIC, currentPageNum, numPerPage);
+		return articleMapper.getPaginationArticleByMid(id, Article.ARTICLE_INUSE, Article.ARTICAL_PUBLIC, (currentPageNum - 1) * numPerPage, numPerPage);
 	}
 	
 	@Override
