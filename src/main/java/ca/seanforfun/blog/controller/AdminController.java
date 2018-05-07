@@ -185,6 +185,29 @@ public class AdminController {
 		mv.setViewName("admin/articleManage.html");
 		return mv;
 	}
+	
+	@RequestMapping("/toLinkManage/{pageNum}")
+	public ModelAndView toLinkManage(ModelAndView mv, @PathVariable(value="pageNum") Integer pageNum){
+		//Add category inforamtion
+		if(null == pageNum){
+			pageNum = 1;
+		}
+		if(pageNum <= 0){
+			throw new SeanForFunException("Incorrect index number...");
+		}
+		Map<Category, List<Category>> adminCategoryMap = CategoryRunner.getAdminCategoryMap();
+		if(null == adminCategoryMap || adminCategoryMap.size() <= 0){
+			throw new SeanForFunException("Blog Category setting error....");
+		}else {
+			mv.addObject("pacategory", adminCategoryMap);
+		}
+		/**
+		 * Get link information from database
+		 */
+		
+		mv.setViewName("admin/friendLinkManage.html");
+		return mv;
+	}
 
 	@RequestMapping("/adminSignout")
 	public ModelAndView signOut(ModelAndView mv, HttpSession session) {

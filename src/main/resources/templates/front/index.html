@@ -261,7 +261,7 @@
 			$p = $("<p class='blog-post-meta'></p>");
 			$p.html(article.lastModifyTimeView + "&nbsp;by ");
 			//Should be modified.
-			$aAuthor = $("<a href='#'>"+article.author.name+"</a>");
+			$aAuthor = $("<a href='#'>"+article.author.name+"&nbsp;</a>");
 			$p.append($aAuthor);
 			var badge_length = article.badges.length;
 			for(var j = 0; j < badge_length; j++){
