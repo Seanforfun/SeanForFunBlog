@@ -21,4 +21,22 @@ public interface LinkEbi {
 	 * @Return: Integer
 	 */
 	public Integer getLinkCount();
+
+	/**
+	 * @Description:Get LinkList from database.
+	 * @Return: List<Link>
+	 */
+	List<Link> getPaginationLinks(Integer pageNum, Integer numPerPage);
+
+	/**
+	 * @Description:Delete link by id.
+	 * @Return: void
+	 */
+	void deleteLinkById(Long id);
+
+	/**
+	 * @Description:Get link information of the link.
+	 * @Return: Link
+	 */
+	Link getLinkById(Long id);
 }

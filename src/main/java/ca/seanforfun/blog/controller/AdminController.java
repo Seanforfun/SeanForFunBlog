@@ -26,6 +26,7 @@ import ca.seanforfun.blog.model.entity.config.SysInfo;
 import ca.seanforfun.blog.model.entity.entity.Article;
 import ca.seanforfun.blog.model.entity.entity.Badge;
 import ca.seanforfun.blog.model.entity.entity.Category;
+import ca.seanforfun.blog.model.entity.entity.Link;
 import ca.seanforfun.blog.model.entity.entity.User;
 import ca.seanforfun.blog.model.entity.vo.PaginationVo;
 import ca.seanforfun.blog.service.ebo.AccessService;
@@ -204,7 +205,14 @@ public class AdminController {
 		/**
 		 * Get link information from database
 		 */
-		
+		Integer linkNum = linkService.getLinkCount();
+		Integer numPerPage = configBean.getMaxManagePerPage();
+		paginationVo.setNumPerPage(numPerPage);
+		paginationVo.setCurrentPageNum(pageNum);
+		paginationVo.calculationMaxPage(linkNum, numPerPage);
+		List<Link> linkList = linkService.getPaginationLinks(pageNum, numPerPage);
+		paginationVo.setLinks(linkList);
+		mv.addObject("paginationVo", paginationVo);
 		mv.setViewName("admin/friendLinkManage.html");
 		return mv;
 	}

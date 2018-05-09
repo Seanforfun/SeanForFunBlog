@@ -33,4 +33,19 @@ public class LinkService implements LinkEbi {
 		}
 		return count.intValue();
 	}
+
+	@Override
+	public List<Link> getPaginationLinks(Integer pageNum, Integer numPerPage) {
+		return linkMapper.getLinksByPage((pageNum - 1) * numPerPage, numPerPage);
+	}
+
+	@Override
+	public void deleteLinkById(Long id) {
+		linkMapper.deleteLinkById(id);
+	}
+
+	@Override
+	public Link getLinkById(Long id) {
+		return linkMapper.getLinkById(id);
+	}
 }
