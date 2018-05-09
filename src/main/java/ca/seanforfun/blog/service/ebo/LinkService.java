@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ca.seanforfun.blog.dao.LinkMapper;
 import ca.seanforfun.blog.exception.SeanForFunException;
@@ -47,5 +48,16 @@ public class LinkService implements LinkEbi {
 	@Override
 	public Link getLinkById(Long id) {
 		return linkMapper.getLinkById(id);
+	}
+
+	@Override
+	@Transactional
+	public void updateLinkById(Link link) {
+		linkMapper.updateLinkById(link.getId(), link.getName(), link.getLink());
+	}
+
+	@Override
+	public void addLink(Link link) {
+		linkMapper.addLink(link.getName(), link.getLink());
 	}
 }

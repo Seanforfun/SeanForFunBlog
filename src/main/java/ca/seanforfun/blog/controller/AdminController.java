@@ -187,8 +187,8 @@ public class AdminController {
 		return mv;
 	}
 	
-	@RequestMapping("/toLinkManage/{pageNum}")
-	public ModelAndView toLinkManage(ModelAndView mv, @PathVariable(value="pageNum") Integer pageNum){
+	@RequestMapping({"/toLinkManage/{pageNum}", "/toLinkManage"})
+	public ModelAndView toLinkManage(ModelAndView mv, @PathVariable(value="pageNum", required=false) Integer pageNum){
 		//Add category inforamtion
 		if(null == pageNum){
 			pageNum = 1;

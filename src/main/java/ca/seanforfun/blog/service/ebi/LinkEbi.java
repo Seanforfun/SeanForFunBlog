@@ -39,4 +39,16 @@ public interface LinkEbi {
 	 * @Return: Link
 	 */
 	Link getLinkById(Long id);
+
+	/**
+	 * @Description:Update link information by id.
+	 * @Return: void
+	 */
+	void updateLinkById(Link link);
+
+	/**
+	 * @Description:Create a new link.
+	 * @Return: void
+	 */
+	void addLink(Link link);
 }

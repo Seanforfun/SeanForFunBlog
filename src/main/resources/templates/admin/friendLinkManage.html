@@ -41,9 +41,17 @@
     		$.ajax({
     			url:"/link/modify/" + id,
     			success:function(data){
-    				alert("success");
+    				$("#linkname").val(data.name);
+    				$("#linkaddress").val(data.link);
+    				$("#linkSubmit").attr("saveid", data.id);
     			}
     		});
+    	}
+    	
+    	function saveInfo(obj){
+    		var id = $(obj).attr("saveid");
+    		$("form:eq(0)").attr("action", "/link/update/" + id);
+    		$(("form:eq(0)")).submit();
     	}
     </script>
   </head>
@@ -75,10 +83,10 @@
 	           				<table class="table">
 								  <thead>
 								    <tr>
-								      <th scope="col">Id</th>
-								      <th scope="col">Name</th>
-								      <th scope="col">Link</th>
-								      <th scope="col">Operation</th>
+								      <th scope="col" width="10%">Id</th>
+								      <th scope="col" width="30%">Name</th>
+								      <th scope="col" width="30%">Link</th>
+								      <th scope="col" width="30%">Operation</th>
 								    </tr>
 								  </thead>
 								  <tbody>
@@ -117,13 +125,13 @@
 							<nav aria-label="Page navigation example">
 							  <ul class="pagination justify-content-center">
 							    <li th:with="result=${paginationVo.currentPageNum - 1}" th:classappend="${paginationVo.currentPageNum != null && paginationVo.currentPageNum == 1}? 'disabled':''" class="page-item">
-							      <a class="page-link" th:href="'/admin/toManageBlog/' + ${result}" tabindex="-1">Previous</a>
+							      <a class="page-link" th:href="'/admin/toLinkManage/' + ${result}" tabindex="-1">Previous</a>
 							    </li>
 						    	<li th:classappend="${paginationVo.currentPageNum == index}?'disabled':''" th:each="index:${#numbers.sequence(1,paginationVo.totalPageNum)}" class="page-item">
-						    		<a class="page-link" th:href="'/admin/toManageBlog/'+${index}" th:text="${index}"></a>
+						    		<a class="page-link" th:href="'/admin/toLinkManage/'+${index}" th:text="${index}"></a>
 						    	</li>
 							    <li class="page-item" th:with="result=${paginationVo.currentPageNum + 1}" th:classappend="${paginationVo.currentPageNum == paginationVo.totalPageNum}? 'disabled':''">
-							      <a class="page-link" th:href="'/admin/toManageBlog/'+${result}">Next</a>
+							      <a class="page-link" th:href="'/admin/toLinkManage/'+${result}">Next</a>
 							    </li>
 							  </ul>
 							</nav>
@@ -135,13 +143,13 @@
 							    	Link Content
 							    </strong>
 							  </div>
-							  <form>
+							  <form action="/" method="POST">
 							  	<div class="form-group" style="margin-left: 10px;margin-right: 10px;">
 								    <label for="exampleInputEmail1"><b>Link Name</b></label>
-								    <input type="text" class="form-control" placeholder="Enter link name(Required)" th:value="${linkInfo?.name}">
+								    <input type="text" name="name" id="linkname" class="form-control" placeholder="Enter link name(Required)">
 								    <label for="exampleInputEmail1"><b>Link Address</b></label>
-								    <input type="text" class="form-control" placeholder="Enter link address(Required)" th:value="${linkInfo?.link}">
-							    	<button type="button" class="btn btn-outline-success" th:link=${linkInfo?.id} style="width: 100px;margin-top: 10px;float: right;margin-bottom: 10px;">Save</button>
+								    <input type="text" name="link" id="linkaddress" class="form-control" placeholder="Enter link address(Required)">
+							    	<button type="button" id="linkSubmit" class="btn btn-outline-success" saveid="" onclick="saveInfo(this)" style="width: 100px;margin-top: 10px;float: right;margin-bottom: 10px;">Save</button>
 								  </div>
 							  </form>							  
 							</div>

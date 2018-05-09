@@ -2,6 +2,7 @@ package ca.seanforfun.blog.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,13 +26,24 @@ public class LinkController {
 	@Autowired
 	private PaginationVo paginationVo;
 	
-	@RequestMapping("/delete/{id}")
-	public ModelAndView deleteLink(ModelAndView mv, @PathVariable("id") Long id){
+	@RequestMapping({"/delete/{id}", "/delete"})
+	public ModelAndView deleteLink(ModelAndView mv, @PathVariable(value="id", required=false) Long id){
 		if(null == id){
 			throw new SeanForFunException("Error happens when deleting link...");
 		}
 		linkService.deleteLinkById(id);
 		mv.setViewName("redirect:/admin/toLinkManage/1");
+		return mv;
+	}
+	
+	@RequestMapping({"/update/{id}", "/update"})
+	public ModelAndView updateOrSaveLink(ModelAndView mv, @ModelAttribute(value="link") Link link, @PathVariable(value="id", required=false) Long id){
+		if(null != id){
+			linkService.updateLinkById(link);
+		}else{
+			linkService.addLink(link);
+		}
+		mv.setViewName("redirect:/admin/toLinkManage");
 		return mv;
 	}
 	

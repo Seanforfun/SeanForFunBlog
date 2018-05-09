@@ -3,9 +3,11 @@ package ca.seanforfun.blog.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
@@ -35,4 +37,10 @@ public interface LinkMapper {
 
 	@Select("SELECT * FROM link WHERE id = #{id}")
 	public Link getLinkById(@Param("id") Long id);
+
+	@Update("UPDATE link SET NAME = #{name}, link=#{link} WHERE id = #{id}")
+	public void updateLinkById(@Param("id") Long id, @Param("name") String name, @Param("link") String link);
+
+	@Insert("INSERT INTO link (NAME, link) VALUES (#{name}, #{link})")
+	public void addLink(@Param("name") String name, @Param("link") String link);
 }
