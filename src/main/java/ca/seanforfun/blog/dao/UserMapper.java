@@ -22,18 +22,16 @@ import ca.seanforfun.blog.model.entity.vo.UserVo;
 public interface UserMapper {
 
 	@Select("SELECT id, name, nickname, bio, intro, pic, activestatus FROM USER WHERE url like '${url}%'")
-	@Cacheable("user")
 	public UserVo getUserByUrl(@Param("url") String url);
 
 	@Select("SELECT id, name FROM USER WHERE id = #{id}")
 	public User getUserById(@Param("id") Long id);
 
-	@Cacheable("admin")
 	@Select("SELECT id, NAME, nickname, bio, intro, pic, activestatus FROM USER WHERE admin=#{adminType}")
 	public List<UserVo> getUserByAdmin(Integer adminType);
 
 	@Cacheable("loginUser")
-	@Select("SELECT id, nickname, activestatus, NAME, PASSWORD, email, bio, country, province, city, url, intro, pic FROM USER WHERE NAME = #{name} AND PASSWORD = #{password}")
+	@Select("SELECT admin, id, nickname, activestatus, NAME, PASSWORD, email, bio, country, province, city, url, intro, pic FROM USER WHERE NAME = #{name} AND PASSWORD = #{password}")
 	public User getUserByNameAndPassword(@Param("name") String name,
 			@Param("password") String password_hash);
 

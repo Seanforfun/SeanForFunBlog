@@ -29,9 +29,11 @@ import ca.seanforfun.blog.model.entity.entity.Category;
 import ca.seanforfun.blog.model.entity.entity.Link;
 import ca.seanforfun.blog.model.entity.entity.User;
 import ca.seanforfun.blog.model.entity.vo.PaginationVo;
+import ca.seanforfun.blog.model.entity.vo.UserVo;
 import ca.seanforfun.blog.service.ebo.AccessService;
 import ca.seanforfun.blog.service.ebo.ArticleService;
 import ca.seanforfun.blog.service.ebo.LinkService;
+import ca.seanforfun.blog.service.ebo.UserService;
 
 /**
  * @author SeanForFun E-mail:xiaob6@mcmaster.ca
@@ -55,6 +57,8 @@ public class AdminController {
 	private SqlInfo sqlInfo;
 	@Autowired
 	private PaginationVo paginationVo;
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping("/toAdmin")
 	public ModelAndView toAdminPage(ModelAndView mv, HttpSession session,
@@ -214,6 +218,25 @@ public class AdminController {
 		paginationVo.setLinks(linkList);
 		mv.addObject("paginationVo", paginationVo);
 		mv.setViewName("admin/friendLinkManage.html");
+		return mv;
+	}
+	
+	@RequestMapping("/toPersionalInfo")
+	public ModelAndView toPersonalInformation(ModelAndView mv, HttpSession session){
+		Map<Category, List<Category>> adminCategoryMap = CategoryRunner.getAdminCategoryMap();
+		if(null == adminCategoryMap || adminCategoryMap.size() <= 0){
+			throw new SeanForFunException("Blog Category setting error....");
+		}else {
+			mv.addObject("pacategory", adminCategoryMap);
+		}
+		User user = (User) session.getAttribute("loginUser");
+		if(user.getAdmin() != User.USER_ADMIN){
+			mv.setViewName("redirect:/admin/toAdmin");
+			return mv;
+		}
+		UserVo adminInfo = userService.getAdmin();
+		mv.addObject("adminInfo", adminInfo);
+		mv.setViewName("admin/adminInfoManage.html");
 		return mv;
 	}
 

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/images/icon/seanforfun.ico">
+	<script type="text/javascript" src="/jquery/jquery-2.1.0.js"></script>
+
+    <title>Admin Page</title>
+
+    <!-- Bootstrap core CSS -->
+	<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/bootstrap/css/dashboard.css" rel="stylesheet">
+    <script type="text/javascript">
+    	$(function(){
+    		$(".hover-class").hover(function() {
+    			$(this).attr("style", "color: #000;background-color:#fff;padding-left: 0px;padding-right: 0px;");
+    		}, function() {
+    			$(this).attr("style", "color: #fff;background-color:#343A40;padding-left: 0px;padding-right: 0px;");
+    		});
+    		
+    		$("#github").click(function(){
+    			window.location.href="https://github.com/Seanforfun";
+    		})
+    	})
+    	
+    	function modifyBlog(obj){
+    		window.location.href="/admin/toWrite/" + $(obj).attr("id");
+    	}
+    	
+    	function publishBlog(obj){
+    		window.location.href="/article/publish/" + $(obj).attr("id");
+    	}
+    	
+    	function deleteBlog(obj){
+    		window.location.href="/article/delete/" + $(obj).attr("id");
+    	}
+    	
+    	function openFile(){
+    		$("#btn_file").click();
+    	}
+    	
+    	function uploadFile(){
+    		var suffixs = ["jpg", "png", "bmp", "jpeg"];
+    		var files = document.getElementById('btn_file').files;
+    		if(files.length == 0){
+    			return;
+    		}
+    		var filename = files[0].name;
+    		var iDot = filename.lastIndexOf(".");
+			var type = filename.substring(iDot + 1);
+			if(!suffixs.includes(type)){
+				alert(filename + " is not a image file");
+			}
+			var form = new FormData();
+			form.append("image", files[0]);
+			
+			var imageInfo = null;
+			$.ajax({
+				  async: false,
+				  crossDomain: true,
+				  url: "https://api.imgur.com/3/image",
+				  method: "POST",
+				  headers: {
+				      "Authorization": "Client-ID 38a56741057799f"
+				   },
+				   processData: false,
+				   contentType: false,
+				   mimeType: "multipart/form-data",
+				   data: form,
+				   success:function(response){
+						 obj = JSON.parse(response);
+						 var link = obj.data.link;
+						 var deleteHash = obj.data.deletehash;
+						 $("img").attr("src", link);
+						 imageInfo = link + ";;;;" + deleteHash;
+				    }
+			  });
+    	}
+    </script>
+  </head>
+
+  <body style="">
+    <div th:replace="include/titleAdmin :: titleAdmin"></div>
+
+    <div class="container-fluid">
+      <div class="row">
+    	<div th:replace="include/categoryAdmin :: categoryAdmin"></div>
+
+        <main class="col-md-11 ml-sm-auto col-lg-11 pt-3 px-4">
+	          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+	            <h1 class="h1 font-italic">
+	            	<strong>
+	            		Admin Information Modify
+	            	</strong>
+	            </h1>
+	            <div class="btn-toolbar mb-2 mb-md-0">
+	              <button id="github" class="btn btn-sm btn-outline-secondary">
+	                <span data-feather="github"></span>
+	                	Seanforfun
+	              </button>
+	            </div>
+	          </div>
+	          <div class="row">
+	          	<div class="col-9">
+		            <form class="needs-validation" novalidate>
+					  <div class="form-row">
+					    <div class="col-md-4 mb-3">
+					      <label for="validationTooltip01">First name</label>
+					      <input type="text" class="form-control" id="validationTooltip01" placeholder="First name" value="Mark" required>
+					      <div class="valid-tooltip">
+					        Looks good!
+					      </div>
+					    </div>
+					    <div class="col-md-4 mb-3">
+					      <label for="validationTooltip02">Last name</label>
+					      <input type="text" class="form-control" id="validationTooltip02" placeholder="Last name" value="Otto" required>
+					      <div class="valid-tooltip">
+					        Looks good!
+					      </div>
+					    </div>
+					    <div class="col-md-4 mb-3">
+					      <label for="validationTooltipUsername">Username</label>
+					      <div class="input-group">
+					        <div class="input-group-prepend">
+					          <span class="input-group-text" id="validationTooltipUsernamePrepend">@</span>
+					        </div>
+					        <input type="text" class="form-control" id="validationTooltipUsername" placeholder="Username" aria-describedby="validationTooltipUsernamePrepend" required>
+					        <div class="invalid-tooltip">
+					          Please choose a unique and valid username.
+					        </div>
+					      </div>
+					    </div>
+					  </div>
+					  <div class="form-row">
+					    <div class="col-md-6 mb-3">
+					      <label for="validationTooltip03">City</label>
+					      <input type="text" class="form-control" id="validationTooltip03" placeholder="City" required>
+					      <div class="invalid-tooltip">
+					        Please provide a valid city.
+					      </div>
+					    </div>
+					    <div class="col-md-3 mb-3">
+					      <label for="validationTooltip04">State</label>
+					      <input type="text" class="form-control" id="validationTooltip04" placeholder="State" required>
+					      <div class="invalid-tooltip">
+					        Please provide a valid state.
+					      </div>
+					    </div>
+					    <div class="col-md-3 mb-3">
+					      <label for="validationTooltip05">Zip</label>
+					      <input type="text" class="form-control" id="validationTooltip05" placeholder="Zip" required>
+					      <div class="invalid-tooltip">
+					        Please provide a valid zip.
+					      </div>
+					    </div>
+					  </div>
+					  <button class="btn btn-primary" type="submit">Submit form</button>
+					</form>
+				</div>
+	          	<div class="col-3">
+	          		<img th:src="${adminInfo?.pic}" class="rounded" style="width: 90%;height: 90%;object-fit:cover;">
+	          		<input type="file" id="btn_file" style="display:none">
+	          		<button type="button" class="btn btn-outline-primary" style="margin-top: 10px; width: 90%;" onclick="openFile()">Select Image</button>
+	          		<button type="button" class="btn btn-outline-success" style="margin-top: 10px; width: 90%;" onclick="uploadFile()">Upload Image</button>
+	          	</div>
+			</div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+	<script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="/bootstrap/assets/js/vendor/holder.min.js"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+  </body>
+</html>
