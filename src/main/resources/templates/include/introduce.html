@@ -2,15 +2,29 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <body>
-	<div class="p-3 mb-3 rounded" th:fragment="introduce">
-		<center>
-			<h4 class="font-italic">About Me</h4>
-			<img th:src="${userInfo.pic}" height="60px" width="60px"
-				class="rounded-circle">
-			<h5 class="font-italic" th:text="${userInfo.name}"></h5>
-			<p class="mb-0 font-italic font-weight-bold" th:text="${userInfo.bio}"></p>
-		</center>
-		<p class="mb-0" th:text="${userInfo.intro}"></p>
-	</div>
+	<th:block th:fragment="introduce">
+		<div class="p-3 mb-3 rounded" >
+			<center>
+				<h4 class="font-italic">About Me</h4>
+				<img th:src="${userInfo.pic}" height="70%" width="70%"
+					class="rounded">
+				<h5 class="font-italic" th:text="${userInfo.name}"></h5>
+				<p class="mb-0 font-italic font-weight-bold" th:text="${userInfo.bio}"></p>
+			</center>
+			<p class="mb-0" th:text="${userInfo.intro}"></p>
+		</div>
+		<hr/>
+		<div>
+			<span data-feather="map-pin" style="width: 13px;height: 13px;"></span>
+			<i th:text="${userInfo.city} + ', ' + ${userInfo.province} + ', ' + ${userInfo.country}" style="font-weight:bold;"></i>
+		</div>
+		<div>
+			<span data-feather="mail" style="width: 13px;height: 13px;"></span>
+			<a th:text="${userInfo.email}" style="font-weight:bold;" th:href="'mailto:' + ${userInfo.email}"></a>
+		</div>
+		<h5>
+			<span class="oi oi-arrow-circle-left"></span>
+		</h5>
+    </th:block>	
 </body>
 </html>

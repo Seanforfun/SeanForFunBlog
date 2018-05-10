@@ -39,4 +39,10 @@ public interface UserEbi {
 	 * @Return: void
 	 */
 	void updateAdminPic(String imageInfo);
+
+	/**
+	 * @Description:Get admin's avatar from database.
+	 * @Return: String
+	 */
+	String getAdminAvatar();
 }

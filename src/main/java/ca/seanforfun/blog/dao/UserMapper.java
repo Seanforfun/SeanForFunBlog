@@ -27,7 +27,7 @@ public interface UserMapper {
 	@Select("SELECT id, name FROM USER WHERE id = #{id}")
 	public User getUserById(@Param("id") Long id);
 
-	@Select("SELECT id, NAME, nickname, bio, intro, pic, activestatus FROM USER WHERE admin=#{adminType}")
+	@Select("SELECT id, NAME, nickname, bio, intro, pic, activestatus, country, province, city, email FROM USER WHERE admin=#{adminType}")
 	public List<UserVo> getUserByAdmin(Integer adminType);
 
 	@Cacheable("loginUser")
@@ -40,4 +40,7 @@ public interface UserMapper {
 
 	@Update("UPDATE USER SET pic = #{imageInfo} WHERE admin = 1")
 	public void updateAdminPic(@Param("imageInfo") String imageInfo);
+
+	@Select("SELECT pic FROM USER WHERE admin = 1")
+	public String getAvatar();
 }

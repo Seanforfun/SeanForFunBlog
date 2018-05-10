@@ -57,6 +57,8 @@ public class LoginController {
 			mv.setViewName("redirect:/admin/toAdmin");
 			return mv;
 		}
+		String avatar = userService.getAdminAvatar();
+		mv.addObject("avatar", avatar);
 		// Dispatcher to login page.
 		mv.setViewName("/admin/login.html");
 		return mv;

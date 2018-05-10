@@ -236,7 +236,8 @@ public class AdminController {
 		}
 		UserVo adminInfo = userService.getAdmin();
 		if(adminInfo.getPic() == null || adminInfo.getPic().trim().length() == 0){
-			adminInfo.setDefaultAvatar();
+			//TODO :Find a way to fix.
+			adminInfo.setPic("http://localhost:8080/images/avatar/avatar.jpg");
 		}
 		mv.addObject("adminInfo", adminInfo);
 		mv.setViewName("admin/adminInfoManage.html");

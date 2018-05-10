@@ -23,7 +23,7 @@
   <body style="background-image: url('/images/admin/loginwall.png'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
   	<div>
 	    <form class="text-center form-signin" action="/login" modelAttribute="user" method="post">
-	      <img class="mb-4" src="/images/avatar/avatar.jpg" width="72" height="72">
+	      <img class="mb-4" th:src="${avatar}" width="72" height="72">
 	      <p id="alert" style="color: red;" th:if="${alert != null && alert.message != null}" th:text="${alert.message}"></p>
 	      <p th:unless="${alert != null && alert.message != null}"></p>
 	      <label for="inputUsername" class="sr-only">Username</label>

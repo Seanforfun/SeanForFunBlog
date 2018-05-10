@@ -60,4 +60,13 @@ public class UserService implements UserEbi {
 	public void updateAdminPic(String imageInfo) {
 		userMapper.updateAdminPic(imageInfo);
 	}
+
+	@Override
+	public String getAdminAvatar() {
+		String avatar = userMapper.getAvatar();
+		if(null == avatar){
+			return "/images/avatar/avatar.jpg";
+		}
+		return avatar;
+	}
 }
