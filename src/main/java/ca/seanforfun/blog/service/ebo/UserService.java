@@ -31,8 +31,8 @@ public class UserService implements UserEbi {
 	@Override
 	public UserVo getAdmin() {
 		Integer adminType = User.USER_ADMIN;
-		List<UserVo> adminUsers =  userMapper.getUserByAdmin(adminType);
-		if(null == adminUsers || adminUsers.size() != 1){
+		List<UserVo> adminUsers = userMapper.getUserByAdmin(adminType);
+		if (null == adminUsers || adminUsers.size() != 1) {
 			throw new SeanForFunException("Admin user number error....");
 		}
 		return adminUsers.get(0);
@@ -42,17 +42,25 @@ public class UserService implements UserEbi {
 	public User checkUserInfo(User user) {
 		String name = user.getName();
 		String password = user.getPassword();
-		if(null == name || password == null){
+		if (null == name || password == null) {
 			return null;
 		}
+		String[] tokens = name.split(" ");
+		if (tokens.length != 2) {
+			return null;
+		}
+		String firstName = tokens[0];
+		String lastName = tokens[1];
 		String password_hash = MD5Utils.md5(password);
-		return userMapper.getUserByNameAndPassword(name, password_hash);
+		return userMapper.getUserByNameAndPassword(firstName, lastName,
+				password_hash);
 	}
 
 	@Override
 	@Transactional
 	public void loginUpdate(Long id, String loginIp) {
-		userMapper.updateUserLastLoginTime(System.currentTimeMillis(), id, loginIp);
+		userMapper.updateUserLastLoginTime(System.currentTimeMillis(), id,
+				loginIp);
 	}
 
 	@Override
@@ -64,7 +72,7 @@ public class UserService implements UserEbi {
 	@Override
 	public String getAdminAvatar() {
 		String avatar = userMapper.getAvatar();
-		if(null == avatar){
+		if (null == avatar) {
 			return "/images/avatar/avatar.jpg";
 		}
 		return avatar;

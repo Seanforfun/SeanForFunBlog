@@ -89,6 +89,10 @@
 				}
 			});
     	}
+    	
+    	function updateUserInfo(){
+    		$("form:eq(0)").submit();
+    	}
     </script>
   </head>
 
@@ -115,59 +119,60 @@
 	          </div>
 	          <div class="row">
 	          	<div class="col-9">
-		            <form class="needs-validation" novalidate>
+		            <form class="was-validated" method="post" action="/user/updateAdminInfo">
+		              <input type="hidden" name="id" th:value="${adminInfo?.id}">
 					  <div class="form-row">
 					    <div class="col-md-4 mb-3">
-					      <label for="validationTooltip01">First name</label>
-					      <input type="text" class="form-control" id="validationTooltip01" placeholder="First name" value="Mark" required>
-					      <div class="valid-tooltip">
-					        Looks good!
-					      </div>
+					       <label for="validationServer01">First name</label>
+					      <input type="text" class="form-control is-invalid" id="validationServer01" placeholder="First name" th:value="${adminInfo?.firstName}"  required>
 					    </div>
 					    <div class="col-md-4 mb-3">
 					      <label for="validationTooltip02">Last name</label>
-					      <input type="text" class="form-control" id="validationTooltip02" placeholder="Last name" value="Otto" required>
-					      <div class="valid-tooltip">
-					        Looks good!
-					      </div>
+					      <input type="text" class="form-control" id="validationTooltip02" placeholder="Last name" th:value="${adminInfo?.lastName}" required>
 					    </div>
 					    <div class="col-md-4 mb-3">
-					      <label for="validationTooltipUsername">Username</label>
+					      <label for="validationTooltipUsername">Nickname</label>
 					      <div class="input-group">
 					        <div class="input-group-prepend">
 					          <span class="input-group-text" id="validationTooltipUsernamePrepend">@</span>
 					        </div>
-					        <input type="text" class="form-control" id="validationTooltipUsername" placeholder="Username" aria-describedby="validationTooltipUsernamePrepend" required>
-					        <div class="invalid-tooltip">
-					          Please choose a unique and valid username.
-					        </div>
+					        <input type="text" th:value="${adminInfo?.nickname}" class="form-control" id="validationTooltipUsername" placeholder="Nickname" aria-describedby="validationTooltipUsernamePrepend" required>
 					      </div>
 					    </div>
 					  </div>
 					  <div class="form-row">
-					    <div class="col-md-6 mb-3">
+					    <div class="col-md-4 mb-4">
 					      <label for="validationTooltip03">City</label>
-					      <input type="text" class="form-control" id="validationTooltip03" placeholder="City" required>
-					      <div class="invalid-tooltip">
-					        Please provide a valid city.
-					      </div>
+					      <input type="text" class="form-control" id="validationTooltip03" placeholder="City" th:value="${adminInfo?.city}" required>
 					    </div>
-					    <div class="col-md-3 mb-3">
+					    <div class="col-md-4 mb-4">
 					      <label for="validationTooltip04">State</label>
-					      <input type="text" class="form-control" id="validationTooltip04" placeholder="State" required>
-					      <div class="invalid-tooltip">
-					        Please provide a valid state.
-					      </div>
+					      <input type="text" class="form-control" id="validationTooltip04" placeholder="State" th:value="${adminInfo?.province}" required>
 					    </div>
-					    <div class="col-md-3 mb-3">
-					      <label for="validationTooltip05">Zip</label>
-					      <input type="text" class="form-control" id="validationTooltip05" placeholder="Zip" required>
-					      <div class="invalid-tooltip">
-					        Please provide a valid zip.
-					      </div>
+					    <div class="col-md-4 mb-4">
+					      <label for="validationTooltip05">Country</label>
+					      <input type="text" class="form-control" id="validationTooltip05" placeholder="Country" th:value="${adminInfo?.country}" required>
 					    </div>
 					  </div>
-					  <button class="btn btn-primary" type="submit">Submit form</button>
+					  <div class="form-row">
+					  	<div class="col-md-12 mb-12">
+					  		 <label for="validationTooltip05">E-mail</label>
+						     <input type="email" class="form-control" id="validationTooltip05" placeholder="Country" th:value="${adminInfo?.email}" required>
+					  	</div>
+					  </div>
+					  <div class="form-row" style="margin-top: 10px;">
+					  	<div class="col-md-6 mb-6">
+					  		 <label for="validationTooltip07">Bio</label>
+					  		<textarea class="form-control" rows="6" style="width: 100%;" required="required" th:text="${adminInfo?.bio}"></textarea>
+					  	</div>
+					  	<div class="col-md-6 mb-6">
+					  		 <label for="validationTooltip08">Introduce</label>
+					  		<textarea class="form-control" rows="6" style="width: 100%;" required="required" th:text="${adminInfo?.intro}"></textarea>
+					  	</div>
+					  </div>
+					  <div style="float: right; margin-top: 10px;">
+					  	<button class="btn btn-outline-warning" type="submit" onclick="updateUserInfo()">Save</button>
+					  </div>
 					</form>
 				</div>
 	          	<div class="col-3">

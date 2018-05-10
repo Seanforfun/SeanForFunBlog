@@ -8,7 +8,7 @@
 				<h4 class="font-italic">About Me</h4>
 				<img th:src="${userInfo.pic}" height="70%" width="70%"
 					class="rounded">
-				<h5 class="font-italic" th:text="${userInfo.name}"></h5>
+				<h5 class="font-italic" th:text="${userInfo.firstName} + ' ' +${userInfo.lastName}"></h5>
 				<p class="mb-0 font-italic font-weight-bold" th:text="${userInfo.bio}"></p>
 			</center>
 			<p class="mb-0" th:text="${userInfo.intro}"></p>

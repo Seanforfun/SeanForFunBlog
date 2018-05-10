@@ -21,18 +21,18 @@ import ca.seanforfun.blog.model.entity.vo.UserVo;
 @Repository
 public interface UserMapper {
 
-	@Select("SELECT id, name, nickname, bio, intro, pic, activestatus FROM USER WHERE url like '${url}%'")
+	@Select("SELECT id, firstname, lastname, nickname, bio, intro, pic, activestatus FROM USER WHERE url like '${url}%'")
 	public UserVo getUserByUrl(@Param("url") String url);
 
-	@Select("SELECT id, name FROM USER WHERE id = #{id}")
+	@Select("SELECT id, firstname, lastname FROM USER WHERE id = #{id}")
 	public User getUserById(@Param("id") Long id);
 
-	@Select("SELECT id, NAME, nickname, bio, intro, pic, activestatus, country, province, city, email FROM USER WHERE admin=#{adminType}")
+	@Select("SELECT id, firstname, lastname, nickname, bio, intro, pic, activestatus, country, province, city, email FROM USER WHERE admin=#{adminType}")
 	public List<UserVo> getUserByAdmin(Integer adminType);
 
 	@Cacheable("loginUser")
-	@Select("SELECT admin, id, nickname, activestatus, NAME, PASSWORD, email, bio, country, province, city, url, intro, pic FROM USER WHERE NAME = #{name} AND PASSWORD = #{password}")
-	public User getUserByNameAndPassword(@Param("name") String name,
+	@Select("SELECT admin, id, nickname, activestatus, firstname, lastname, PASSWORD, email, bio, country, province, city, url, intro, pic FROM USER WHERE firstname = #{firstname} and lastname = #{lastname} AND PASSWORD = #{password}")
+	public User getUserByNameAndPassword(@Param("firstname") String firstname, @Param("lastname") String lastname,
 			@Param("password") String password_hash);
 
 	@Update("UPDATE USER SET lastLoginTime = #{currentTimeMillis}, ipAddr = #{loginIp} WHERE id = #{id}")
