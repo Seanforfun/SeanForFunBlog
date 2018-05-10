@@ -54,4 +54,10 @@ public class UserService implements UserEbi {
 	public void loginUpdate(Long id, String loginIp) {
 		userMapper.updateUserLastLoginTime(System.currentTimeMillis(), id, loginIp);
 	}
+
+	@Override
+	@Transactional
+	public void updateAdminPic(String imageInfo) {
+		userMapper.updateAdminPic(imageInfo);
+	}
 }

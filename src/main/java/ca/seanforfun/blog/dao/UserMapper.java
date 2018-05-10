@@ -37,4 +37,7 @@ public interface UserMapper {
 
 	@Update("UPDATE USER SET lastLoginTime = #{currentTimeMillis}, ipAddr = #{loginIp} WHERE id = #{id}")
 	public void updateUserLastLoginTime(@Param("currentTimeMillis") long currentTimeMillis, @Param("id") Long id, @Param("loginIp") String loginIp);
+
+	@Update("UPDATE USER SET pic = #{imageInfo} WHERE admin = 1")
+	public void updateAdminPic(@Param("imageInfo") String imageInfo);
 }

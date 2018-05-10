@@ -33,4 +33,10 @@ public interface UserEbi {
 	 * @Return: void
 	 */
 	void loginUpdate(Long id, String loginIp);
+
+	/**
+	 * @Description: Update admin avatar information.
+	 * @Return: void
+	 */
+	void updateAdminPic(String imageInfo);
 }

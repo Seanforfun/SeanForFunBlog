@@ -75,11 +75,19 @@
 				   success:function(response){
 						 obj = JSON.parse(response);
 						 var link = obj.data.link;
-						 var deleteHash = obj.data.deletehash;
 						 $("img").attr("src", link);
-						 imageInfo = link + ";;;;" + deleteHash;
+						 imageInfo = link;
 				    }
 			  });
+			$.ajax({
+				data:{
+					"imageInfo":imageInfo
+				},
+				url:"/user/image",
+				success: function(data){
+					alert("success");
+				}
+			});
     	}
     </script>
   </head>

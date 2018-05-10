@@ -65,7 +65,7 @@ public class IndexController {
 		/**
 		 * Get user avatar and carousel pictures from third party database.
 		 */
-		if (null == userInfo.getPic()) {
+		if (null == userInfo.getPic() || userInfo.getPic().trim().length() == 0) {
 			userInfo.setDefaultAvatar();
 		}
 
