@@ -40,8 +40,6 @@ public class User {
 	@Size(min=1, max=100, groups={UpdateAdminValidator.class})
 	private String lastName;
 	private String name;
-	@NotNull(groups={UpdateAdminValidator.class})
-	@Size(min=1, max=40, groups={UpdateAdminValidator.class})
 	private String password;
 	@NotNull(groups={UpdateAdminValidator.class})
 	@Size(min=1, max=100, groups={UpdateAdminValidator.class})

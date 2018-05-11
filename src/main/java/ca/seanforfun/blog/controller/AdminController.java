@@ -223,6 +223,18 @@ public class AdminController {
 	
 	@RequestMapping("/toPersionalInfo")
 	public ModelAndView toPersonalInformation(ModelAndView mv, HttpSession session){
+		if(null != session.getAttribute("alertMessage")){
+			session.setAttribute("alertMessage", null);
+			mv.addObject("alertMessage", "alertMessage");
+		}
+		if(null != session.getAttribute("passwordError")){
+			session.setAttribute("passwordError", null);
+			mv.addObject("passwordError", "passwordError");
+		}
+		if(null != session.getAttribute("SuccessInfo")){
+			session.setAttribute("SuccessInfo", null);
+			mv.addObject("SuccessInfo", "SuccessInfo");
+		}
 		Map<Category, List<Category>> adminCategoryMap = CategoryRunner.getAdminCategoryMap();
 		if(null == adminCategoryMap || adminCategoryMap.size() <= 0){
 			throw new SeanForFunException("Blog Category setting error....");

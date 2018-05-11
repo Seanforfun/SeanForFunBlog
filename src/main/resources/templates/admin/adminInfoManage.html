@@ -101,7 +101,7 @@
     		if(!verifyEmail()){
     			return;
     		}
-    		/* $("form:eq(0)").submit(); */
+    		$("form:eq(0)").submit();
     	}
     	
     	function verifyEmail(){
@@ -141,6 +141,24 @@
     	<div th:replace="include/categoryAdmin :: categoryAdmin"></div>
 
         <main class="col-md-11 ml-sm-auto col-lg-11 pt-3 px-4">
+        	<div th:if="${alertMessage!=null}" class="alert alert-warning alert-dismissible fade show" role="alert">
+				  <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				<div th:if="${passwordError!=null}" class="alert alert-warning alert-dismissible fade show" role="alert">
+				  <strong>Holy guacamole!</strong> You should check your old password.
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				<div th:if="${SuccessInfo!=null}" class="alert alert-success alert-dismissible fade show" role="alert">
+				  <strong>Good Job!</strong> Your information has been successfully save.
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
 	          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
 	            <h1 class="h1 font-italic">
 	            	<strong>
@@ -186,11 +204,11 @@
 					  <div class="form-row">
 					    <div class="col-md-6 mb-6">
 					      <label for="validationTooltip03">New Password</label>
-					      <input name="password" type="text" class="form-control" id="newpassword" placeholder="New Password(Required)" required>
+					      <input name="password" type="text" class="form-control" id="newpassword" placeholder="New Password(Required)">
 					    </div>
 					    <div class="col-md-6 mb-6">
 					      <label for="validationTooltip04">Re-enter New Password</label>
-					      <input type="text" class="form-control" id="newrepassword" placeholder="Re-enter new password(Required)"  required>
+					      <input type="text" class="form-control" id="newrepassword" placeholder="Re-enter new password(Required)">
 					    </div>
 					  </div>
 					  <div class="form-row">

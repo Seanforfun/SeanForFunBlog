@@ -175,14 +175,14 @@
 								$locationDiv = $("<div></div>");
 								$locationSpan = $("<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-map-pin' style='width: 13px;height: 13px;'><path d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'></path><circle cx='12' cy='10' r='3'></circle></svg>");
 								$locationDiv.append($locationSpan);
-								$i = $("<i style='font-weight:bold;'>"+userInfo.city+', '+userInfo.province+", "+userInfo.country+"</i>")
+								$i = $("<i style='font-weight:bold;'>&nbsp;"+userInfo.city+', '+userInfo.province+", "+userInfo.country+"</i>")
 								$locationDiv.append($i);
 								$aside.append($locationDiv);
 							}
 							$emailDiv = $("<div></div>");
-							$locationSpan = $("<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-mail' style='width: 13px;height: 13px;'><path d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'></path><circle cx='12' cy='10' r='3'></circle></svg>");
+							$locationSpan = $("<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-mail' style='width: 13px;height: 13px;'><path d='M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z'></path><polyline points='22,6 12,13 2,6'></polyline></svg>");
 							$emailDiv.append($locationSpan);
-							$emailA = $("<a style='font-weight:bold;' href='mailto:"+userInfo.email+"'>"+ userInfo.email +"</a>");
+							$emailA = $("<a style='font-weight:bold;' href='mailto:"+userInfo.email+"'>&nbsp;"+ userInfo.email +"</a>");
 							$emailDiv.append($emailA);
 							$aside.append($emailDiv);
 							
@@ -191,8 +191,12 @@
 							$archivesDiv.append($h4);
 							$ol = $("<ol class='list-unstyled mb-0'></ol>")
 							//TODO must rewrite here
-							$li = $("<li><a href=''#'>March 2014</a></li>")
-							$ol.append($li);
+							var months = data.months;
+							for(var i = 0; i < months.length; i++){
+								var month = months[i];
+								$li = $("<li><a href='javascript:void(0);' id='"+month.id+"' onclick='getArchiveArticle(this)'>"+month.dateView + "(" +month.articleCount +")" + "</a></li>")
+								$ol.append($li);
+							}
 							$archivesDiv.append($ol);
 							$aside.append($archivesDiv);
 							

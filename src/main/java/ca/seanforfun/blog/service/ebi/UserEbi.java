@@ -45,4 +45,16 @@ public interface UserEbi {
 	 * @Return: String
 	 */
 	String getAdminAvatar();
+
+	/**
+	 * @Description:Get user from db by id.
+	 * @Return: User
+	 */
+	User getUserById(Long id);
+
+	/**
+	 * @Description:Update User information.
+	 * @Return: void
+	 */
+	void updateUserInfo(User user);
 }

@@ -49,6 +49,15 @@ public class LoginController {
 	@RequestMapping("/tologin")
 	public ModelAndView toLoginPage(ModelAndView mv, HttpSession session,
 			HttpServletResponse response, HttpServletRequest request) throws IOException {
+		System.out.println("==========================");
+		System.out.println("==========================");
+		System.out.println("==========================");
+		System.out.println("==========================");
+		Alert alert = (Alert) session.getAttribute("alert");
+		if(alert != null){
+			session.setAttribute("alert", null);
+			mv.addObject("alert", alert);
+		}
 		// If session scope saved user information direct to admin page directly.
 		String rememberToken = (String) session.getAttribute("remember");
 		String loginIp = getIpAddr(request);
@@ -71,8 +80,9 @@ public class LoginController {
 		// Check user information from database.
 		User loginUser = userService.checkUserInfo(user);
 		if (loginUser == null) {
-			mv.addObject("alert", new Alert("Name or password incorrect."));
-			mv.setViewName("/admin/login.html");
+			session.setAttribute("alert", new Alert("Name or password incorrect."));
+			mv.setViewName("redirect:/tologin");
+			return mv;
 		}
 		if (loginUser.getActivestatus() == User.USER_NOT_ACTIVED) {
 			mv.addObject("alert", new Alert(

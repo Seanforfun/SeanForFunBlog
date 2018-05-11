@@ -77,4 +77,18 @@ public class UserService implements UserEbi {
 		}
 		return avatar;
 	}
+
+	@Override
+	public User getUserById(Long id) {
+		return userMapper.getUserById(id);
+	}
+
+	@Override
+	@Transactional
+	public void updateUserInfo(User user) {
+		userMapper.updateUserInfoById(user.getId(), user.getFirstName(),
+				user.getLastName(), user.getPassword(), user.getBio(),
+				user.getIntro(), user.getCountry(), user.getProvince(),
+				user.getCity(), user.getEmail(), user.getNickname());
+	}
 }
