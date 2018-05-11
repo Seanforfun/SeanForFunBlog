@@ -22,11 +22,13 @@ import ca.seanforfun.blog.model.entity.entity.Article;
 import ca.seanforfun.blog.model.entity.entity.Badge;
 import ca.seanforfun.blog.model.entity.entity.Image;
 import ca.seanforfun.blog.model.entity.entity.Link;
+import ca.seanforfun.blog.model.entity.entity.Month;
 import ca.seanforfun.blog.model.entity.entity.User;
 import ca.seanforfun.blog.model.entity.vo.PaginationVo;
 import ca.seanforfun.blog.model.entity.vo.UserVo;
 import ca.seanforfun.blog.service.ebo.ArticleService;
 import ca.seanforfun.blog.service.ebo.LinkService;
+import ca.seanforfun.blog.service.ebo.MonthService;
 import ca.seanforfun.blog.service.ebo.UserService;
 import ca.seanforfun.blog.validator.ArticleWriteValidateGroup;
 
@@ -48,6 +50,8 @@ public class ArticleController {
 	private UserService userService;
 	@Autowired
 	private LinkService linkService;
+	@Autowired
+	private MonthService monthService;
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public ModelAndView updateArticle(
@@ -185,6 +189,8 @@ public class ArticleController {
 		List<Article> articleByCategory = articleService.getArticleByCategory(
 				category, index, numPerPage);
 		paginationVo.setArticles(articleByCategory);
+		List<Month> months = monthService.getArchiveInfo();
+		paginationVo.setMonths(months);
 		/**
 		 * Get admin user information.
 		 */

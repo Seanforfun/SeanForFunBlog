@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import ca.seanforfun.blog.model.entity.config.PaginationBean;
 import ca.seanforfun.blog.model.entity.entity.Article;
 import ca.seanforfun.blog.model.entity.entity.Link;
+import ca.seanforfun.blog.model.entity.entity.Month;
 
 @Component
 @Scope("prototype")
@@ -16,6 +17,15 @@ public class PaginationVo extends PaginationBean {
 	private List<Article> articles;
 	private UserVo userVo;
 	private List<Link> links;
+	private List<Month> months;
+	public List<Month> getMonths() {
+		return months;
+	}
+
+	public void setMonths(List<Month> months) {
+		this.months = months;
+	}
+
 	public List<Link> getLinks() {
 		return links;
 	}

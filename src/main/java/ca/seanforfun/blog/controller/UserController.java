@@ -28,7 +28,9 @@ public class UserController {
 	public ModelAndView updateAdminInfo(
 			ModelAndView mv,
 			@Validated(value = UpdateAdminValidator.class) @ModelAttribute("user") User user,
-			BindingResult bindingResult) {
+			BindingResult bindingResult, String oldPassword) {
+		System.out.println(oldPassword);
+		System.out.println(user.getPassword());
 		// Update Admin information
 		return mv;
 	}

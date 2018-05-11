@@ -9,14 +9,14 @@
 				<img th:src="${userInfo.pic}" height="70%" width="70%"
 					class="rounded">
 				<h5 class="font-italic" th:text="${userInfo.firstName} + ' ' +${userInfo.lastName}"></h5>
-				<p class="mb-0 font-italic font-weight-bold" th:text="${userInfo.bio}"></p>
+				<p class="mb-0 font-italic font-weight-bold" th:text="${userInfo?.bio}"></p>
 			</center>
-			<p class="mb-0" th:text="${userInfo.intro}"></p>
+			<p class="mb-0" th:text="${userInfo?.intro}"></p>
 		</div>
 		<hr/>
-		<div>
+		<div th:if="${userInfo.city != null || userInfo.province != null || userInfo.country != null }">
 			<span data-feather="map-pin" style="width: 13px;height: 13px;"></span>
-			<i th:text="${userInfo.city} + ', ' + ${userInfo.province} + ', ' + ${userInfo.country}" style="font-weight:bold;"></i>
+			<i th:text="${userInfo?.city} + ', ' + ${userInfo?.province} + ', ' + ${userInfo?.country}" style="font-weight:bold;"></i>
 		</div>
 		<div>
 			<span data-feather="mail" style="width: 13px;height: 13px;"></span>

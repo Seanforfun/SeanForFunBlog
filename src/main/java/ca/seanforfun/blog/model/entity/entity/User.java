@@ -3,7 +3,11 @@ package ca.seanforfun.blog.model.entity.entity;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import ca.seanforfun.blog.utils.FormatUtils;
+import ca.seanforfun.blog.validator.UpdateAdminValidator;
 
 /**
  * @author SeanForFun E-mail:xiaob6@mcmaster.ca
@@ -29,20 +33,33 @@ public class User {
 	 * User information
 	 */
 	private String nickname;
+	@NotNull(groups={UpdateAdminValidator.class})
+	@Size(min=1, max=100, groups={UpdateAdminValidator.class})
 	private String firstName;
+	@NotNull(groups={UpdateAdminValidator.class})
+	@Size(min=1, max=100, groups={UpdateAdminValidator.class})
 	private String lastName;
 	private String name;
+	@NotNull(groups={UpdateAdminValidator.class})
+	@Size(min=1, max=40, groups={UpdateAdminValidator.class})
 	private String password;
+	@NotNull(groups={UpdateAdminValidator.class})
+	@Size(min=1, max=100, groups={UpdateAdminValidator.class})
 	private String email;
+	@NotNull(groups={UpdateAdminValidator.class})
 	private String bio;
+	@NotNull(groups={UpdateAdminValidator.class})
 	private String intro;
 	private String pic;
 	
 	/**
 	 * User location
 	 */
+	@Size(min=0, max=60, groups={UpdateAdminValidator.class})
 	private String country;
+	@Size(min=0, max=60, groups={UpdateAdminValidator.class})
 	private String province;
+	@Size(min=0, max=60, groups={UpdateAdminValidator.class})
 	private String city;
 	
 	/**

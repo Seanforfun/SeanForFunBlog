@@ -91,7 +91,44 @@
     	}
     	
     	function updateUserInfo(){
-    		$("form:eq(0)").submit();
+    		var newPassword = $("#newpassword").val();
+    		var newrePassword = $("#newrepassword").val();
+    		if(newPassword != newrePassword){
+    			$("#newrepassword").val("");
+    			$("#newrepassword").attr("placeholder", "Password and re-enter password don't match.");
+    			return;
+    		}
+    		if(!verifyEmail()){
+    			return;
+    		}
+    		/* $("form:eq(0)").submit(); */
+    	}
+    	
+    	function verifyEmail(){
+    		var email = $("#emailInput").val();
+    		if(null == email || 0 == email.length){
+    			$("#emailInput").val("");
+    			 $("#emailInput").attr("placeholder","Please provide a valid e-mail address!");
+    		}
+    		var regex = /^\w+@[a-z0-9]+(\.[a-z]+){1,3}$/;
+    		if(!regex.test(email)){
+    			$("#emailInput").val("");
+    			 $("#emailInput").attr("placeholder","Please provide a valid e-mail address!");
+	    		return false;
+    		}
+    		var firstname = $("#firstname").val();
+    		if(null == firstname || 0 == firstname.length){
+    			$("#firstname").val("");
+    			$("#firstname").attr("placeholder", "Please provide your firstname");
+    			return;
+    		}
+    		var lastname = $("#lastname").val();
+    		if(null == lastname || 0 == lastname.length){
+    			$("#lastname").val("");
+    			$("#lastname").attr("placeholder", "Please provide your lastname");
+    			return;
+    		}
+    		return true;
     	}
     </script>
   </head>
@@ -124,11 +161,11 @@
 					  <div class="form-row">
 					    <div class="col-md-4 mb-3">
 					       <label for="validationServer01">First name</label>
-					      <input type="text" class="form-control is-invalid" id="validationServer01" placeholder="First name" th:value="${adminInfo?.firstName}"  required>
+					      <input name="firstName" type="text" class="form-control is-invalid" id="firstname" placeholder="First name(Required)" th:value="${adminInfo?.firstName}"  required>
 					    </div>
 					    <div class="col-md-4 mb-3">
 					      <label for="validationTooltip02">Last name</label>
-					      <input type="text" class="form-control" id="validationTooltip02" placeholder="Last name" th:value="${adminInfo?.lastName}" required>
+					      <input name="lastName" type="text" class="form-control" id="lastname" placeholder="Last name(Required)" th:value="${adminInfo?.lastName}" required>
 					    </div>
 					    <div class="col-md-4 mb-3">
 					      <label for="validationTooltipUsername">Nickname</label>
@@ -136,38 +173,56 @@
 					        <div class="input-group-prepend">
 					          <span class="input-group-text" id="validationTooltipUsernamePrepend">@</span>
 					        </div>
-					        <input type="text" th:value="${adminInfo?.nickname}" class="form-control" id="validationTooltipUsername" placeholder="Nickname" aria-describedby="validationTooltipUsernamePrepend" required>
+					        <input name="nickname" type="text" th:value="${adminInfo?.nickname}" class="form-control" id="validationTooltipUsername" placeholder="Nickname(Required)" aria-describedby="validationTooltipUsernamePrepend" required>
 					      </div>
+					    </div>
+					  </div>
+					  <div class="form-row">
+					    <div class="col-md-12 mb-12">
+					      <label for="validationTooltip03">Old Password</label>
+					      <input name="oldPassword" type="text" class="form-control" id="password" placeholder="Old Password(Required)" required>
+					    </div>
+					  </div>
+					  <div class="form-row">
+					    <div class="col-md-6 mb-6">
+					      <label for="validationTooltip03">New Password</label>
+					      <input name="password" type="text" class="form-control" id="newpassword" placeholder="New Password(Required)" required>
+					    </div>
+					    <div class="col-md-6 mb-6">
+					      <label for="validationTooltip04">Re-enter New Password</label>
+					      <input type="text" class="form-control" id="newrepassword" placeholder="Re-enter new password(Required)"  required>
 					    </div>
 					  </div>
 					  <div class="form-row">
 					    <div class="col-md-4 mb-4">
 					      <label for="validationTooltip03">City</label>
-					      <input type="text" class="form-control" id="validationTooltip03" placeholder="City" th:value="${adminInfo?.city}" required>
+					      <input name="city" type="text" class="form-control" id="validationTooltip03" placeholder="City" th:value="${adminInfo?.city}">
 					    </div>
 					    <div class="col-md-4 mb-4">
-					      <label for="validationTooltip04">State</label>
-					      <input type="text" class="form-control" id="validationTooltip04" placeholder="State" th:value="${adminInfo?.province}" required>
+					      <label for="validationTooltip04">Province</label>
+					      <input name="province" type="text" class="form-control" id="validationTooltip04" placeholder="Province" th:value="${adminInfo?.province}">
 					    </div>
 					    <div class="col-md-4 mb-4">
 					      <label for="validationTooltip05">Country</label>
-					      <input type="text" class="form-control" id="validationTooltip05" placeholder="Country" th:value="${adminInfo?.country}" required>
+					      <input name="country" type="text" class="form-control" id="validationTooltip05" placeholder="Country" th:value="${adminInfo?.country}">
 					    </div>
 					  </div>
 					  <div class="form-row">
 					  	<div class="col-md-12 mb-12">
-					  		 <label for="validationTooltip05">E-mail</label>
-						     <input type="email" class="form-control" id="validationTooltip05" placeholder="Country" th:value="${adminInfo?.email}" required>
+						    <label for="validationTooltip05">E-mail</label>
+						  	<div class="input-group">
+							     <input name="email" type="email" class="form-control" id="emailInput" placeholder="E-mail(Required)" th:value="${adminInfo?.email}" required>
+						  	</div>
 					  	</div>
 					  </div>
-					  <div class="form-row" style="margin-top: 10px;">
+					  <div class="form-row">
 					  	<div class="col-md-6 mb-6">
 					  		 <label for="validationTooltip07">Bio</label>
-					  		<textarea class="form-control" rows="6" style="width: 100%;" required="required" th:text="${adminInfo?.bio}"></textarea>
+					  		<textarea name="bio" class="form-control" rows="6" style="width: 100%;" th:text="${adminInfo?.bio}"></textarea>
 					  	</div>
 					  	<div class="col-md-6 mb-6">
 					  		 <label for="validationTooltip08">Introduce</label>
-					  		<textarea class="form-control" rows="6" style="width: 100%;" required="required" th:text="${adminInfo?.intro}"></textarea>
+					  		<textarea name="intro" class="form-control" rows="6" style="width: 100%;" th:text="${adminInfo?.intro}"></textarea>
 					  	</div>
 					  </div>
 					  <div style="float: right; margin-top: 10px;">
